@@ -28,5 +28,6 @@ Route::post('/verify-otp', [RegisterController::class, 'verifyOtp'])->name('veri
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
-    Route::get('/questionaries', [\App\Http\Controllers\QuestionariesController::class, 'questionaries'])->name('questionaries');
+    Route::match(['get', 'post'],'/questionaries', [\App\Http\Controllers\QuestionariesController::class, 'questionaries'])->name('questionaries');
+    Route::match(['get', 'post'], '/preference', [\App\Http\Controllers\QuestionariesController::class, 'preference'])->name('preference');
 });
