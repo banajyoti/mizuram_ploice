@@ -5,7 +5,7 @@
 	<div class="flex gap-3">
 		<div class="grow flex flex-col group">
 			<div class="h-full flex flex-col items-center md:items-start">
-				<a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs" href="questionaries.php">
+				<a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs" href="{{ route('questionaries') }}">
 					<div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span class="m-auto text-sm TimesNR">Q</span></div>
 					<span class="hidden lg:inline-block">Questionaries</span>
 				</a>
@@ -176,7 +176,7 @@
 </div>
 
 <div class="mt-auto px-4 flex items-center">
-	<a class="inline-block bg-gray-600 hover:bg-gray-700 text-white p-2 rounded-md Nunito" href="questionaries.php"><i class="bi bi-arrow-left-short pr-1"></i>Go Back</a>
+	<a class="inline-block bg-gray-600 hover:bg-gray-700 text-white p-2 rounded-md Nunito" href="{{ route('questionaries') }}"><i class="bi bi-arrow-left-short pr-1"></i>Go Back</a>
 	<a class="ml-auto inline-block bg-green-600 hover:bg-green-700 text-white p-2 rounded-md Nunito" href="document.php"><i class="bi bi-check-all pr-1"></i>Save & proceede</a>
 </div>
 @include('layouts.footer')

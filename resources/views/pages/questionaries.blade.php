@@ -5,7 +5,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 @include('layouts.nav-2')
-
 <div class="px-4 grow flex flex-col">
     <div class="flex gap-3">
         <div class="grow flex flex-col group">
@@ -91,7 +90,7 @@
     <div class="p-4 grow border border-gray-300 rounded-lg space-y-4">
         <p class="m-auto text-yellow-500 text-center rounded-md text-[0.65rem] md:text-sm font-medium">Candidate need to
             fillout all the mandatory <span class="text-red-600">*</span> questions.</p>
-        <form action="" method="post">
+        <form id="myForm" action="" method="post">
             <input type="hidden" value="{{ Auth::user()->id }}" name="user_id">
             <div class="grid grid-cols-2 gap-6">
                 <div class="col-span-2 lg:col-span-1 p-0 md:p-6 md:py-8 border rounded-lg border-gray-300">
@@ -121,15 +120,16 @@
                             <p class="px-6 text-gray-500 hidden md:block" id="min_score_display">Answer<i
                                     class="bi bi-1-circle text-sm text-gray-400 px-1"></i>:</p>
                             <div class="ml-auto">
-                                <input id="no_min_score_mizo" value="0" type="radio" name="min_score_mizo"
-                                    class="hidden peer">
+                                <input id="no_min_score_mizo" {{ ($data->min_score_mizo ?? '') == 0 ? 'checked' : '' }}
+                                    value="0" type="radio" name="min_score_mizo" class="hidden peer">
                                 <label for="no_min_score_mizo"
                                     class="inline-block border border-gray-300 hover:border-gray-600 hover:text-gray-800 peer-checked:border-gray-600 peer-checked:bg-gray-600 peer-checked:text-white rounded-md h-11 w-28 flex items-center justify-center text-sm">No,
                                     i haven't.</label>
                             </div>
                             <div class="mr-2 md:mr-0">
-                                <input id="yes_min_score_mizo" value="1" type="radio" name="min_score_mizo"
-                                    class="hidden peer">
+                                <input id="yes_min_score_mizo"
+                                    {{ ($data->min_score_mizo ?? '') == 1 ? 'checked' : '' }} value="1"
+                                    type="radio" name="min_score_mizo" class="hidden peer">
                                 <label for="yes_min_score_mizo"
                                     class="inline-block border border-gray-300 hover:border-blue-600 hover:text-blue-800 peer-checked:border-blue-600 peer-checked:bg-blue-600 peer-checked:text-white rounded-md h-11 w-28 flex items-center justify-center text-sm">Yes,
                                     i have.</label>
@@ -164,15 +164,15 @@
                             <p class="px-6 text-gray-500 hidden md:block" id="class_x_display">Answer<i
                                     class="bi bi-2-circle text-sm text-gray-400 px-1"></i>:</p>
                             <div class="ml-auto">
-                                <input id="no_class_x_mizo" value="0" type="radio" name="class_x_mizo"
-                                    class="hidden peer">
+                                <input id="no_class_x_mizo" {{ ($data->class_x_mizo ?? '') == 0 ? 'checked' : '' }}
+                                    value="0" type="radio" name="class_x_mizo" class="hidden peer">
                                 <label for="no_class_x_mizo"
                                     class="inline-block border border-gray-300 hover:border-gray-600 hover:text-gray-800 peer-checked:border-gray-600 peer-checked:bg-gray-600 peer-checked:text-white rounded-md h-11 w-28 flex items-center justify-center text-sm">No,
                                     i haven't.</label>
                             </div>
                             <div class="mr-2 md:mr-0">
-                                <input id="yes_class_x_mizo" value="1" type="radio" name="class_x_mizo"
-                                    class="hidden peer">
+                                <input id="yes_class_x_mizo" {{ ($data->class_x_mizo ?? '') == 1 ? 'checked' : '' }}
+                                    value="1" type="radio" name="class_x_mizo" class="hidden peer">
                                 <label for="yes_class_x_mizo"
                                     class="inline-block border border-gray-300 hover:border-blue-600 hover:text-blue-800 peer-checked:border-blue-600 peer-checked:bg-blue-600 peer-checked:text-white rounded-md h-11 w-28 flex items-center justify-center text-sm">Yes,
                                     i have.</label>
@@ -207,15 +207,15 @@
                             <p class="px-6 text-gray-500 hidden md:block" id="mizo_as_mil_display">Answer<i
                                     class="bi bi-3-circle text-sm text-gray-400 px-1"></i>:</p>
                             <div class="ml-auto">
-                                <input id="no_mizo_as_mil" value="0" type="radio" name="mizo_as_mil"
-                                    class="hidden peer">
+                                <input id="no_mizo_as_mil" {{ ($data->mizo_as_mil ?? '') == 0 ? 'checked' : '' }}
+                                    value="0" type="radio" name="mizo_as_mil" class="hidden peer">
                                 <label for="no_mizo_as_mil"
                                     class="inline-block border border-gray-300 hover:border-gray-600 hover:text-gray-800 peer-checked:border-gray-600 peer-checked:bg-gray-600 peer-checked:text-white rounded-md h-11 w-28 flex items-center justify-center text-sm">No,
                                     i haven't.</label>
                             </div>
                             <div class="mr-2 md:mr-0">
-                                <input id="yes_mizo_as_mil" value="1" type="radio" name="mizo_as_mil"
-                                    class="hidden peer">
+                                <input id="yes_mizo_as_mil" {{ ($data->mizo_as_mil ?? '') == 1 ? 'checked' : '' }}
+                                    value="1" type="radio" name="mizo_as_mil" class="hidden peer">
                                 <label for="yes_mizo_as_mil"
                                     class="inline-block border border-gray-300 hover:border-blue-600 hover:text-blue-800 peer-checked:border-blue-600 peer-checked:bg-blue-600 peer-checked:text-white rounded-md h-11 w-28 flex items-center justify-center text-sm">Yes,
                                     i have.</label>
@@ -249,15 +249,15 @@
                             <p class="px-6 text-gray-500 hidden md:block" id="comp_cert_display">Answer<i
                                     class="bi bi-4-circle text-sm text-gray-400 px-1"></i>:</p>
                             <div class="ml-auto">
-                                <input id="no_comp_cert" value="0" type="radio" name="comp_cert"
-                                    class="hidden peer">
+                                <input id="no_comp_cert" {{ ($data->comp_cert ?? '') == 0 ? 'checked' : '' }}
+                                    value="0" type="radio" name="comp_cert" class="hidden peer">
                                 <label for="no_comp_cert"
                                     class="inline-block border border-gray-300 hover:border-gray-600 hover:text-gray-800 peer-checked:border-gray-600 peer-checked:bg-gray-600 peer-checked:text-white rounded-md h-11 w-28 flex items-center justify-center text-sm">No,
                                     i don't.</label>
                             </div>
                             <div class="mr-2 md:mr-0">
-                                <input id="yes_comp_cert" value="1" type="radio" name="comp_cert"
-                                    class="hidden peer">
+                                <input id="yes_comp_cert" {{ ($data->comp_cert ?? '') == 1 ? 'checked' : '' }}
+                                    value="1" type="radio" name="comp_cert" class="hidden peer">
                                 <label for="yes_comp_cert"
                                     class="inline-block border border-gray-300 hover:border-blue-600 hover:text-blue-800 peer-checked:border-blue-600 peer-checked:bg-blue-600 peer-checked:text-white rounded-md h-11 w-28 flex items-center justify-center text-sm">Yes,
                                     i have.</label>
@@ -291,29 +291,29 @@
                             <p class="px-6 text-gray-500 hidden md:block" id="ncc_cert_display">Answer<i
                                     class="bi bi-5-circle text-sm text-gray-400 px-1"></i>:</p>
                             <div class="ml-auto">
-                                <input id="no_ncc_cert" value="0" type="radio" name="ncc_cert"
-                                    class="hidden peer">
+                                <input id="no_ncc_cert" {{ ($data->ncc_cert ?? '') == 0 ? 'checked' : '' }}
+                                    value="0" type="radio" name="ncc_cert" class="hidden peer">
                                 <label for="no_ncc_cert"
                                     class="inline-block border border-gray-300 hover:border-gray-600 hover:text-gray-800 peer-checked:border-gray-600 peer-checked:bg-gray-600 peer-checked:text-white rounded-md h-11 w-28 flex items-center justify-center text-sm">No,
                                     i don't.</label>
                             </div>
                             <div class="mr-2 md:mr-0">
-                                <input id="yes_ncc_cert" value="1" type="radio" name="ncc_cert"
-                                    class="hidden peer">
+                                <input id="yes_ncc_cert" {{ ($data->ncc_cert ?? '') == 1 ? 'checked' : '' }}
+                                    value="1" type="radio" name="ncc_cert" class="hidden peer">
                                 <label for="yes_ncc_cert"
                                     class="inline-block border border-gray-300 hover:border-blue-600 hover:text-blue-800 peer-checked:border-blue-600 peer-checked:bg-blue-600 peer-checked:text-white rounded-md h-11 w-28 flex items-center justify-center text-sm">Yes,
                                     i have.</label>
                             </div>
                         </div>
                         <div class="m-2 flex lg:flex-col xl:flex-row items-center choose_ncc_div hidden">
-                            <p class="px-6 text-gray-500 hidden md:block mr-auto xl:mr-0" id="ncc_grade_display">Choose NCC Grade:</p>
+                            <p class="px-6 text-gray-500 hidden md:block mr-auto xl:mr-0" id="ncc_grade_display">
+                                Choose NCC Grade:</p>
                             <div class="flex items-center gap-1 ml-auto">
                                 <div class="xl:ml-auto flex items-center">
                                     <div
                                         class="flex items-center p-2 mx-1 border border-gray-300 hover:border-blue-500 rounded-md">
-                                        <input id="bordered-radio-1" type="radio" value="1"
-                                            name="ncc_grade"
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                        <input id="bordered-radio-1" type="radio" value="1" name="ncc_grade"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 ncc-grade-val">
                                         <label for="bordered-radio-1" class="w-full ms-2 text-sm text-gray-900"><span
                                                 class="hidden md:inline-block">NCC:</span><span
                                                 class="ps-1 font-medium text-lg">A</span></label>
@@ -322,7 +322,7 @@
                                         class="flex items-center p-2 mx-1 border border-gray-300 hover:border-blue-500 rounded-md">
                                         <input checked id="bordered-radio-2" type="radio" value="2"
                                             name="ncc_grade"
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 ncc-grade-val">
                                         <label for="bordered-radio-2" class="w-full ms-2 text-sm text-gray-900"><span
                                                 class="hidden md:inline-block">NCC:</span><span
                                                 class="ps-1 font-medium text-lg">B</span></label>
@@ -331,7 +331,7 @@
                                         class="flex items-center p-2 mx-1 border border-gray-300 hover:border-blue-500 rounded-md">
                                         <input checked id="bordered-radio-3" type="radio" value="3"
                                             name="ncc_grade"
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 ncc-grade-val">
                                         <label for="bordered-radio-3" class="w-full ms-2 text-sm text-gray-900"><span
                                                 class="hidden md:inline-block">NCC:</span><span
                                                 class="ps-1 font-medium text-lg">C</span></label>
@@ -370,15 +370,15 @@
                             <p class="px-6 text-gray-500 hidden md:block" id="home_guard_display">Answer<i
                                     class="bi bi-6-circle text-sm text-gray-400 px-1"></i>:</p>
                             <div class="ml-auto">
-                                <input id="no_home_guard" value="0" type="radio" name="home_guard"
-                                    class="hidden peer">
+                                <input id="no_home_guard" {{ ($data->home_guard ?? '') == 0 ? 'checked' : '' }}
+                                    value="0" type="radio" name="home_guard" class="hidden peer">
                                 <label for="no_home_guard"
                                     class="inline-block border border-gray-300 hover:border-gray-600 hover:text-gray-800 peer-checked:border-gray-600 peer-checked:bg-gray-600 peer-checked:text-white rounded-md h-11 w-28 flex items-center justify-center text-sm">No,
                                     i'm.</label>
                             </div>
                             <div class="mr-2 md:mr-0">
-                                <input id="yes_home_guard" value="1" type="radio" name="home_guard"
-                                    class="hidden peer">
+                                <input id="yes_home_guard" {{ ($data->home_guard ?? '') == 1 ? 'checked' : '' }}
+                                    value="1" type="radio" name="home_guard" class="hidden peer">
                                 <label for="yes_home_guard"
                                     class="inline-block border border-gray-300 hover:border-blue-600 hover:text-blue-800 peer-checked:border-blue-600 peer-checked:bg-blue-600 peer-checked:text-white rounded-md h-11 w-28 flex items-center justify-center text-sm">Yes,
                                     i'm not.</label>
@@ -413,15 +413,15 @@
                             <p class="px-6 text-gray-500 hidden md:block" id="iti_eqi_display">Answer<i
                                     class="bi bi-7-circle text-sm text-gray-400 px-1"></i>:</p>
                             <div class="ml-auto">
-                                <input id="no_iti_eqi" value="0" type="radio" name="iti_eqi"
-                                    class="hidden peer">
+                                <input id="no_iti_eqi" {{ ($data->iti_eqi ?? '') == 0 ? 'checked' : '' }}
+                                    value="0" type="radio" name="iti_eqi" class="hidden peer">
                                 <label for="no_iti_eqi"
                                     class="inline-block border border-gray-300 hover:border-gray-600 hover:text-gray-800 peer-checked:border-gray-600 peer-checked:bg-gray-600 peer-checked:text-white rounded-md h-11 w-28 flex items-center justify-center text-sm">No,
                                     i haven't.</label>
                             </div>
                             <div class="mr-2 md:mr-0">
-                                <input id="yes_iti_eqi" value="1" type="radio" name="iti_eqi"
-                                    class="hidden peer">
+                                <input id="yes_iti_eqi" {{ ($data->iti_eqi ?? '') == 1 ? 'checked' : '' }}
+                                    value="1" type="radio" name="iti_eqi" class="hidden peer">
                                 <label for="yes_iti_eqi"
                                     class="inline-block border border-gray-300 hover:border-blue-600 hover:text-blue-800 peer-checked:border-blue-600 peer-checked:bg-blue-600 peer-checked:text-white rounded-md h-11 w-28 flex items-center justify-center text-sm">Yes,
                                     i have.</label>
@@ -456,15 +456,18 @@
                             <p class="px-6 text-gray-500 hidden md:block" id="auto_mobile_display">Answer<i
                                     class="bi bi-8-circle text-sm text-gray-400 px-1"></i>:</p>
                             <div class="ml-auto">
-                                <input id="auto_mobile_1" type="radio" value="0" name="auto_mobile"
-                                    class="hidden peer">
+
+                                <input id="auto_mobile_1" type="radio"
+                                    {{ ($data->auto_mobile ?? '') == 0 ? 'checked' : '' }} value="0"
+                                    name="auto_mobile" class="hidden peer">
                                 <label for="auto_mobile_1"
                                     class="inline-block border border-gray-300 hover:border-gray-600 hover:text-gray-800 peer-checked:border-gray-600 peer-checked:bg-gray-600 peer-checked:text-white rounded-md h-11 w-28 flex items-center justify-center text-sm">No,
                                     i haven't.</label>
                             </div>
                             <div class="mr-2 md:mr-0">
-                                <input id="auto_mobile_2" type="radio" value="1" name="auto_mobile"
-                                    class="hidden peer">
+                                <input id="auto_mobile_2" type="radio"
+                                    {{ ($data->auto_mobile ?? '') == 1 ? 'checked' : '' }} value="1"
+                                    name="auto_mobile" class="hidden peer">
                                 <label for="auto_mobile_2"
                                     class="inline-block border border-gray-300 hover:border-blue-600 hover:text-blue-800 peer-checked:border-blue-600 peer-checked:bg-blue-600 peer-checked:text-white rounded-md h-11 w-28 flex items-center justify-center text-sm">Yes,
                                     i have.</label>
@@ -488,7 +491,7 @@
     $(document).ready(function() {
         // Object to store the selected values for all sections
         var formData = {};
-
+        // $('#save_button').hide();
         // Function to handle radio button selection and AJAX post for each section
         function submitRadioData(sectionName) {
             // Collect the selected value from the radio buttons for this section
@@ -526,6 +529,22 @@
             // Check if formData has any values
             toggleSaveButton();
 
+            // Function to toggle visibility of the Save & Proceed button
+            function toggleSaveButton() {
+                // Get the selected values of the radio buttons
+                const minScoreMizo = $('input[name="min_score_mizo"]:checked').val();
+                const classXMizo = $('input[name="class_x_mizo"]:checked').val();
+                const mizoAsMil = $('input[name="mizo_as_mil"]:checked').val();
+                const compCert = $('input[name="comp_cert"]:checked').val();
+
+                // Determine the conditions for showing the save button
+                // if (minScoreMizo === '1' || classXMizo === '1' || mizoAsMil === '1' && compCert == '1') {
+                //     $('#save_button').show(); // Show the button
+                // } else {
+                //     $('#save_button').hide(); // Hide the button
+                // }
+            }
+
             // Check if 'ncc_cert' value is '1' and show or hide the NCC section
             if (formData['ncc_cert'] === '1') {
                 $('.choose_ncc_div').removeClass('hidden'); // Show the NCC choice div
@@ -535,65 +554,77 @@
         }
 
         // Function to toggle visibility of the Save & Proceed button
-        function toggleSaveButton() {
-            // Check if formData is empty or contains any empty values
-            var isEmpty = Object.keys(formData).length === 0; // Check if formData is empty
-            var hasEmptyValue = Object.values(formData).includes(''); // Check if any value in formData is empty
+        // function toggleSaveButton() {
+        //     // Check if formData is empty or contains any empty values
+        //     var isEmpty = Object.keys(formData).length === 0; // Check if formData is empty
+        //     var hasEmptyValue = Object.values(formData).includes(''); // Check if any value in formData is empty
 
-            // If formData is empty or contains any empty values, hide the button
-            if (isEmpty || hasEmptyValue) {
-                $('#save_button').hide(); // Hide button if formData is empty or contains empty values
-            } else {
-                $('#save_button').show(); // Show button if formData contains all values
-            }
-        }
+        //     // If formData is empty or contains any empty values, hide the button
+        //     if (isEmpty || hasEmptyValue) {
+        //         $('#save_button').hide(); // Hide button if formData is empty or contains empty values
+        //     } else {
+        //         $('#save_button').show(); // Show button if formData contains all values
+        //     }
+        // }
         // Function to submit all the collected data at once
         function submitAllData() {
-            // Get CSRF token dynamically
-            var csrfToken = $('meta[name="csrf-token"]').attr('content');
-            var userId = $('input[name="user_id"]').val();
-            var nccGrade = $('input[name="ncc_grade"]').val();
-            console.log($('input[name="ncc_grade"]').val())
-            // Prepare the data to be sent in the AJAX request
-            var data = {
-                formData: formData,
-                user_id: userId,
-                ncc_grade: nccGrade,
-                _token: csrfToken // Include CSRF token for security
-            };
+            // Get the form element
+            var form = document.getElementById('myForm'); // Make sure the form has the correct ID
 
-            console.log('Submitting all data:', data);
+            // Create a FormData object from the form element
+            var formData = new FormData($('#myForm')[0]);
+
+            // Add additional data to FormData if necessary (e.g., ncc_grade, user_id)
+            var userId = $('input[name="user_id"]').val();
+            var nccGrade = $('input[name="ncc_grade"]:checked').val();
+
+            // formData.append('user_id', userId); // Add user_id to FormData
+            // formData.append('ncc_grade', nccGrade); // Add ncc_grade to FormData
+
+            // Log the form data to check
+            console.log('FormData:', formData);
 
             // Send AJAX request to submit all the collected data at once
             $.ajax({
-                url: '{{ route('questionaries') }}', // Replace with your actual route
+                url: '{{ route('questionaries') }}', // Your route for form submission
                 type: 'POST',
-                data: data,
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') // CSRF Token
+                },
+                data: formData,
+                contentType: false, // Let the browser set the content type for FormData
+                processData: false, // Don't let jQuery process the data (FormData does it)
                 success: function(response) {
-                    // Handle success response
-                    console.log(response.message); // Response message from server (if any)
-
-                    // Show success alert with SweetAlert
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success!',
-                        text: 'Data submitted successfully!',
-                        confirmButtonText: 'OK'
-                    }).then(() => {
-                        // Redirect to the 'questionaries' route after the alert is closed
-                        window.location.href = '{{ route('preference') }}';
-                    });
+                    if (response.status == 400) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'All fields are mendatory.',
+                            confirmButtonText: 'OK',
+                            confirmButtonClass: 'btn btn-danger'
+                        });
+                    } else {
+                        // Handle success response
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success!',
+                            text: response.message,
+                            confirmButtonText: 'OK',
+                            confirmButtonClass: 'btn btn-success'
+                        }).then(() => {
+                            // Redirect after successful submission
+                            window.location.href = '{{ route('preference') }}';
+                        });
+                    }
                 },
                 error: function(xhr, status, error) {
                     // Handle error response
-                    console.error('An error occurred:', status, error);
-
-                    // Show error alert with SweetAlert
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
                         text: 'An error occurred. Please try again.',
-                        confirmButtonText: 'OK'
+                        confirmButtonText: 'OK',
+                        confirmButtonClass: 'btn btn-danger'
                     });
                 }
             });
