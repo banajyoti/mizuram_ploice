@@ -196,8 +196,8 @@
 <div class="mt-auto px-4 flex items-center">
     <a class="inline-block bg-gray-600 hover:bg-gray-700 text-white p-2 rounded-md Nunito"
         href="{{ route('questionaries') }}"><i class="bi bi-arrow-left-short pr-1"></i>Go Back</a>
-    <a class="ml-auto inline-block bg-green-600 hover:bg-green-700 text-white p-2 rounded-md Nunito"
-        href="{{ route('preference') }}"><i class="bi bi-check-all pr-1"></i>Save & proceede</a>
+    <a class="ml-auto inline-block bg-green-600 hover:bg-green-700 text-white p-2 rounded-md Nunito {{ !empty($preference) ? '' : 'hidden' }}"
+        href="{{ route('profile') }}"><i class="bi bi-check-all pr-1"></i>Save & proceede</a>
 </div>
 @include('layouts.footer')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -320,24 +320,39 @@
         // On page load, check localStorage to disable checkboxes if needed
         ['post-1', 'post-2', 'post-3'].forEach(function(id) {
             if (localStorage.getItem(id) === 'checked') {
-                $("#" + id).prop('disabled', true); // Disable the checkbox
-                $("#" + id).prop('checked', true); // Ensure the checkbox is marked as checked
-                $("#" + id).next('label').css('color', 'gray').css('pointer-events',
-                'none'); // Optionally disable the label's interactivity
+                $("#" + id).prop('disabled', true);
+                $("#" + id).prop('checked', true);
+                $("#" + id).next('label').css('color', 'gray').css('pointer-events', 'none');
+            } else {
+                $("#" + id).prop('disabled', false);
+                $("#" + id).prop('checked', false);
+                $("#" + id).next('label').css('color', '').css('pointer-events', 'auto');
             }
         });
 
-        // When a checkbox is clicked, disable it and save the state
+        // When a checkbox is clicked, toggle its state and save/remove from localStorage
         $('input[type="checkbox"]').on('change', function() {
-            var id = $(this).attr('id');
-            if ($(this).prop('checked')) {
+            var checkbox = $(this);
+            var id = checkbox.attr('id');
+            console.log('Checkbox ID:', id);
+            console.log('Checkbox checked:', checkbox.prop('checked'));
+
+            if (checkbox.prop('checked')) {
                 // Save the state in localStorage
                 localStorage.setItem(id, 'checked');
+                console.log('Saved in localStorage:', id);
 
-                // Disable the checkbox
-                $(this).prop('disabled', true);
-                $(this).next('label').css('color', 'gray').css('pointer-events',
-                'none'); // Optional: Disable label styling
+                // Disable the checkbox and style it
+                checkbox.prop('disabled', true);
+                checkbox.next('label').css('color', 'gray').css('pointer-events', 'none');
+            } else {
+                // Remove the state from localStorage when unchecked
+                localStorage.removeItem(id);
+                console.log('Removed from localStorage:', id);
+
+                // Enable the checkbox and reset the label styling
+                checkbox.prop('disabled', false);
+                checkbox.next('label').css('color', '').css('pointer-events', 'auto');
             }
         });
     });

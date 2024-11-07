@@ -214,4 +214,13 @@ class QuestionariesController extends Controller
             return response()->json($errors, 403);
         }
     }
+
+    public function profile(Request $request)
+    {
+        if ($request->isMethod('GET')) {
+            return view('pages.profile');
+        } else {
+
+        }
+    }
 }
