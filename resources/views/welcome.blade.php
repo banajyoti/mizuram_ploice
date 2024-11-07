@@ -156,3 +156,19 @@
     // On page load, hide NCC choice sectio
 
 </script>
+
+if ($('input[name="min_score_mizo"]:checked').val() === '1' || $(
+                    'input[name="class_x_mizo"]:checked').val() === '0' ||
+                $('input[name="mizo_as_mil"]:checked').val() === '0') {
+                $('#save_button').show();
+            } else if ($('input[name="min_score_mizo"]:checked').val() === '0' || $(
+                    'input[name="class_x_mizo"]:checked').val() === '1' ||
+                $('input[name="mizo_as_mil"]:checked').val() === '0') {
+                $('#save_button').show();
+            } else if ($('input[name="min_score_mizo"]:checked').val() === '0' || $(
+                    'input[name="class_x_mizo"]:checked').val() === '0' ||
+                $('input[name="mizo_as_mil"]:checked').val() === '1') {
+                $('#save_button').show();
+            } else {
+                $('#save_button').hide();
+            }

@@ -179,7 +179,7 @@
             </div>
             <div class="mb-8 sm:mb-0">
                 <a class="block p-2 rounded-lg text-sm text-center bg-blue-800 hover:bg-blue-900 text-white"
-                    href="{{ route('notification-login') }}">Apply Online <i class="bi bi-arrow-right"></i></a>
+                    href="{{ route('login') }}">Apply Online <i class="bi bi-arrow-right"></i></a>
             </div>
         </div>
     </div>

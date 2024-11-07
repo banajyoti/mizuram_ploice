@@ -30,4 +30,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::match(['get', 'post'],'/questionaries', [\App\Http\Controllers\QuestionariesController::class, 'questionaries'])->name('questionaries');
     Route::match(['get', 'post'], '/preference', [\App\Http\Controllers\QuestionariesController::class, 'preference'])->name('preference');
+    Route::get('/update-preference/{prefId}/{type}', [\App\Http\Controllers\QuestionariesController::class, 'preferenceUpdate'])->name('candidate.preference.update');
 });

@@ -23,7 +23,7 @@
         <div class="grow flex flex-col group">
             <div class="h-full flex flex-col items-center md:items-start">
                 <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="preference.php">
+                    href="{{ route('preference') }}">
                     <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
                             class="m-auto text-sm TimesNR"><i class="bi bi-arrow-down-up"></i></span></div>
                     <span class="hidden lg:inline-block">Post Preferences</span>
@@ -36,7 +36,7 @@
         <div class="grow flex flex-col group">
             <div class="h-full flex flex-col items-center md:items-start">
                 <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="profile.php">
+                    href="#">
                     <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
                             class="m-auto text-sm TimesNR"><i class="bi bi-person"></i></span></div>
                     <span class="hidden lg:inline-block">Profile</span>
@@ -49,7 +49,7 @@
         <div class="grow flex flex-col group">
             <div class="h-full flex flex-col items-center md:items-start">
                 <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="document.php">
+                    href="#">
                     <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
                             class="m-auto text-sm TimesNR"><i class="bi bi-file-earmark-pdf"></i></span></div>
                     <span class="hidden lg:inline-block">Document's</span>
@@ -62,7 +62,7 @@
         <div class="grow flex flex-col group">
             <div class="h-full flex flex-col items-center md:items-start">
                 <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="payment.php">
+                    href="#">
                     <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
                             class="m-auto text-sm TimesNR">₹</span></div>
                     <span class="hidden lg:inline-block">Payment</span>
@@ -75,7 +75,7 @@
         <div class="grow flex flex-col group">
             <div class="h-full flex flex-col items-center md:items-start">
                 <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="download.php">
+                    href="#">
                     <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
                             class="m-auto text-sm TimesNR"><i class="bi bi-download"></i></span></div>
                     <span class="hidden lg:inline-block">Download</span>
@@ -117,8 +117,18 @@
                             </div>
                         </div>
                         <div class="my-2 md:mt-2 flex items-center gap-1 md:gap-2">
-                            <p class="px-6 text-gray-500 hidden md:block" id="min_score_display">Answer<i
-                                    class="bi bi-1-circle text-sm text-gray-400 px-1"></i>:</p>
+                            <p class="px-6 text-gray-500 hidden md:block" id="min_score_display">
+                                Answer<i class="bi bi-1-circle text-sm text-gray-400 px-1"></i>:
+                                @if ($data && isset($data->min_score_mizo))
+                                    @if ($data->min_score_mizo == 1)
+                                        I have
+                                    @else
+                                        I haven't
+                                    @endif
+                                @else
+                                    Data not available
+                                @endif
+                            </p>
                             <div class="ml-auto">
                                 <input id="no_min_score_mizo" {{ ($data->min_score_mizo ?? '') == 0 ? 'checked' : '' }}
                                     value="0" type="radio" name="min_score_mizo" class="hidden peer">
@@ -161,8 +171,18 @@
                             </div>
                         </div>
                         <div class="my-2 md:mt-2 flex items-center gap-1 md:gap-2">
-                            <p class="px-6 text-gray-500 hidden md:block" id="class_x_display">Answer<i
-                                    class="bi bi-2-circle text-sm text-gray-400 px-1"></i>:</p>
+                            <p class="px-6 text-gray-500 hidden md:block" id="min_score_display">
+                                Answer<i class="bi bi-1-circle text-sm text-gray-400 px-1"></i>:
+                                @if ($data && isset($data->class_x_mizo))
+                                    @if ($data->class_x_mizo == 1)
+                                        i have
+                                    @else
+                                        i haven't
+                                    @endif
+                                @else
+                                    Data not available
+                                @endif
+                            </p>
                             <div class="ml-auto">
                                 <input id="no_class_x_mizo" {{ ($data->class_x_mizo ?? '') == 0 ? 'checked' : '' }}
                                     value="0" type="radio" name="class_x_mizo" class="hidden peer">
@@ -204,8 +224,18 @@
                             </div>
                         </div>
                         <div class="my-2 md:mt-2 flex items-center gap-1 md:gap-2">
-                            <p class="px-6 text-gray-500 hidden md:block" id="mizo_as_mil_display">Answer<i
-                                    class="bi bi-3-circle text-sm text-gray-400 px-1"></i>:</p>
+                            <p class="px-6 text-gray-500 hidden md:block" id="min_score_display">
+                                Answer<i class="bi bi-1-circle text-sm text-gray-400 px-1"></i>:
+                                @if ($data && isset($data->mizo_as_mil))
+                                    @if ($data->class_x_mizo == 1)
+                                        i have
+                                    @else
+                                        i haven't
+                                    @endif
+                                @else
+                                    Data not available
+                                @endif
+                            </p>
                             <div class="ml-auto">
                                 <input id="no_mizo_as_mil" {{ ($data->mizo_as_mil ?? '') == 0 ? 'checked' : '' }}
                                     value="0" type="radio" name="mizo_as_mil" class="hidden peer">
@@ -246,8 +276,18 @@
                             </div>
                         </div>
                         <div class="my-2 md:mt-2 flex items-center gap-1 md:gap-2">
-                            <p class="px-6 text-gray-500 hidden md:block" id="comp_cert_display">Answer<i
-                                    class="bi bi-4-circle text-sm text-gray-400 px-1"></i>:</p>
+                            <p class="px-6 text-gray-500 hidden md:block" id="min_score_display">
+                                Answer<i class="bi bi-1-circle text-sm text-gray-400 px-1"></i>:
+                                @if ($data && isset($data->comp_cert))
+                                    @if ($data->comp_cert == 1)
+                                        i have
+                                    @else
+                                        i don't.
+                                    @endif
+                                @else
+                                    Data not available
+                                @endif
+                            </p>
                             <div class="ml-auto">
                                 <input id="no_comp_cert" {{ ($data->comp_cert ?? '') == 0 ? 'checked' : '' }}
                                     value="0" type="radio" name="comp_cert" class="hidden peer">
@@ -288,8 +328,18 @@
                             </div>
                         </div>
                         <div class="my-2 md:mt-2 flex items-center gap-1 md:gap-2 ncc_answer_div">
-                            <p class="px-6 text-gray-500 hidden md:block" id="ncc_cert_display">Answer<i
-                                    class="bi bi-5-circle text-sm text-gray-400 px-1"></i>:</p>
+                            <p class="px-6 text-gray-500 hidden md:block" id="min_score_display">
+                                Answer<i class="bi bi-1-circle text-sm text-gray-400 px-1"></i>:
+                                @if ($data && isset($data->ncc_cert))
+                                    @if ($data->ncc_cert == 1)
+                                        i have
+                                    @else
+                                        i don't.
+                                    @endif
+                                @else
+                                    Data not available
+                                @endif
+                            </p>
                             <div class="ml-auto">
                                 <input id="no_ncc_cert" {{ ($data->ncc_cert ?? '') == 0 ? 'checked' : '' }}
                                     value="0" type="radio" name="ncc_cert" class="hidden peer">
@@ -313,30 +363,37 @@
                                     <div
                                         class="flex items-center p-2 mx-1 border border-gray-300 hover:border-blue-500 rounded-md">
                                         <input id="bordered-radio-1" type="radio" value="1" name="ncc_grade"
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 ncc-grade-val">
-                                        <label for="bordered-radio-1" class="w-full ms-2 text-sm text-gray-900"><span
-                                                class="hidden md:inline-block">NCC:</span><span
-                                                class="ps-1 font-medium text-lg">A</span></label>
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2"
+                                            @if (isset($data->ncc_grade) && $data->ncc_grade == 1) checked @endif>
+                                        <label for="bordered-radio-1" class="w-full ms-2 text-sm text-gray-900">
+                                            <span class="hidden md:inline-block">NCC:</span>
+                                            <span class="ps-1 font-medium text-lg">A</span>
+                                        </label>
                                     </div>
+
                                     <div
                                         class="flex items-center p-2 mx-1 border border-gray-300 hover:border-blue-500 rounded-md">
-                                        <input checked id="bordered-radio-2" type="radio" value="2"
-                                            name="ncc_grade"
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 ncc-grade-val">
-                                        <label for="bordered-radio-2" class="w-full ms-2 text-sm text-gray-900"><span
-                                                class="hidden md:inline-block">NCC:</span><span
-                                                class="ps-1 font-medium text-lg">B</span></label>
+                                        <input id="bordered-radio-2" type="radio" value="2" name="ncc_grade"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2"
+                                            @if (isset($data->ncc_grade) && $data->ncc_grade == 2) checked @endif>
+                                        <label for="bordered-radio-2" class="w-full ms-2 text-sm text-gray-900">
+                                            <span class="hidden md:inline-block">NCC:</span>
+                                            <span class="ps-1 font-medium text-lg">B</span>
+                                        </label>
                                     </div>
+
                                     <div
                                         class="flex items-center p-2 mx-1 border border-gray-300 hover:border-blue-500 rounded-md">
-                                        <input checked id="bordered-radio-3" type="radio" value="3"
-                                            name="ncc_grade"
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 ncc-grade-val">
-                                        <label for="bordered-radio-3" class="w-full ms-2 text-sm text-gray-900"><span
-                                                class="hidden md:inline-block">NCC:</span><span
-                                                class="ps-1 font-medium text-lg">C</span></label>
+                                        <input id="bordered-radio-3" type="radio" value="3" name="ncc_grade"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2"
+                                            @if (isset($data->ncc_grade) && $data->ncc_grade == 3) checked @endif>
+                                        <label for="bordered-radio-3" class="w-full ms-2 text-sm text-gray-900">
+                                            <span class="hidden md:inline-block">NCC:</span>
+                                            <span class="ps-1 font-medium text-lg">C</span>
+                                        </label>
                                     </div>
                                 </div>
+
                                 <button type="button"
                                     class="p-2.5 border border-gray-300 hover:border-red-500 rounded-md hover:text-red-500 revert_ncc_choise"
                                     title="Revert NCC choise"><i class="bi bi-x-lg"></i></button>
@@ -367,8 +424,18 @@
                             </div>
                         </div>
                         <div class="my-2 md:mt-2 flex items-center gap-1 md:gap-2">
-                            <p class="px-6 text-gray-500 hidden md:block" id="home_guard_display">Answer<i
-                                    class="bi bi-6-circle text-sm text-gray-400 px-1"></i>:</p>
+                            <p class="px-6 text-gray-500 hidden md:block" id="min_score_display">
+                                Answer<i class="bi bi-1-circle text-sm text-gray-400 px-1"></i>:
+                                @if ($data && isset($data->home_guard))
+                                    @if ($data->home_guard == 1)
+                                        i'm.
+                                    @else
+                                        i'm not.
+                                    @endif
+                                @else
+                                    Data not available
+                                @endif
+                            </p>
                             <div class="ml-auto">
                                 <input id="no_home_guard" {{ ($data->home_guard ?? '') == 0 ? 'checked' : '' }}
                                     value="0" type="radio" name="home_guard" class="hidden peer">
@@ -410,8 +477,18 @@
                             </div>
                         </div>
                         <div class="my-2 md:mt-2 flex items-center gap-1 md:gap-2">
-                            <p class="px-6 text-gray-500 hidden md:block" id="iti_eqi_display">Answer<i
-                                    class="bi bi-7-circle text-sm text-gray-400 px-1"></i>:</p>
+                            <p class="px-6 text-gray-500 hidden md:block" id="min_score_display">
+                                Answer<i class="bi bi-1-circle text-sm text-gray-400 px-1"></i>:
+                                @if ($data && isset($data->iti_eqi))
+                                    @if ($data->iti_eqi == 1)
+                                        i have.
+                                    @else
+                                        i haven't.
+                                    @endif
+                                @else
+                                    Data not available
+                                @endif
+                            </p>
                             <div class="ml-auto">
                                 <input id="no_iti_eqi" {{ ($data->iti_eqi ?? '') == 0 ? 'checked' : '' }}
                                     value="0" type="radio" name="iti_eqi" class="hidden peer">
@@ -453,8 +530,18 @@
                             </div>
                         </div>
                         <div class="my-2 md:mt-2 flex items-center gap-1 md:gap-2">
-                            <p class="px-6 text-gray-500 hidden md:block" id="auto_mobile_display">Answer<i
-                                    class="bi bi-8-circle text-sm text-gray-400 px-1"></i>:</p>
+                            <p class="px-6 text-gray-500 hidden md:block" id="min_score_display">
+                                Answer<i class="bi bi-1-circle text-sm text-gray-400 px-1"></i>:
+                                @if ($data && isset($data->auto_mobile))
+                                    @if ($data->auto_mobile == 1)
+                                        i have.
+                                    @else
+                                        i haven't.
+                                    @endif
+                                @else
+                                    Data not available
+                                @endif
+                            </p>
                             <div class="ml-auto">
 
                                 <input id="auto_mobile_1" type="radio"
@@ -481,32 +568,27 @@
 </div>
 <div class="px-4 mt-auto flex items-center">
     <a id="save_button" type="submit"
-        class="ml-auto inline-block bg-green-600 hover:bg-green-700 text-white p-2 rounded-md Nunito"><i
-            class="bi bi-check-all pr-1"></i>Save & proceed</a>
+        class="ml-auto inline-block bg-green-600 hover:bg-green-700 text-white p-2 rounded-md Nunito {{ !empty($data) ? '' : 'hidden' }}">
+        <i class="bi bi-check-all pr-1"></i>Save & proceed
+    </a>
 </div>
+
 @include('layouts.footer')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 <script>
     $(document).ready(function() {
-        // Object to store the selected values for all sections
         var formData = {};
-        // $('#save_button').hide();
-        // Function to handle radio button selection and AJAX post for each section
+
         function submitRadioData(sectionName) {
-            // Collect the selected value from the radio buttons for this section
             var selectedValue = $('input[name="' + sectionName + '"]:checked').val() ||
-                ''; // Default to empty string if not selected
+                '';
 
             console.log('Selected Value for ' + sectionName + ':', selectedValue);
-
-            // Store the selected value in the formData object
             formData[sectionName] = selectedValue;
 
-            // Determine display text for the selected value
             var displayText = selectedValue === '1' ? 'Yes, I have.' : 'No, I haven\'t.';
 
-            // Update the corresponding <p> tag
             if (sectionName === 'min_score_mizo') {
                 $('#min_score_display').text('Answer: ' + displayText);
             } else if (sectionName === 'class_x_mizo') {
@@ -523,77 +605,46 @@
                 $('#iti_eqi_display').text('Answer: ' + displayText);
             } else if (sectionName === 'auto_mobile') {
                 $('#auto_mobile_display').text('Answer: ' + displayText);
-            } else if (sectionName === 'ncc_grade') {
-                $('#ncc_grade_display').text('Answer: ' + displayText);
             }
-            // Check if formData has any values
+
             toggleSaveButton();
 
-            // Function to toggle visibility of the Save & Proceed button
             function toggleSaveButton() {
-                // Get the selected values of the radio buttons
                 const minScoreMizo = $('input[name="min_score_mizo"]:checked').val();
                 const classXMizo = $('input[name="class_x_mizo"]:checked').val();
                 const mizoAsMil = $('input[name="mizo_as_mil"]:checked').val();
                 const compCert = $('input[name="comp_cert"]:checked').val();
 
-                // Determine the conditions for showing the save button
-                // if (minScoreMizo === '1' || classXMizo === '1' || mizoAsMil === '1' && compCert == '1') {
-                //     $('#save_button').show(); // Show the button
-                // } else {
-                //     $('#save_button').hide(); // Hide the button
-                // }
+                if ((minScoreMizo === '1' || classXMizo === '1' || mizoAsMil === '1') && compCert == '1') {
+                    $('#save_button').show();
+                } else {
+                    $('#save_button').hide();
+                }
             }
 
-            // Check if 'ncc_cert' value is '1' and show or hide the NCC section
             if (formData['ncc_cert'] === '1') {
-                $('.choose_ncc_div').removeClass('hidden'); // Show the NCC choice div
+                $('.choose_ncc_div').removeClass('hidden');
             } else {
-                $('.choose_ncc_div').addClass('hidden'); // Hide the NCC choice div
+                $('.choose_ncc_div').addClass('hidden');
             }
         }
 
-        // Function to toggle visibility of the Save & Proceed button
-        // function toggleSaveButton() {
-        //     // Check if formData is empty or contains any empty values
-        //     var isEmpty = Object.keys(formData).length === 0; // Check if formData is empty
-        //     var hasEmptyValue = Object.values(formData).includes(''); // Check if any value in formData is empty
-
-        //     // If formData is empty or contains any empty values, hide the button
-        //     if (isEmpty || hasEmptyValue) {
-        //         $('#save_button').hide(); // Hide button if formData is empty or contains empty values
-        //     } else {
-        //         $('#save_button').show(); // Show button if formData contains all values
-        //     }
-        // }
-        // Function to submit all the collected data at once
         function submitAllData() {
-            // Get the form element
-            var form = document.getElementById('myForm'); // Make sure the form has the correct ID
-
-            // Create a FormData object from the form element
+            var form = document.getElementById('myForm');
             var formData = new FormData($('#myForm')[0]);
 
-            // Add additional data to FormData if necessary (e.g., ncc_grade, user_id)
             var userId = $('input[name="user_id"]').val();
             var nccGrade = $('input[name="ncc_grade"]:checked').val();
-
-            // formData.append('user_id', userId); // Add user_id to FormData
-            // formData.append('ncc_grade', nccGrade); // Add ncc_grade to FormData
-
-            // Log the form data to check
             console.log('FormData:', formData);
-
-            // Send AJAX request to submit all the collected data at once
             $.ajax({
-                url: '{{ route('questionaries') }}', // Your route for form submission
+                url: '{{ route('questionaries') }}',
                 type: 'POST',
                 headers: {
-                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') // CSRF Token
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                 },
                 data: formData,
-                contentType: false, // Let the browser set the content type for FormData
-                processData: false, // Don't let jQuery process the data (FormData does it)
+                contentType: false,
+                processData: false,
                 success: function(response) {
                     if (response.status == 400) {
                         Swal.fire({
@@ -667,29 +718,21 @@
             submitRadioData('ncc_grade');
         });
 
-
-        // Attach click event for the "Save & Proceed" button to submit all data
         $('#save_button').click(function() {
             submitAllData();
         });
 
-        // On page load, hide NCC choice section if 'ncc_cert' is not selected or its value is not '1'
         if ($('input[name="ncc_cert"]:checked').val() === '1') {
             $('.choose_ncc_div').removeClass('hidden');
         } else {
             $('.choose_ncc_div').addClass('hidden');
         }
 
-        // Revert NCC choice - hide NCC section when revert button is clicked
         $('.revert_ncc_choise').click(function() {
-            // Hide the NCC choice section
             $('.choose_ncc_div').addClass('hidden');
+            $('input[name="ncc_cert"]').prop('checked', false);
+            formData['ncc_cert'] = '';
 
-            // Reset NCC selection in formData (set it to empty)
-            $('input[name="ncc_cert"]').prop('checked', false); // Uncheck the radio buttons
-            formData['ncc_cert'] = ''; // Clear the 'ncc_cert' value in formData
-
-            // Toggle the save button visibility after resetting the value
             toggleSaveButton();
         });
     });
