@@ -1,17 +1,15 @@
 @include('layouts.header')
-
 <head>
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 @include('layouts.nav-2')
-
 <div class="px-4 grow flex flex-col">
     <div class="flex gap-3">
         <div class="grow flex flex-col group">
             <div class="h-full flex flex-col items-center md:items-start">
                 <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="{{ route('questionaries') }}">
+                    href="questionaries.php">
                     <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
                             class="m-auto text-sm TimesNR">Q</span></div>
                     <span class="hidden lg:inline-block">Questionaries</span>
@@ -37,7 +35,7 @@
         <div class="grow flex flex-col group">
             <div class="h-full flex flex-col items-center md:items-start">
                 <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="#">
+                    href="profile.php">
                     <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
                             class="m-auto text-sm TimesNR"><i class="bi bi-person"></i></span></div>
                     <span class="hidden lg:inline-block">Profile</span>
@@ -50,7 +48,7 @@
         <div class="grow flex flex-col group">
             <div class="h-full flex flex-col items-center md:items-start">
                 <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="#">
+                    href="document.php">
                     <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
                             class="m-auto text-sm TimesNR"><i class="bi bi-file-earmark-pdf"></i></span></div>
                     <span class="hidden lg:inline-block">Document's</span>
@@ -63,7 +61,7 @@
         <div class="grow flex flex-col group">
             <div class="h-full flex flex-col items-center md:items-start">
                 <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="#">
+                    href="payment.php">
                     <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
                             class="m-auto text-sm TimesNR">₹</span></div>
                     <span class="hidden lg:inline-block">Payment</span>
@@ -76,7 +74,7 @@
         <div class="grow flex flex-col group">
             <div class="h-full flex flex-col items-center md:items-start">
                 <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="#">
+                    href="download.php">
                     <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
                             class="m-auto text-sm TimesNR"><i class="bi bi-download"></i></span></div>
                     <span class="hidden lg:inline-block">Download</span>
@@ -92,40 +90,70 @@
 
     <div class="p-4 grow border border-gray-300 rounded-lg space-y-8">
         <p class="m-auto text-yellow-500 text-center rounded-md text-[0.65rem] md:text-sm font-medium">Candidate are
-            requested to select the post as per their preference</p>
-        <div class="flex flex-col items-center justify-center space-y-4">
-            <!-- Section for selecting posts -->
-            <div class="lg:w-[60vw]">
-                <p class="mb-2 text-gray-600 border-b">Select post's that you want to apply for</p>
-                <div class="flex items-center gap-4">
-                    <div class="flex items-center border p-2 rounded-lg">
-                        <input id="post-1" type="checkbox" value="AB (ARMED BRANCH)"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-
-                        <label for="post-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">AB
-                            (ARMED BRANCH)
-                        </label>
+            requested to slect the post as per their preference</p>
+        <div class="flex flex-col items-center justify-center space-y-">
+            <div class="mb-8">
+                <p class="mb-2 text-gray-600">Select post's manually that you want to apply for</p>
+                <div class="mb-2 md:mb-0 lg:w-[40vw] grid grid-cols-12" id="ab-section">
+                    <div class="col-span-12 md:col-span-9 border">
+                        <div class="h-full p-2 flex justify-center md:justify-start items-center">
+                            AB (ARMED BRANCH)
+                        </div>
                     </div>
-                    <div class="flex items-center border p-2 rounded-lg">
-                        <input id="post-2" type="checkbox" value="UB (UNARMED BRANCH)"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="post-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">UB
-                            (UNARMED BRANCH)
-                        </label>
+                    <div class="col-span-12 md:col-span-3 border">
+                        <div class="h-full p-2 text-center">
+                            <button type="button"
+                                class="p-1 px-2 bg-gray-200 hover:bg-blue-600 hover:text-white text-xs w-full add-post-btn"
+                                data-section="ab">
+                                <i class="bi bi-plus-lg pr-1"></i>ADD POST
+                            </button>
+                            <button type="button" class="p-1 px-2 text-green-600 text-xs w-full pe-none" disabled>
+                                <i class="bi bi-check-all pr-1"></i>POST ADDED
+                            </button>
+                        </div>
                     </div>
-                    <div class="flex items-center border p-2 rounded-lg">
-                        <input id="post-3" type="checkbox" value="CONSTABLE"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="post-3"
-                            class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">CONSTABLE
-                        </label>
+                </div>
+                <div class="mb-2 md:mb-0 lg:w-[40vw] grid grid-cols-12" id="ub-section">
+                    <div class="col-span-12 md:col-span-9 border">
+                        <div class="h-full p-2 flex justify-center md:justify-start items-center">
+                            UB (UNARMED BRANCH)
+                        </div>
+                    </div>
+                    <div class="col-span-12 md:col-span-3 border">
+                        <div class="h-full p-2 text-center">
+                            <button type="button"
+                                class="p-1 px-2 bg-gray-200 hover:bg-blue-600 hover:text-white text-xs w-full add-post-btn"
+                                data-section="ub">
+                                <i class="bi bi-plus-lg pr-1"></i>ADD POST
+                            </button>
+                            <button type="button" class="p-1 px-2 text-green-600 text-xs w-full pe-none" disabled>
+                                <i class="bi bi-check-all pr-1"></i>POST ADDED
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2 md:mb-0 lg:w-[40vw] grid grid-cols-12" id="constable-section">
+                    <div class="col-span-12 md:col-span-9 border">
+                        <div class="h-full p-2 flex justify-center md:justify-start items-center">
+                            CONSTABLE
+                        </div>
+                    </div>
+                    <div class="col-span-12 md:col-span-3 border">
+                        <div class="h-full p-2 text-center">
+                            <button type="button"
+                                class="p-1 px-2 bg-gray-200 hover:bg-blue-600 hover:text-white text-xs w-full add-post-btn"
+                                data-section="constable">
+                                <i class="bi bi-plus-lg pr-1"></i>ADD POST
+                            </button>
+                            <button type="button" class="p-1 px-2 text-green-600 text-xs w-full pe-none" disabled>
+                                <i class="bi bi-check-all pr-1"></i>POST ADDED
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <!-- List of posts with preference order (Data Table) -->
-            <p class="text-gray-600 border-b">List of post's with preference order</p>
-            <div class="lg:w-[60vw] hidden md:grid grid-cols-12" id="post-preference-table">
+            <p class="mb-4 text-gray-600 border-b">List of post's with preference order</p>
+            <div class="lg:w-[60vw] hidden md:grid grid-cols-12">
                 <div class="col-span-2 border">
                     <div class="h-full p-2 text-sm lg:text-md text-center">
                         Preference Number
@@ -141,219 +169,121 @@
                         #
                     </div>
                 </div>
-                <!-- Dynamically render preferences from the database -->
-                @foreach ($preferences as $preference)
-                    <div class="col-span-2 border post-row">
-                        <div class="h-full p-2 text-sm lg:text-md text-center">
-                            {{ $preference->preferences }}
-                        </div>
-                    </div>
-                    <div class="col-span-7 border post-row">
-                        <div class="h-full p-2 text-sm lg:text-md">
-                            {{ $preference->post_id }} <!-- Assuming you have a relationship with Post model -->
-                        </div>
-                    </div>
-                    <div class="col-span-3 border post-row">
-                        <div class="h-full p-2 text-sm lg:text-md text-center">
-                            @if ($preference->preference == 1)
-                                <button type="button"
-                                    class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white updatePref"
-                                    disabled prefId="{{ $preference->id }}">
-                                    <i class="bi bi-chevron-up"></i>
-                                </button>
-                            @else
-                                <button type="button"
-                                    class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white updatePref"
-                                    prefId="{{ $preference->id }}" typeId="1">
-                                    <i class="bi bi-chevron-up"></i>
-                                </button>
-                            @endif
-                            @if ($preference->preference == $preferences->count())
-                                <button type="button"
-                                    class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white updatePref"
-                                    disabled prefId="{{ $preference->id }}">
-                                    <i class="bi bi-chevron-down"></i>
-                                </button>
-                            @else
-                                <button type="button"
-                                    class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white updatePref"
-                                    prefId="{{ $preference->id }}" typeId="2">
-                                    <i class="bi bi-chevron-down"></i>
-                                </button>
-                            @endif
-                            <button type="button"
-                                class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-400 text-red-500 updatePref"
-                                prefId="{{ $preference->id }}" typeId="3"> <i class="bi bi-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                @endforeach
+            </div>
+            <div class="mb-8" id="post-list">
             </div>
         </div>
     </div>
 </div>
 
 <div class="mt-auto px-4 flex items-center">
-    <a class="inline-block bg-gray-600 hover:bg-gray-700 text-white p-2 rounded-md Nunito"
-        href="{{ route('questionaries') }}"><i class="bi bi-arrow-left-short pr-1"></i>Go Back</a>
-    <a class="ml-auto inline-block bg-green-600 hover:bg-green-700 text-white p-2 rounded-md Nunito {{ !empty($preference) ? '' : 'hidden' }}"
-        href="{{ route('profile') }}"><i class="bi bi-check-all pr-1"></i>Save & proceede</a>
+    <a class="inline-block bg-gray-600 hover:bg-gray-700 text-white p-2 rounded-md Nunito" href="questionaries.php"><i
+            class="bi bi-arrow-left-short pr-1"></i>Go Back</a>
+    <a class="ml-auto inline-block bg-green-600 hover:bg-green-700 text-white p-2 rounded-md Nunito"
+        href="document.php"><i class="bi bi-check-all pr-1"></i>Save & proceede</a>
 </div>
+
 @include('layouts.footer')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 <script>
-    $(document).ready(function() {
-        // Event listener for checkbox selection
-        $('input[type="checkbox"]').change(function() {
-            updatePostPreferenceTable();
-            handlePostSelection(); // Handle data submission to the server
+   $(document).ready(function() {
+    var postCount = 1;
+
+    // Handle the "Add Post" button click event
+    $('.add-post-btn').on('click', function() {
+        // Get the post name based on the section
+        var section = $(this).data('section');
+        var postText = '';
+        var postId = ''; // Assume you have post IDs or you can map these later
+
+        if (section === 'ab') {
+            postText = 'AB (ARMED BRANCH)';
+            postId = 1; // Set the appropriate ID based on your data (e.g., from database)
+        } else if (section === 'ub') {
+            postText = 'UB (UNARMED BRANCH)';
+            postId = 2; // Set the appropriate ID
+        } else if (section === 'constable') {
+            postText = 'CONSTABLE';
+            postId = 3; // Set the appropriate ID
+        }
+
+        // Create a new post structure
+        var newPostHtml = `
+        <div class="lg:w-[60vw] grid grid-cols-12 post-list-item" data-post-id="${postId}" data-preference="${postCount}">
+            <div class="col-span-2 md:col-span-2 border">
+                <div class="h-full p-2 text-center">
+                    ${String(postCount).padStart(2, '0')}  <!-- Format the number with leading zero -->
+                </div>
+            </div>
+            <div class="col-span-10 md:col-span-7 border">
+                <div class="h-full p-2">
+                    ${postText}
+                </div>
+            </div>
+            <div class="col-span-12 md:col-span-3 border">
+                <div class="h-full p-2 text-center">
+                    <button type="button" class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white">
+                        <i class="bi bi-chevron-up"></i>
+                    </button>
+                    <button type="button" class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white">
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <button type="button" class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-400 text-red-500">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+
+        // Append the new post to the post list
+        $('#post-list').append(newPostHtml);
+
+        // Increment the post counter
+        postCount++;
+
+        // Disable the "Add Post" button and enable the "Post Added" button
+        $(this).prop('disabled', true); // Disable "Add Post"
+        $(this).next('.post-added-btn').prop('disabled', false); // Enable "Post Added"
+
+        // After adding, submit the posts to the backend
+        submitPostsToDatabase();
+    });
+
+    // Function to submit the posts to the backend
+    function submitPostsToDatabase() {
+        var postsData = [];
+
+        // Loop through each post and gather necessary data
+        $('.post-list-item').each(function() {
+            var postId = $(this).data('post-id');
+            var preference = $(this).data('preference'); // Get the preference from data attribute
+
+            postsData.push({
+                post_id: postId,
+                preference: preference
+            });
         });
 
-        function updatePostPreferenceTable() {
-            // Empty the table before updating it
-            $('#post-preference-table').find('.post-row').remove();
-
-            // Loop through each checked checkbox
-            $('input[type="checkbox"]:checked').each(function(index) {
-                const postName = $(this).val();
-                const preferenceNumber = index + 1;
-
-                // Append a new row for each selected checkbox
-                $('#post-preference-table').append(`
-                <div class="col-span-2 border post-row">
-                    <div class="h-full p-2 text-sm lg:text-md text-center">
-                        ${preferenceNumber}
-                    </div>
-                </div>
-                <div class="col-span-7 border post-row">
-                    <div class="h-full p-2 text-sm lg:text-md">
-                        ${postName}
-                    </div>
-                </div>
-                <div class="col-span-3 border post-row">
-                    <div class="h-full p-2 text-sm lg:text-md text-center">
-                        <button type="button" class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white">
-                            <i class="bi bi-chevron-up"></i>
-                        </button>
-                        <button type="button" class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white">
-                            <i class="bi bi-chevron-down"></i>
-                        </button>
-                        <button type="button" class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-400 text-red-500 remove-post-btn">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            `);
-            });
-        }
-
-        // Function to handle checkbox selection and send data to the server
-        function handlePostSelection() {
-            var selectedPosts = [];
-            $('input[type="checkbox"]:checked').each(function() {
-                selectedPosts.push($(this).val());
-            });
-
-            $.ajax({
-                url: '/preference', // Adjust with your actual server endpoint
-                method: 'POST',
-                data: {
-                    _token: $('meta[name="csrf-token"]').attr('content'),
-                    posts: selectedPosts, // Array of selected post names
-                },
-                success: function(response) {
-                    if (response.success) {
-                        console.log('Post preferences saved successfully.');
-                    } else {
-                        console.log('Error saving post preferences.');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('AJAX Error: ' + status + ' - ' + error);
-                }
-            });
-        }
-    });
-</script>
-<script>
-    $(document).on('click', '.updatePref', function(e) {
-        e.preventDefault();
-
-        var elm = $(this);
-        $('.pageloader').fadeIn();
-        var prefId = $(this).attr('prefId');
-        var type = $(this).attr('typeId');
-        var actionUrl = "/update-preference/" + prefId + "/" + type;
-        elm.attr('disabled', true);
+        // Send the data via AJAX to the backend
         $.ajax({
-            type: 'GET',
-            url: actionUrl,
-            success: function(data) {
-                $('.pageloader').fadeOut();
-                elm.attr('disabled', false);
-                swal.fire({
-                    title: 'Success!',
-                    text: 'Your preference has been updated.',
-                    icon: 'success',
-                    confirmButtonClass: 'btn btn-success'
-                });
-                window.location.reload();
+            url: '/preference', // Update with your actual URL
+            method: 'POST',
+            data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                posts: postsData // Send the posts data to the server
             },
-            error: function(data) {
-                $(".pageloader").fadeOut();
-                elm.attr('disabled', false);
-                var msg = ajaxErrorMsg(data);
-                swal.fire({
-                    "title": 'Sorry!',
-                    "html": msg,
-                    "type": "error",
-                    "confirmButtonClass": "btn btn-danger"
-                });
-
+            success: function(response) {
+                if (response.success) {
+                    console.log('Posts saved successfully.');
+                } else {
+                    console.log('Error saving posts.');
+                }
             },
-        });
-    });
-</script>
-<script>
-    $(document).ready(function() {
-        // On page load, check localStorage to disable checkboxes if needed
-        ['post-1', 'post-2', 'post-3'].forEach(function(id) {
-            if (localStorage.getItem(id) === 'checked') {
-                $("#" + id).prop('disabled', true);
-                $("#" + id).prop('checked', true);
-                $("#" + id).next('label').css('color', 'gray').css('pointer-events', 'none');
-            } else {
-                $("#" + id).prop('disabled', false);
-                $("#" + id).prop('checked', false);
-                $("#" + id).next('label').css('color', '').css('pointer-events', 'auto');
+            error: function(xhr, status, error) {
+                console.error('AJAX Error: ' + status + ' - ' + error);
             }
         });
+    }
+});
 
-        // When a checkbox is clicked, toggle its state and save/remove from localStorage
-        $('input[type="checkbox"]').on('change', function() {
-            var checkbox = $(this);
-            var id = checkbox.attr('id');
-            console.log('Checkbox ID:', id);
-            console.log('Checkbox checked:', checkbox.prop('checked'));
-
-            if (checkbox.prop('checked')) {
-                // Save the state in localStorage
-                localStorage.setItem(id, 'checked');
-                console.log('Saved in localStorage:', id);
-
-                // Disable the checkbox and style it
-                checkbox.prop('disabled', true);
-                checkbox.next('label').css('color', 'gray').css('pointer-events', 'none');
-            } else {
-                // Remove the state from localStorage when unchecked
-                localStorage.removeItem(id);
-                console.log('Removed from localStorage:', id);
-
-                // Enable the checkbox and reset the label styling
-                checkbox.prop('disabled', false);
-                checkbox.next('label').css('color', '').css('pointer-events', 'auto');
-            }
-        });
-    });
 </script>

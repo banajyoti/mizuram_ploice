@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Models\Preference;
 use App\Models\Questionary;
 use App\Models\User;
@@ -95,31 +96,83 @@ class QuestionariesController extends Controller
     }
 
 
+    // public function preference(Request $request)
+    // {
+    //     if ($request->isMethod('GET')) {
+    //         $preferences = Preference::where('user_id', Auth::user()->id)->get();
+    //         $questionaries = Questionary::where('user_id', Auth::user()->id)->first();
+    //         $check = Preference::select('post_id')->where('user_id', Auth::user()->id)->get();
+    //         return view('pages.preference', compact('questionaries', 'preferences', 'check'));
+    //     } else {
+    //         $posts = $request->input('posts');
+    //         $userId = Auth::user()->id;
+    //         foreach ($posts as $index => $postId) {
+    //             $preference = Preference::where('user_id', $userId)
+    //                 ->where('post_id', $postId)
+    //                 ->first();
+
+    //             $count_pref = Preference::where('user_id', $userId)->count();
+    //             if ($preference) {
+    //                 $preference->update([
+    //                     'preferences' => $index + 1,
+    //                 ]);
+
+    //             } else {
+    //                 Preference::create([
+    //                     'user_id' => $userId,
+    //                     'post_id' => $postId,
+    //                     'preferences' => $index + 1,
+    //                 ]);
+    //             }
+    //         }
+
+    //         $posts = [
+    //             "AB (ARMED BRANCH)",
+    //             "UB (UNARMED BRANCH)",
+    //             "CONSTABLE"
+    //         ];
+
+    //         return response()->json([
+    //             'success' => true,
+    //             'posts' => $posts // Return the posts array as it was sent
+    //         ]);
+    //     }
+    // }
+
+
     public function preference(Request $request)
     {
         if ($request->isMethod('GET')) {
+            // $questionaries = Questionary::where('user_id', Auth::user()->id)->first();
             $preferences = Preference::where('user_id', Auth::user()->id)->get();
-            $questionaries = Questionary::where('user_id', Auth::user()->id)->first();
-            return view('pages.preference', compact('questionaries', 'preferences'));
+
+            // // Extract an array of post_ids from preferences
+            // $post_ids = $preferences->pluck('post_id')->toArray();
+
+            // // Get posts that are not in the selected post_ids
+            // $posts = Post::whereNotIn('id', $post_ids)->get(['id', 'post']);
+            return view('pages.preference', compact( 'preferences'));
         } else {
-            $posts = $request->input('posts');
             $userId = Auth::user()->id;
-            foreach ($posts as $index => $postId) {
-                $preference = Preference::where('user_id', $userId)
-                    ->where('post_id', $postId)
+            $postsData = $request->input('posts');
+
+            foreach ($postsData as $postData) {
+                // Check if the preference already exists
+                $existingPreference = Preference::where('user_id', $userId)
+                    ->where('post_id', $postData['post_id'])
                     ->first();
 
-                $count_pref = Preference::where('user_id', $userId)->count();
-                if ($preference) {
-                    $preference->update([
-                        'preferences' => $index + 1,
+                if ($existingPreference) {
+                    // Update the existing record
+                    $existingPreference->update([
+                        'preferences' => $postData['preference'] // Or other values as necessary
                     ]);
-
                 } else {
+                    // Create a new preference record
                     Preference::create([
                         'user_id' => $userId,
-                        'post_id' => $postId,
-                        'preferences' => $count_pref + 1,
+                        'post_id' => $postData['post_id'],
+                        'preferences' => $postData['preference'] // Adjust accordingly
                     ]);
                 }
             }
@@ -127,6 +180,7 @@ class QuestionariesController extends Controller
             return response()->json(['success' => true]);
         }
     }
+
 
     public function preferenceUpdate($prefId, $type)
     {
@@ -154,7 +208,7 @@ class QuestionariesController extends Controller
 
             if ($type == 2) {
                 $p1 = Preference::where('user_id', $student->id)->where('id', $prefId)->first();
-                $p2 = Preference::where('user_id', $student->id)->where('preferences', $p1->preferences + 1)->first();
+                $p2 = Preference::where('user_id', $student->id)->where('preference', $p1->preferences + 1)->first();
                 if (Preference::where('user_id', $student->id)->count() < $p1->preferences + 1) {
                     DB::rollBack();
                     $errors['status'] = 'Error';
@@ -177,6 +231,7 @@ class QuestionariesController extends Controller
                     }
                 }
             }
+
             if ($type == 1) {
                 $p1 = Preference::where('user_id', $student->id)->where('id', $prefId)->first();
                 $p2 = Preference::where('user_id', $student->id)->where('preferences', $p1->preferences - 1)->first();
@@ -218,7 +273,9 @@ class QuestionariesController extends Controller
     public function profile(Request $request)
     {
         if ($request->isMethod('GET')) {
-            return view('pages.profile');
+            $userId = Auth::user()->id;
+            $registerDetails = User::where('id', Auth::user()->id)->first();
+            return view('pages.profile', compact('registerDetails'));
         } else {
 
         }

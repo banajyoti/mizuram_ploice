@@ -136,12 +136,12 @@
                             <select id="sal" name="salutation"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
                                 <option selected>select</option>
-                                <option value="00">Sri</option>
-                                <option value="01">Smt.</option>
-                                <option value="02">Mr.</option>
-                                <option value="03">Mrs.</option>
-                                <option value="04">Ms.</option>
-                                <option value="05">Md.</option>
+                                <option value="Sri">Sri</option>
+                                <option value="Sri">Sri.</option>
+                                <option value="Mr">Mr.</option>
+                                <option value="Mrs">Mrs.</option>
+                                <option value="Ms">Ms.</option>
+                                <option value="Md">Md.</option>
                             </select>
                         </div>
                     </div>
