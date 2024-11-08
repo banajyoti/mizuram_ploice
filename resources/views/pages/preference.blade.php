@@ -1,4 +1,5 @@
 @include('layouts.header')
+
 <head>
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -170,8 +171,44 @@
                     </div>
                 </div>
             </div>
-            <div class="mb-8" id="post-list">
-            </div>
+            @foreach ($preferences as $preference)
+                <div class="mb-8" id="post-list">
+                    <div class="lg:w-[60vw] grid grid-cols-12">
+                        <div class="col-span-2 md:col-span-2 border">
+                            <div class="h-full p-2 text-center">
+                                {{ $preference->preferences }}
+                            </div>
+                        </div>
+                        <div class="col-span-10 md:col-span-7 border">
+                            <div class="h-full p-2">
+                                @if ($preference->post_id == 1)
+                                    AB (ARMED BRANCH)
+                                @elseif ($preference->post_id == 2)
+                                    UB (UNARMED BRANCH)
+                                @else
+                                    CONSTABLE
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-span-12 md:col-span-3 border">
+                            <div class="h-full p-2 text-center">
+                                <button type="button"
+                                    class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white">
+                                    <i class="bi bi-chevron-up"></i>
+                                </button>
+                                <button type="button"
+                                    class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white">
+                                    <i class="bi bi-chevron-down"></i>
+                                </button>
+                                <button type="button"
+                                    class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-400 text-red-500">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
 </div>
@@ -185,29 +222,29 @@
 
 @include('layouts.footer')
 <script>
-   $(document).ready(function() {
-    var postCount = 1;
+    $(document).ready(function() {
+        var postCount = 1;
 
-    // Handle the "Add Post" button click event
-    $('.add-post-btn').on('click', function() {
-        // Get the post name based on the section
-        var section = $(this).data('section');
-        var postText = '';
-        var postId = ''; // Assume you have post IDs or you can map these later
+        // Handle the "Add Post" button click event
+        $('.add-post-btn').on('click', function() {
+            // Get the post name based on the section
+            var section = $(this).data('section');
+            var postText = '';
+            var postId = ''; // Assume you have post IDs or you can map these later
 
-        if (section === 'ab') {
-            postText = 'AB (ARMED BRANCH)';
-            postId = 1; // Set the appropriate ID based on your data (e.g., from database)
-        } else if (section === 'ub') {
-            postText = 'UB (UNARMED BRANCH)';
-            postId = 2; // Set the appropriate ID
-        } else if (section === 'constable') {
-            postText = 'CONSTABLE';
-            postId = 3; // Set the appropriate ID
-        }
+            if (section === 'ab') {
+                postText = 'AB (ARMED BRANCH)';
+                postId = 1; // Set the appropriate ID based on your data (e.g., from database)
+            } else if (section === 'ub') {
+                postText = 'UB (UNARMED BRANCH)';
+                postId = 2; // Set the appropriate ID
+            } else if (section === 'constable') {
+                postText = 'CONSTABLE';
+                postId = 3; // Set the appropriate ID
+            }
 
-        // Create a new post structure
-        var newPostHtml = `
+            // Create a new post structure
+            var newPostHtml = `
         <div class="lg:w-[60vw] grid grid-cols-12 post-list-item" data-post-id="${postId}" data-preference="${postCount}">
             <div class="col-span-2 md:col-span-2 border">
                 <div class="h-full p-2 text-center">
@@ -235,55 +272,54 @@
         </div>
     `;
 
-        // Append the new post to the post list
-        $('#post-list').append(newPostHtml);
+            // Append the new post to the post list
+            $('#post-list').append(newPostHtml);
 
-        // Increment the post counter
-        postCount++;
+            // Increment the post counter
+            postCount++;
 
-        // Disable the "Add Post" button and enable the "Post Added" button
-        $(this).prop('disabled', true); // Disable "Add Post"
-        $(this).next('.post-added-btn').prop('disabled', false); // Enable "Post Added"
+            // Disable the "Add Post" button and enable the "Post Added" button
+            $(this).prop('disabled', true); // Disable "Add Post"
+            $(this).next('.post-added-btn').prop('disabled', false); // Enable "Post Added"
 
-        // After adding, submit the posts to the backend
-        submitPostsToDatabase();
-    });
+            // After adding, submit the posts to the backend
+            submitPostsToDatabase();
+        });
 
-    // Function to submit the posts to the backend
-    function submitPostsToDatabase() {
-        var postsData = [];
+        // Function to submit the posts to the backend
+        function submitPostsToDatabase() {
+            var postsData = [];
 
-        // Loop through each post and gather necessary data
-        $('.post-list-item').each(function() {
-            var postId = $(this).data('post-id');
-            var preference = $(this).data('preference'); // Get the preference from data attribute
+            // Loop through each post and gather necessary data
+            $('.post-list-item').each(function() {
+                var postId = $(this).data('post-id');
+                var preference = $(this).data('preference'); // Get the preference from data attribute
 
-            postsData.push({
-                post_id: postId,
-                preference: preference
+                postsData.push({
+                    post_id: postId,
+                    preference: preference
+                });
             });
-        });
 
-        // Send the data via AJAX to the backend
-        $.ajax({
-            url: '/preference', // Update with your actual URL
-            method: 'POST',
-            data: {
-                _token: $('meta[name="csrf-token"]').attr('content'),
-                posts: postsData // Send the posts data to the server
-            },
-            success: function(response) {
-                if (response.success) {
-                    console.log('Posts saved successfully.');
-                } else {
-                    console.log('Error saving posts.');
+            // Send the data via AJAX to the backend
+            $.ajax({
+                url: '/preference', // Update with your actual URL
+                method: 'POST',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    posts: postsData // Send the posts data to the server
+                },
+                success: function(response) {
+                    if (response.success) {
+                        console.log('Posts saved successfully.');
+                    } else {
+                        console.log('Error saving posts.');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error: ' + status + ' - ' + error);
                 }
-            },
-            error: function(xhr, status, error) {
-                console.error('AJAX Error: ' + status + ' - ' + error);
-            }
-        });
-    }
-});
-
+            });
+        }
+    });
 </script>
