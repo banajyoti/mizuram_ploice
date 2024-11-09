@@ -299,7 +299,7 @@
                                 @foreach ($states as $state)
                                     <option value="{{ $state->id }}"
                                         {{ old('permanent_address.state_id', $userProfiles->p_state_id ?? '') == $state->id ? 'selected' : '' }}>
-                                        {{ $state->name }}
+                                        {{ $userProfiles->s1 }}
                                     </option>
                                 @endforeach
 
@@ -426,9 +426,11 @@
                             <select id="c_state_id" name="correspondence_address[state_id]"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 required>
-                                <option value="" selected disabled>Select</option>
                                 @foreach ($states as $state)
-                                    <option value="{{ $state->id }}">{{ $state->name }}</option>
+                                    <option value="{{ $state->id }}"
+                                        {{ old('correspondence_address.state_id', $userProfiles->c_state_id ?? '') == $state->id ? 'selected' : '' }}>
+                                        {{ $userProfiles->s2 }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
