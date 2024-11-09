@@ -9,6 +9,7 @@ use App\Models\User;
 use Auth;
 use Exception;
 use Illuminate\Http\Request;
+use Log;
 use Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -143,44 +144,51 @@ class QuestionariesController extends Controller
     public function preference(Request $request)
     {
         if ($request->isMethod('GET')) {
-            // $questionaries = Questionary::where('user_id', Auth::user()->id)->first();
             $preferences = Preference::where('user_id', Auth::user()->id)->get();
-
-            // // Extract an array of post_ids from preferences
+            $check = Preference::where('user_id', Auth::user()->id)->first();
+            $postStatuses = [
+                'ab' => $preferences->where('post_id', 1)->count() > 0, // Check if AB post exists
+                'ub' => $preferences->where('post_id', 2)->count() > 0, // Check if UB post exists
+                'constable' => $preferences->where('post_id', 3)->count() > 0, // Check if Constable post exists
+            ];
+            // Extract an array of post_ids from preferences
             // $post_ids = $preferences->pluck('post_id')->toArray();
 
-            // // Get posts that are not in the selected post_ids
+            // Get posts that are not in the selected post_ids
             // $posts = Post::whereNotIn('id', $post_ids)->get(['id', 'post']);
-            return view('pages.preference', compact( 'preferences'));
+            return view('pages.preference', compact('preferences', 'postStatuses', 'check'));
         } else {
+            $postData = $request->all();
             $userId = Auth::user()->id;
-            $postsData = $request->input('posts');
+            $postId = $postData['post_id'];
+            $preference = $postData['preference'];
 
-            foreach ($postsData as $postData) {
-                // Check if the preference already exists
-                $existingPreference = Preference::where('user_id', $userId)
-                    ->where('post_id', $postData['post_id'])
-                    ->first();
+            $existingPreference = Preference::where('user_id', $userId)
+                ->where('post_id', $postId)
+                ->first();
 
-                if ($existingPreference) {
-                    // Update the existing record
-                    $existingPreference->update([
-                        'preferences' => $postData['preference'] // Or other values as necessary
-                    ]);
-                } else {
-                    // Create a new preference record
-                    Preference::create([
-                        'user_id' => $userId,
-                        'post_id' => $postData['post_id'],
-                        'preferences' => $postData['preference'] // Adjust accordingly
-                    ]);
-                }
+            if ($existingPreference) {
+                $existingPreference->update([
+                    'preferences' => $preference
+                ]);
+            } else {
+                $lastPreference = Preference::where('user_id', $userId)
+                    ->max('preferences');
+
+                $newPreferenceNumber = $lastPreference + 1;
+                Preference::create([
+                    'user_id' => $userId,
+                    'post_id' => $postId,
+                    'preferences' => $newPreferenceNumber
+                ]);
             }
-
-            return response()->json(['success' => true]);
+            $preferences = Preference::where('user_id', Auth::user()->id)->get();
+            return response()->json([
+                'success' => true,
+                'preferences' => $preferences
+            ]);
         }
     }
-
 
     public function preferenceUpdate($prefId, $type)
     {
@@ -267,17 +275,6 @@ class QuestionariesController extends Controller
             //$e->getMessage();
             "Failed to save User Data";
             return response()->json($errors, 403);
-        }
-    }
-
-    public function profile(Request $request)
-    {
-        if ($request->isMethod('GET')) {
-            $userId = Auth::user()->id;
-            $registerDetails = User::where('id', Auth::user()->id)->first();
-            return view('pages.profile', compact('registerDetails'));
-        } else {
-
         }
     }
 }

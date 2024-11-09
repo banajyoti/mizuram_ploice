@@ -200,12 +200,12 @@
                             <select id="high_qual" name="high_qual"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
                                 <option selected>select</option>
-                                <option value="00">HSLC</option>
-                                <option value="01">HS</option>
-                                <option value="02">Diploma</option>
-                                <option value="03">Graduation</option>
-                                <option value="04">Post Graduation</option>
-                                <option value="05">Phd.</option>
+                                <option value="1">HSLC</option>
+                                <option value="2">HS</option>
+                                <option value="3">Diploma</option>
+                                <option value="4">Graduation</option>
+                                <option value="5">Post Graduation</option>
+                                <option value="6">Phd.</option>
                             </select>
                         </div>
                     </div>
@@ -217,9 +217,9 @@
                             <select id="gender" name="gender_id"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
                                 <option selected>select</option>
-                                <option value="00">Male</option>
-                                <option value="01">Female</option>
-                                <option value="02">Others</option>
+                                <option value="1">Male</option>
+                                <option value="2">Female</option>
+                                <option value="3">Others</option>
                             </select>
                         </div>
                     </div>
@@ -325,8 +325,8 @@
                             <select id="ex_ser"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
                                 <option selected>select</option>
-                                <option value="00">YES</option>
-                                <option value="01">NO</option>
+                                <option value="1">YES</option>
+                                <option value="2">NO</option>
                             </select>
                         </div>
                     </div>
@@ -338,8 +338,8 @@
                             <select id="X_inMizo"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
                                 <option selected>select</option>
-                                <option value="00">YES</option>
-                                <option value="01">NO</option>
+                                <option value="1">YES</option>
+                                <option value="2">NO</option>
                             </select>
                         </div>
                     </div>

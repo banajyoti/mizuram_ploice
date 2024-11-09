@@ -95,6 +95,7 @@
         <div class="flex flex-col items-center justify-center space-y-">
             <div class="mb-8">
                 <p class="mb-2 text-gray-600">Select post's manually that you want to apply for</p>
+                <!-- AB (ARMED BRANCH) Section -->
                 <div class="mb-2 md:mb-0 lg:w-[40vw] grid grid-cols-12" id="ab-section">
                     <div class="col-span-12 md:col-span-9 border">
                         <div class="h-full p-2 flex justify-center md:justify-start items-center">
@@ -105,15 +106,18 @@
                         <div class="h-full p-2 text-center">
                             <button type="button"
                                 class="p-1 px-2 bg-gray-200 hover:bg-blue-600 hover:text-white text-xs w-full add-post-btn"
-                                data-section="ab">
+                                data-section="ab" @if ($postStatuses['ab']) style="display: none;" @endif>
                                 <i class="bi bi-plus-lg pr-1"></i>ADD POST
                             </button>
-                            <button type="button" class="p-1 px-2 text-green-600 text-xs w-full pe-none" disabled>
+                            <button type="button" class="p-1 px-2 text-green-600 text-xs w-full pe-none post-added-btn"
+                                @if (!$postStatuses['ab']) style="display: none;" @endif>
                                 <i class="bi bi-check-all pr-1"></i>POST ADDED
                             </button>
                         </div>
                     </div>
                 </div>
+
+                <!-- UB (UNARMED BRANCH) Section -->
                 <div class="mb-2 md:mb-0 lg:w-[40vw] grid grid-cols-12" id="ub-section">
                     <div class="col-span-12 md:col-span-9 border">
                         <div class="h-full p-2 flex justify-center md:justify-start items-center">
@@ -124,15 +128,18 @@
                         <div class="h-full p-2 text-center">
                             <button type="button"
                                 class="p-1 px-2 bg-gray-200 hover:bg-blue-600 hover:text-white text-xs w-full add-post-btn"
-                                data-section="ub">
+                                data-section="ub" @if ($postStatuses['ub']) style="display: none;" @endif>
                                 <i class="bi bi-plus-lg pr-1"></i>ADD POST
                             </button>
-                            <button type="button" class="p-1 px-2 text-green-600 text-xs w-full pe-none" disabled>
+                            <button type="button" class="p-1 px-2 text-green-600 text-xs w-full pe-none post-added-btn"
+                                @if (!$postStatuses['ub']) style="display: none;" @endif>
                                 <i class="bi bi-check-all pr-1"></i>POST ADDED
                             </button>
                         </div>
                     </div>
                 </div>
+
+                <!-- CONSTABLE Section -->
                 <div class="mb-2 md:mb-0 lg:w-[40vw] grid grid-cols-12" id="constable-section">
                     <div class="col-span-12 md:col-span-9 border">
                         <div class="h-full p-2 flex justify-center md:justify-start items-center">
@@ -143,15 +150,19 @@
                         <div class="h-full p-2 text-center">
                             <button type="button"
                                 class="p-1 px-2 bg-gray-200 hover:bg-blue-600 hover:text-white text-xs w-full add-post-btn"
-                                data-section="constable">
+                                data-section="constable"
+                                @if ($postStatuses['constable']) style="display: none;" @endif>
                                 <i class="bi bi-plus-lg pr-1"></i>ADD POST
                             </button>
-                            <button type="button" class="p-1 px-2 text-green-600 text-xs w-full pe-none" disabled>
+                            <button type="button"
+                                class="p-1 px-2 text-green-600 text-xs w-full pe-none post-added-btn"
+                                @if (!$postStatuses['constable']) style="display: none;" @endif>
                                 <i class="bi bi-check-all pr-1"></i>POST ADDED
                             </button>
                         </div>
                     </div>
                 </div>
+
             </div>
             <p class="mb-4 text-gray-600 border-b">List of post's with preference order</p>
             <div class="lg:w-[60vw] hidden md:grid grid-cols-12">
@@ -171,44 +182,64 @@
                     </div>
                 </div>
             </div>
-            @foreach ($preferences as $preference)
-                <div class="mb-8" id="post-list">
-                    <div class="lg:w-[60vw] grid grid-cols-12">
-                        <div class="col-span-2 md:col-span-2 border">
-                            <div class="h-full p-2 text-center">
-                                {{ $preference->preferences }}
+            <div id="post-list-container">
+                @foreach ($preferences as $preference)
+                    <div class="mb-8 post-list-item" data-post-id="{{ $preference->post_id }}">
+                        <div class="lg:w-[60vw] grid grid-cols-12">
+                            <div class="col-span-2 md:col-span-2 border">
+                                <div class="h-full p-2 text-center">
+                                    {{ $preference->preferences }}
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-span-10 md:col-span-7 border">
-                            <div class="h-full p-2">
-                                @if ($preference->post_id == 1)
-                                    AB (ARMED BRANCH)
-                                @elseif ($preference->post_id == 2)
-                                    UB (UNARMED BRANCH)
-                                @else
-                                    CONSTABLE
-                                @endif
+                            <div class="col-span-10 md:col-span-7 border">
+                                <div class="h-full p-2">
+                                    @if ($preference->post_id == 1)
+                                        AB (ARMED BRANCH)
+                                    @elseif ($preference->post_id == 2)
+                                        UB (UNARMED BRANCH)
+                                    @else
+                                        CONSTABLE
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-span-12 md:col-span-3 border">
-                            <div class="h-full p-2 text-center">
-                                <button type="button"
-                                    class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white">
-                                    <i class="bi bi-chevron-up"></i>
-                                </button>
-                                <button type="button"
-                                    class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white">
-                                    <i class="bi bi-chevron-down"></i>
-                                </button>
-                                <button type="button"
-                                    class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-400 text-red-500">
-                                    <i class="bi bi-trash"></i>
-                                </button>
+                            <div class="col-span-12 md:col-span-3 border">
+                                <div class="h-full p-2 text-center">
+                                    @if ($preference->preference == 1)
+                                        <button type="button"
+                                            class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white updatePref"
+                                            disabled prefId="{{ $preference->id }}">
+                                            <i class="bi bi-chevron-up"></i>
+                                        </button>
+                                    @else
+                                        <button type="button"
+                                            class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white updatePref"
+                                            prefId="{{ $preference->id }}" typeId="1">
+                                            <i class="bi bi-chevron-up"></i>
+                                        </button>
+                                    @endif
+                                    @if ($preference->preference == $preferences->count())
+                                        <button type="button"
+                                            class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white updatePref"
+                                            disabled prefId="{{ $preference->id }}">
+                                            <i class="bi bi-chevron-down"></i>
+                                        </button>
+                                    @else
+                                        <button type="button"
+                                            class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white updatePref"
+                                            prefId="{{ $preference->id }}" typeId="2">
+                                            <i class="bi bi-chevron-down"></i>
+                                        </button>
+                                    @endif
+                                    <button type="button"
+                                        class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-400 text-red-500 updatePref"
+                                        prefId="{{ $preference->id }}" typeId="3"> <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
         </div>
     </div>
 </div>
@@ -216,110 +247,211 @@
 <div class="mt-auto px-4 flex items-center">
     <a class="inline-block bg-gray-600 hover:bg-gray-700 text-white p-2 rounded-md Nunito" href="questionaries.php"><i
             class="bi bi-arrow-left-short pr-1"></i>Go Back</a>
-    <a class="ml-auto inline-block bg-green-600 hover:bg-green-700 text-white p-2 rounded-md Nunito"
-        href="document.php"><i class="bi bi-check-all pr-1"></i>Save & proceede</a>
+    <a class="ml-auto inline-block bg-green-600 hover:bg-green-700 text-white p-2 rounded-md Nunito {{ !empty($check) ? '' : 'hidden' }}"
+        href="{{ route('profile') }}"><i class="bi bi-check-all pr-1"></i>Save & proceede</a>
 </div>
 
 @include('layouts.footer')
 <script>
     $(document).ready(function() {
-        var postCount = 1;
+        var preferenceCount = 1; // Initial preference count for each post
 
         // Handle the "Add Post" button click event
         $('.add-post-btn').on('click', function() {
-            // Get the post name based on the section
             var section = $(this).data('section');
             var postText = '';
-            var postId = ''; // Assume you have post IDs or you can map these later
+            var postId = '';
 
+            // Set the post details based on the section clicked
             if (section === 'ab') {
                 postText = 'AB (ARMED BRANCH)';
-                postId = 1; // Set the appropriate ID based on your data (e.g., from database)
+                postId = 1;
             } else if (section === 'ub') {
                 postText = 'UB (UNARMED BRANCH)';
-                postId = 2; // Set the appropriate ID
+                postId = 2;
             } else if (section === 'constable') {
                 postText = 'CONSTABLE';
-                postId = 3; // Set the appropriate ID
+                postId = 3;
             }
 
-            // Create a new post structure
+            // Create the HTML for the new post
             var newPostHtml = `
-        <div class="lg:w-[60vw] grid grid-cols-12 post-list-item" data-post-id="${postId}" data-preference="${postCount}">
-            <div class="col-span-2 md:col-span-2 border">
-                <div class="h-full p-2 text-center">
-                    ${String(postCount).padStart(2, '0')}  <!-- Format the number with leading zero -->
+            <div class="mb-8 post-list-item" data-post-id="${postId}">
+                <div class="lg:w-[60vw] grid grid-cols-12">
+                    <div class="col-span-2 md:col-span-2 border">
+                        <div class="h-full p-2 text-center">
+                            ${preferenceCount} <!-- Displaying the preferenceCount -->
+                        </div>
+                    </div>
+                    <div class="col-span-10 md:col-span-7 border">
+                        <div class="h-full p-2">
+                            ${postText}  <!-- Displaying the postText -->
+                        </div>
+                    </div>
+                    <div class="col-span-12 md:col-span-3 border">
+                        <div class="h-full p-2 text-center">
+                            <button type="button" class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white updatePref">
+                                <i class="bi bi-chevron-up"></i>
+                            </button>
+                            <button type="button" class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white updatePref">
+                                <i class="bi bi-chevron-down"></i>
+                            </button>
+                            <button type="button" class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-400 text-red-500 updatePref">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-span-10 md:col-span-7 border">
-                <div class="h-full p-2">
-                    ${postText}
-                </div>
-            </div>
-            <div class="col-span-12 md:col-span-3 border">
-                <div class="h-full p-2 text-center">
-                    <button type="button" class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white">
-                        <i class="bi bi-chevron-up"></i>
-                    </button>
-                    <button type="button" class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white">
-                        <i class="bi bi-chevron-down"></i>
-                    </button>
-                    <button type="button" class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-400 text-red-500">
-                        <i class="bi bi-trash"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    `;
+        `;
 
-            // Append the new post to the post list
-            $('#post-list').append(newPostHtml);
+            // Append the new post to the post list container
+            $('#post-list-container').append(newPostHtml);
 
-            // Increment the post counter
-            postCount++;
+            // Increment the preference count
+            preferenceCount++;
 
-            // Disable the "Add Post" button and enable the "Post Added" button
-            $(this).prop('disabled', true); // Disable "Add Post"
-            $(this).next('.post-added-btn').prop('disabled', false); // Enable "Post Added"
+            // Submit the post to the backend for saving
+            submitPostToDatabase(postId, preferenceCount -
+                1); // Subtract 1 to use current count before increment
 
-            // After adding, submit the posts to the backend
-            submitPostsToDatabase();
+            // After adding the post, hide the "Add Post" button and show the "Post Added" button
+            $(this).hide(); // Hide the "Add Post" button
+            $(this).closest('.col-span-12').find('.post-added-btn')
+                .show(); // Show the "Post Added" button
         });
 
-        // Function to submit the posts to the backend
-        function submitPostsToDatabase() {
-            var postsData = [];
-
-            // Loop through each post and gather necessary data
-            $('.post-list-item').each(function() {
-                var postId = $(this).data('post-id');
-                var preference = $(this).data('preference'); // Get the preference from data attribute
-
-                postsData.push({
-                    post_id: postId,
-                    preference: preference
-                });
-            });
+        // Function to submit each post to the backend
+        function submitPostToDatabase(postId, preference) {
+            var postData = {
+                _token: $('meta[name="csrf-token"]').attr('content'), // CSRF token
+                post_id: postId, // The ID of the post
+                preference: preference // The preference number
+            };
 
             // Send the data via AJAX to the backend
             $.ajax({
-                url: '/preference', // Update with your actual URL
+                url: '/preference', // Your backend route
                 method: 'POST',
-                data: {
-                    _token: $('meta[name="csrf-token"]').attr('content'),
-                    posts: postsData // Send the posts data to the server
-                },
+                contentType: 'application/json', // Set content type to JSON
+                dataType: 'json', // Expect JSON response
+                data: JSON.stringify(postData), // Send the data as JSON
                 success: function(response) {
-                    if (response.success) {
-                        console.log('Posts saved successfully.');
-                    } else {
-                        console.log('Error saving posts.');
+                    console.log('Post saved successfully', response);
+
+                    // Now, update the list of preferences with the new data returned from the backend
+                    if (response.preferences) {
+                        updatePreferencesList(response.preferences);
                     }
                 },
                 error: function(xhr, status, error) {
-                    console.error('AJAX Error: ' + status + ' - ' + error);
+                    console.error('AJAX Error:', status, error);
+                    console.log(xhr.responseText); // Log response text for more details
                 }
             });
         }
+
+        // Function to update the preferences list after adding or updating a post
+        function updatePreferencesList(preferences) {
+            // Clear the current list of preferences
+            $('#post-list-container').empty();
+
+            // Loop through the updated preferences and append them to the list
+            preferences.forEach(function(preference) {
+                var postText = '';
+                if (preference.post_id == 1) postText = 'AB (ARMED BRANCH)';
+                else if (preference.post_id == 2) postText = 'UB (UNARMED BRANCH)';
+                else postText = 'CONSTABLE';
+
+                // Append the preference to the list
+                $('#post-list-container').append(`
+                <div class="mb-8 post-list-item" data-post-id="${preference.post_id}">
+                    <div class="lg:w-[60vw] grid grid-cols-12">
+                        <div class="col-span-2 md:col-span-2 border">
+                            <div class="h-full p-2 text-center">
+                                ${preference.preferences} <!-- Displaying the preference -->
+                            </div>
+                        </div>
+                        <div class="col-span-10 md:col-span-7 border">
+                            <div class="h-full p-2">
+                                ${postText}
+                            </div>
+                        </div>
+                        <div class="col-span-12 md:col-span-3 border">
+                            <div class="h-full p-2 text-center">
+                                <button type="button" class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white updatePref">
+                                    <i class="bi bi-chevron-up"></i>
+                                </button>
+                                <button type="button" class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-600 hover:text-white updatePref">
+                                    <i class="bi bi-chevron-down"></i>
+                                </button>
+                                <button type="button" class="p-1 px-2 rounded bg-gray-200 hover:bg-gray-400 text-red-500 updatePref">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `);
+            });
+        }
+
+        // Handle showing/hiding buttons based on if there are existing posts
+        function togglePostButtons(sectionId) {
+            var section = $(`#${sectionId}`);
+            var addPostBtn = section.find('.add-post-btn');
+            var postAddedBtn = section.find('.post-added-btn');
+
+            // If the section has posts, hide "Add Post" button and show "Post Added" button
+            if (section.find('.post-list-item').length > 0) {
+                addPostBtn.hide(); // Hide the "Add Post" button
+                postAddedBtn.show(); // Show the "Post Added" button
+            } else {
+                addPostBtn.show(); // Show the "Add Post" button
+                postAddedBtn.hide(); // Hide the "Post Added" button
+            }
+        }
+    });
+</script>
+
+<script>
+    $(document).on('click', '.updatePref', function(e) {
+        e.preventDefault();
+
+        var elm = $(this);
+        $('.pageloader').fadeIn();
+        var prefId = $(this).attr('prefId');
+        var type = $(this).attr('typeId');
+        var actionUrl = "/update-preference/" + prefId + "/" + type;
+        elm.attr('disabled', true);
+        $.ajax({
+            type: 'GET',
+            url: actionUrl,
+            success: function(data) {
+                $('.pageloader').fadeOut();
+                //elm.attr('disabled', false);
+                window.location.reload();
+                //  elm.attr('disabled', false);
+                // swal.fire({
+                //     title: 'Success!',
+                //     text: 'Your preference has been updated.',
+                //     icon: 'success',
+                //     confirmButtonClass: 'btn btn-success'
+                // });
+                //  window.location.reload();
+            },
+            error: function(data) {
+                $(".pageloader").fadeOut();
+                elm.attr('disabled', false);
+                var msg = ajaxErrorMsg(data);
+                swal.fire({
+                    "title": 'Sorry!',
+                    "html": msg,
+                    "type": "error",
+                    "confirmButtonClass": "btn btn-danger"
+                });
+
+            },
+        });
     });
 </script>

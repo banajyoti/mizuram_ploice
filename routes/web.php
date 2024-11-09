@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use App\Models\QuestionariesController;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::match(['get', 'post'],'/questionaries', [\App\Http\Controllers\QuestionariesController::class, 'questionaries'])->name('questionaries');
     Route::match(['get', 'post'], '/preference', [\App\Http\Controllers\QuestionariesController::class, 'preference'])->name('preference');
-    Route::match(['get', 'post'], '/profile', [\App\Http\Controllers\QuestionariesController::class, 'profile'])->name('profile');
+    Route::match(['get', 'post'], '/profile', [ProfileController::class, 'profile'])->name('profile');
+    Route::get('/get-district', [ProfileController::class, 'getDistrict'])->name('getDistrict');
     Route::get('/update-preference/{prefId}/{type}', [\App\Http\Controllers\QuestionariesController::class, 'preferenceUpdate'])->name('candidate.preference.update');
 });

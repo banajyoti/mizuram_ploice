@@ -46,10 +46,12 @@ class RegisterController extends Controller
                 return response()->json(['status' => 'error', 'errors' => $validator->errors()], 422);
             }
 
+            $full_name = $request->first_name . ' ' . $request->middle_name . ' ' . $request->last_name;
             // Create a new user (or adjust based on your data model)
             $user = User::create([
                 'registration_number' => $uniqueFormId,
                 'salutation' => $request->salutation,
+                'full_name' => $full_name,
                 'first_name' => $request->first_name,
                 'middle_name' => $request->middle_name,
                 'last_name' => $request->last_name,
@@ -62,8 +64,8 @@ class RegisterController extends Controller
                 'age' => $request->age,
                 'email' => $request->email,
                 // 'phone' => $request->phone,
-                'ex-ser' => $request->ex_ser,
-                'X-inMizo' => $request->X_inMizo,
+                'ex_ser' => $request->ex_ser,
+                'X_inMizo' => $request->X_inMizo,
                 // Add more fields as necessary
             ]);
 
