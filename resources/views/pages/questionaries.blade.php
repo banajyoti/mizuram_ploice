@@ -652,7 +652,8 @@
                             title: 'Oops...',
                             text: 'All fields are mendatory.',
                             confirmButtonText: 'OK',
-                            confirmButtonClass: 'btn btn-danger'
+                            confirmButtonClass: 'btn btn-danger',
+                            confirmButtonColor:'##B32525'
                         });
                     } else {
                         // Handle success response
@@ -661,7 +662,8 @@
                             title: 'Success!',
                             text: response.message,
                             confirmButtonText: 'OK',
-                            confirmButtonClass: 'btn btn-success'
+                            confirmButtonClass: 'btn btn-success',
+                            confirmButtonColor: '#2DB325'
                         }).then(() => {
                             // Redirect after successful submission
                             window.location.href = '{{ route('preference') }}';
@@ -675,7 +677,8 @@
                         title: 'Oops...',
                         text: 'An error occurred. Please try again.',
                         confirmButtonText: 'OK',
-                        confirmButtonClass: 'btn btn-danger'
+                        confirmButtonClass: 'btn btn-danger',
+                        confirmButtonColor:'##B32525'
                     });
                 }
             });

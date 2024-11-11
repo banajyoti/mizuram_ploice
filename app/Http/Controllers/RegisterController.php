@@ -156,13 +156,13 @@ Cognitive Tech";
             $lastRequestNo = $lasRequestFormNo->registration_number;
             $ltstRequestNo = (int) substr($lastRequestNo, -5) + 1;
 
-            $value = 'APRECN' . $date . '' . str_pad($ltstRequestNo, 5, 0, STR_PAD_LEFT);
-            if ($value == "APRECN2024") {
+            $value = 'MIZOPOL' . $date . '' . str_pad($ltstRequestNo, 5, 0, STR_PAD_LEFT);
+            if ($value == "MIZOPOL2024") {
                 $ltstRequestNo = (int) substr($ltstRequestNo, -5) + 1;
-                $value = 'APRECN' . $date . '' . str_pad($ltstRequestNo, 5, 0, STR_PAD_LEFT);
+                $value = 'MIZOPOL' . $date . '' . str_pad($ltstRequestNo, 5, 0, STR_PAD_LEFT);
             }
         } else {
-            $value = 'APRECN' . $date . '00001';
+            $value = 'MIZOPOL' . $date . '00001';
         }
         return $value;
     }

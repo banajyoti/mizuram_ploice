@@ -245,6 +245,7 @@
                             title: 'Login Successful',
                             text: response.message,
                             showConfirmButton: false,
+                            confirmButtonColor: '#2DB325'
                             timer: 1500 // Auto-hide after 1.5 seconds
                         }).then(() => {
                             // Redirect after successful login

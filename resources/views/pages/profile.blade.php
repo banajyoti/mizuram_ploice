@@ -1,4 +1,5 @@
 @include('layouts.header')
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 @include('layouts.nav-2')
 <div class="px-4 grow flex flex-col">
     <div class="flex gap-3">
@@ -111,7 +112,7 @@
                         <div class="h-full flex flex-col">
                             <label for="cast_cat" class="block mb-auto px-1 text-sm font-medium text-gray-600">Cast/
                                 Category</label>
-                            <input type="text" id="cast_cat" value="{{ $registerDetails->category_id }}"
+                            <input type="text" id="cast_cat" value="{{ $registerDetails->c }}"
                                 class="bg-gray-200  border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 name="" value="General" required disabled />
                         </div>
@@ -188,7 +189,8 @@
                                 Phone Number</label>
                             <input type="text" id="alt_Pnumber"
                                 class="bg-gray-50  border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
-                                name="" value="" placeholder="Alternate number" required />
+                                name="alt_mobile" value="{{ old('alt_mobile', $userProfiles->alt_mobile ?? '') }}"
+                                placeholder="Alternate number" required />
                         </div>
                     </div>
                     <div class="col-span-12 md:col-span-4 lg:col-span-3 xl:col-span-2">
@@ -227,7 +229,8 @@
                                     class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="religion"
                                 class="bg-gray-50  border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
-                                name="religion" value="" placeholder="Religion" required />
+                                name="religion" value="{{ old('religion', $userProfiles->religion ?? '') }}"
+                                placeholder="Religion" required />
                         </div>
                     </div>
                     <div class="col-span-12 md:col-span-4 lg:col-span-3 xl:col-span-2">
@@ -237,7 +240,8 @@
                                     class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="nation"
                                 class="bg-gray-50  border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
-                                name="nationality" value="" placeholder="Nationality" required />
+                                name="nationality" value="{{ old('nationality', $userProfiles->nationality ?? '') }}"
+                                placeholder="Nationality" required />
                         </div>
                     </div>
                     <div class="col-span-12 md:col-span-4 lg:col-span-3 xl:col-span-2">
@@ -246,7 +250,8 @@
                                 Number</label>
                             <input type="text" id="adhar"
                                 class="bg-gray-50  border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
-                                name="adhar_no" value="" placeholder="Aadhaar Number" required />
+                                name="adhar_no"value="{{ old('adhar_no', $userProfiles->adhar_no ?? '') }}"
+                                placeholder="Aadhaar Number" required />
                         </div>
                     </div>
                 </div>
@@ -268,6 +273,7 @@
                                 Line
                                 1<span class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="p_address1" name="permanent_address[street1]"
+                                onkeydown="return /[a-z]/i.test(event.key)"
                                 value="{{ old('permanent_address.street1', $userProfiles->p_address1 ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Street 1" required />
@@ -281,6 +287,7 @@
                                 Line
                                 2</label>
                             <input type="text" id="p_address2" name="permanent_address[street2]"
+                                onkeydown="return /[a-z]/i.test(event.key)"
                                 value="{{ old('permanent_address.street2', $userProfiles->p_address2 ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Street 2" />
@@ -299,7 +306,7 @@
                                 @foreach ($states as $state)
                                     <option value="{{ $state->id }}"
                                         {{ old('permanent_address.state_id', $userProfiles->p_state_id ?? '') == $state->id ? 'selected' : '' }}>
-                                        {{ $userProfiles->s1 }}
+                                        {{ $state->name }}
                                     </option>
                                 @endforeach
 
@@ -318,7 +325,9 @@
                                 required>
                                 <option value="">Select</option>
                                 @foreach ($districts as $district)
-                                    <option value="{{ $district->id }}">{{ $district->name }}</option>
+                                    <option value="{{ $district->id }}"
+                                        {{ old('permanent_address.district', $userProfiles->p_district_id ?? '') == $district->id ? 'selected' : '' }}>
+                                        {{ $district->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -332,6 +341,7 @@
                                 District (Please specify)<span class="ps-1 text-red-500">*</span>
                             </label>
                             <input type="text" id="district-text" name="permanent_address[district_text]"
+                                onkeydown="return /[a-z]/i.test(event.key)"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" />
                         </div>
                     </div>
@@ -344,6 +354,7 @@
                                 class="block mb-auto px-1 text-sm font-medium text-gray-600">Police Station<span
                                     class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="p_police_id" name="permanent_address[police_station]"
+                                onkeydown="return /[a-z]/i.test(event.key)"
                                 value="{{ old('permanent_address.police_station', $userProfiles->p_police_id ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Police Station" required />
@@ -356,6 +367,7 @@
                             <label for="post_office" class="block mb-auto px-1 text-sm font-medium text-gray-600">Post
                                 Office<span class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="p_post_office" name="permanent_address[post_office]"
+                                onkeydown="return /[a-z]/i.test(event.key)"
                                 value="{{ old('permanent_address.post_office', $userProfiles->p_post_office ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Post Office" required />
@@ -398,6 +410,7 @@
                                 class="block mb-auto px-1 text-sm font-medium text-gray-600">Address Line
                                 1<span class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="c_address1" name="correspondence_address[street1]"
+                                onkeydown="return /[a-z]/i.test(event.key)"
                                 value="{{ old('permanent_address.street1', $userProfiles->c_address1 ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Street 1" required />
@@ -411,6 +424,7 @@
                                 class="block mb-auto px-1 text-sm font-medium text-gray-600">Address Line
                                 2</label>
                             <input type="text" id="c_address2" name="correspondence_address[street2]"
+                                onkeydown="return /[a-z]/i.test(event.key)"
                                 value="{{ old('permanent_address.street2', $userProfiles->c_address2 ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Street 2" />
@@ -429,7 +443,7 @@
                                 @foreach ($states as $state)
                                     <option value="{{ $state->id }}"
                                         {{ old('correspondence_address.state_id', $userProfiles->c_state_id ?? '') == $state->id ? 'selected' : '' }}>
-                                        {{ $userProfiles->s2 }}
+                                        {{ $state->name }}
                                     </option>
                                 @endforeach
                             </select>
@@ -447,7 +461,9 @@
                                 required>
                                 <option value="">Select</option>
                                 @foreach ($districts as $district)
-                                    <option value="{{ $district->id }}">{{ $district->name }}</option>
+                                    <option value="{{ $district->id }}"
+                                        {{ old('correspondence_address.district', $userProfiles->c_district_id ?? '') == $district->id ? 'selected' : '' }}>
+                                        {{ $district->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -461,6 +477,7 @@
                                 District (Please specify)<span class="ps-1 text-red-500">*</span>
                             </label>
                             <input type="text" id="c_district-text" name="permanent_address[district_text]"
+                                onkeydown="return /[a-z]/i.test(event.key)"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" />
                         </div>
                     </div>
@@ -473,6 +490,7 @@
                                 class="block mb-auto px-1 text-sm font-medium text-gray-600">Police Station<span
                                     class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="c_police_id" name="correspondence_address[police_station]"
+                                onkeydown="return /[a-z]/i.test(event.key)"
                                 value="{{ old('permanent_address.police_station', $userProfiles->c_police_id ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Police Station" required />
@@ -486,6 +504,7 @@
                                 class="block mb-auto px-1 text-sm font-medium text-gray-600">Post Office<span
                                     class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="c_post_office" name="correspondence_address[post_office]"
+                                onkeydown="return /[a-z]/i.test(event.key)"
                                 value="{{ old('permanent_address.post_office', $userProfiles->c_post_office ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Post Office" required />
@@ -499,6 +518,7 @@
                                 class="block mb-auto px-1 text-sm font-medium text-gray-600">Pincode<span
                                     class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="c_pin" name="correspondence_address[pincode]"
+                                maxlength="6" minlength="6"
                                 value="{{ old('permanent_address.pincode', $userProfiles->c_pin ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Pincode" required />
@@ -517,6 +537,7 @@
                                     class="block mb-auto px-1 text-sm font-medium text-gray-600">Board/ School<span
                                         class="ps-1 text-red-500">*</span></label>
                                 <input type="text" id="board_school" name="education[board_school]"
+                                    onkeydown="return /[a-z]/i.test(event.key)"
                                     value="{{ old('permanent_address.board_school', $userProfiles->board_id ?? '') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                     placeholder="Board/ School" required />
@@ -528,6 +549,7 @@
                                 <label for="school_name"
                                     class="block mb-auto px-1 text-sm font-medium text-gray-600">School Name</label>
                                 <input type="text" id="school_name" name="education[school_name]"
+                                    onkeydown="return /[a-z]/i.test(event.key)"
                                     value="{{ old('permanent_address.school_name', $userProfiles->school_name ?? '') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                     placeholder="School Name" />
@@ -572,6 +594,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     </form>
 </div>
 
@@ -579,7 +602,7 @@
     <a class="inline-block bg-gray-600 hover:bg-gray-700 text-white p-2 rounded-md Nunito"
         href="{{ route('preference') }}"><i class="bi bi-arrow-left-short pr-1"></i>Go Back</a>
     <a id="save-proceed-btn"
-        class="ml-auto inline-block bg-green-600 hover:bg-green-700 text-white p-2 rounded-md Nunito"><i
+        class="ml-auto inline-block bg-green-600 hover:bg-green-700 text-white p-2 rounded-md Nunito {{ !empty($userProfiles) ? '' : 'hidden' }}"><i
             class="bi bi-check-all pr-1"></i>Save & proceede</a>
 </div>
 @include('layouts.footer')
@@ -587,6 +610,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     // AJAX Form Submission
@@ -605,15 +630,36 @@
                 contentType: false, // Important for file uploads
                 success: function(response) {
                     if (response.success) {
-                        alert("Form submitted successfully!");
-                        // Optionally, you can redirect or handle response here
+                        // Success alert with SweetAlert2
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Form submitted successfully!',
+                            icon: 'success',
+                            confirmButtonText: 'OK',
+                            confirmButtonColor:'#2DB325'
+                        }).then(() => {
+                            // Redirect after the user clicks "OK" on the success message
+                            window.location.href = '/document'; // Redirect URL
+                        });
                     } else {
-                        alert("There was an error submitting the form.");
+                        // Error alert with SweetAlert2
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'There was an error submitting the form.',
+                            icon: 'error',
+                            confirmButtonText: 'Try Again'
+                        });
                     }
                 },
                 error: function(xhr, status, error) {
                     console.error("Error: " + error);
-                    alert("An error occurred while submitting the form.");
+                    // Error alert with SweetAlert2 for AJAX failure
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'An error occurred while submitting the form.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                 }
             });
         });
@@ -707,4 +753,11 @@
             dsitrict2text.value = "";
         }
     }
+</script>
+<script>
+    $('input[type=text], textarea').keyup(function() {
+        $(this).val(function() {
+            return this.value.toUpperCase();
+        })
+    });
 </script>
