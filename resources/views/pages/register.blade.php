@@ -151,7 +151,7 @@
                                 Name<span class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="first_name" onkeydown="return /[a-z]/i.test(event.key)"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
-                                name="first_name" value="" placeholder="First Name" required />
+                                name="first_name" value="{{ old('first_name') }}" placeholder="First Name" required />
                         </div>
                     </div>
                     <div class="col-span-3">
@@ -160,7 +160,7 @@
                                 Name<span class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="middle_name" onkeydown="return /[a-z]/i.test(event.key)"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
-                                name="middle_name" value="" placeholder="Middle Name" required />
+                                name="middle_name" value="{{ old('middle_name') }}" placeholder="Middle Name" required />
                         </div>
                     </div>
                     <div class="col-span-3">
@@ -169,7 +169,7 @@
                                 Name<span class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="last_name" onkeydown="return /[a-z]/i.test(event.key)"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
-                                name="last_name" value="" placeholder="Last Name" required />
+                                name="last_name" value="{{ old('last_name') }}" placeholder="Last Name" required />
                         </div>
                     </div>
                     <div class="col-span-6">
@@ -179,7 +179,7 @@
                                 Name<span class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="father_name" onkeydown="return /[a-z]/i.test(event.key)"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
-                                name="father_name" value="" placeholder="Father Name" required />
+                                name="father_name" value="{{ old('father_name') }}" placeholder="Father Name" required />
                         </div>
                     </div>
                     <div class="col-span-6">
@@ -189,7 +189,7 @@
                                     class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="mother_name" onkeydown="return /[a-z]/i.test(event.key)"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
-                                name="mother_name" value="" placeholder="Mother Name" required />
+                                name="mother_name" value="{{ old('mother_name') }}" placeholder="Mother Name" required />
                         </div>
                     </div>
                     <div class="col-span-3">
@@ -230,12 +230,12 @@
                             <select id="cast_cat" name="category_id"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2">
                                 <option selected>select</option>
-                                <option value="00">General</option>
-                                <option value="01">OBC</option>
-                                <option value="02">MOBC</option>
-                                <option value="00">SC</option>
-                                <option value="01">ST (P)</option>
-                                <option value="02">ST (H)</option>
+                                <option value="1">General</option>
+                                <option value="2">OBC</option>
+                                <option value="3">MOBC</option>
+                                <option value="4">SC</option>
+                                <option value="5">ST (P)</option>
+                                <option value="6">ST (H)</option>
                             </select>
                         </div>
                     </div>
@@ -274,49 +274,6 @@
                         </div>
                     </div>
                     <div class="col-span-4">
-                        <!-- Div-1 -->
-                        {{-- <div class="h-ful flex flex-col phone">
-                            <div class="flex items-center justify-between">
-                                <label for="p_number" class="block mb-auto px-1 text-sm font-medium text-gray-600">
-                                    <i class="bi bi-check-circle-fill text-[0.70rem] pr-1"></i>
-                                    Phone Number
-                                    <span class="ps-1 text-red-500">*</span>
-                                </label>
-                                <button class="pr-2 text-xs flex items-center hover:text-red-500 hidden"
-                                    id="change_p_number"><i
-                                        class="bi bi-arrow-repeat text-sm pr-1"></i>change</button>
-                            </div>
-                            <div class="flex gap-2">
-                                <input type="text" id="p_number"
-                                    class="grow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
-                                    name="phone" value="" placeholder="Phone Number" required />
-                                <button type="button"
-                                    class="text-xs text-white hover:text-green-100 bg-green-600 hover:bg-green-700 rounded-lg p-2 whitespace-nowrap"
-                                    id="send_OTP">Send OTP</button>
-                            </div>
-                        </div> --}}
-                        <!-- Div-2 -->
-                        {{-- <div class="h-ful flex flex-col verify_phone hidden">
-                            <label for="email"
-                                class="block px-1 text-sm font-medium text-gray-600 flex items-center">
-                                <button type="button"
-                                    class="rounded-md px-1 mr-1 bg-gray-200 hover:bg-gray-300 text-blue-600"
-                                    id="back_to_phone"><i
-                                        class="bi bi-chevron-double-left text-[0.65rem]"></i></button>
-                                Enter OTP
-                                <span class="ps-1 text-red-500">*</span>
-                            </label>
-                            <div class="flex gap-1 mt-auto">
-                                <input type="text" id="otp"
-                                    class="grow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 text-center"
-                                    name="otp" value="" placeholder="X X X X" required />
-                                <button type="button"
-                                    class="text-xs text-white hover:text-green-100 bg-green-600 hover:bg-green-700 rounded-lg px-2 py-0.5"
-                                    id="verified">Verify</button>
-                                <button type="button"
-                                    class="text-xs text-white hover:text-yellow-100 bg-yellow-500 hover:bg-yellow-600 rounded-lg px-2 py-0.5">Resend</button>
-                            </div>
-                        </div> --}}
                     </div>
                     <div class="col-span-4">
                         <div class="h-full flex flex-col">
@@ -370,209 +327,5 @@
 </div>
 @include('layouts.footer')
 @include('layouts.modals')
-<script>
-    $(document).ready(function() {
-        // Handle form submission
-        $('#submitButton').on('click', function(event) {
-            event.preventDefault(); // Prevent the default form submission
+@include('layouts.custom-scripts.registerScript')
 
-            // Check if OTP is verified
-            if (!document.getElementById('submitButton').classList.contains('hidden')) {
-                // Collect form data
-                var formData = $('#registrationForm').serialize();
-
-                // Send AJAX request
-                $.ajax({
-                    url: '{{ route('register') }}', // Your route
-                    type: 'POST',
-                    data: formData,
-                    success: function(response) {
-                        // Handle success
-                        $('#registrationId').text(response.registration_number);
-                        // $('#reg-form-saved').removeClass('hidden');
-                        $('#responseMessage').html('<p class="text-green-500">' + response
-                            .message + '</p>');
-                    },
-                    error: function(xhr) {
-                        let errorMessage = '<p class="text-red-500">An error occurred:</p>';
-
-                        // Check if the response is in JSON format
-                        try {
-                            const jsonResponse = JSON.parse(xhr.responseText);
-                            if (jsonResponse.errors) {
-                                errorMessage += '<ul>';
-                                $.each(jsonResponse.errors, function(key, value) {
-                                    errorMessage += '<li>' + value[0] +
-                                        '</li>'; // Show first error
-                                });
-                                errorMessage += '</ul>';
-                            } else {
-                                errorMessage += '<p>' + jsonResponse.message ||
-                                    'An error occurred' + '</p>';
-                            }
-                        } catch (e) {
-                            // If JSON parsing fails, fall back to responseText
-                            errorMessage += '<p>' + xhr.responseText +
-                                '</p>'; // Show raw response
-                        }
-
-                        $('#responseMessage').html(errorMessage);
-                    }
-                });
-
-            } else {
-                alert('Please verify your OTP before submitting the form.');
-            }
-        });
-
-        // Handle sending OTP
-        document.getElementById('send_OTP').addEventListener('click', function() {
-            const phoneNumber = document.getElementById('p_number').value;
-
-            if (!phoneNumber) {
-                alert('Please enter your phone number.');
-                return;
-            }
-
-            // Create FormData object
-            const formData = new FormData();
-            formData.append('phone', phoneNumber);
-
-            fetch('/send-otp', {
-                    method: 'POST',
-                    dataType: 'text',
-                    body: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
-                            .getAttribute('content')
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('OTP sent successfully!');
-                        document.querySelector('.verify_phone').classList.remove(
-                            'hidden'); // Show OTP input
-                    } else {
-                        alert('Error sending OTP. Please try again.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred while sending the OTP.');
-                });
-        });
-
-        // Handle OTP verification
-        document.getElementById('verified').addEventListener('click', function() {
-            const otp = document.getElementById('otp').value;
-
-            if (!otp) {
-                alert('Please enter the OTP.');
-                return;
-            }
-
-            // Create FormData object
-            const formData = new FormData();
-            formData.append('otp', otp);
-
-            fetch('/verify-otp', {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
-                            .getAttribute('content')
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('OTP verified successfully!');
-                        document.querySelector('.verify_phone').classList.add('hidden');
-
-                        // Show the submit button
-                        document.getElementById('submitButton').classList.remove('hidden');
-                    } else {
-                        alert('Invalid OTP. Please try again.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred while verifying the OTP.');
-                });
-        });
-    });
-</script>
-<script>
-    document.getElementById('reg_declaration').addEventListener('change', function() {
-        const submitButton = document.getElementById('submitButton');
-
-        if (this.checked) {
-            submitButton.classList.remove('hidden'); // Show the button
-        } else {
-            submitButton.classList.add('hidden'); // Hide the button
-        }
-    });
-
-    /** jQUERY for calculate age **/
-    function myFunction() {
-        var dob = document.getElementById("dob").value;
-
-        var form = document.getElementById("form"),
-            date = document.getElementById("date2"),
-            month = document.getElementById("month2"),
-            year = document.getElementById("year2"),
-
-            age = document.getElementById("age"),
-            days = document.getElementById("days"),
-            mons = document.getElementById("months"),
-            ddd = "2024/07/01";
-        today = new Date(ddd);
-        console.log(today);
-
-        year.value = today.getFullYear();
-        month.value = today.getMonth() + 1;
-        date.value = today.getDate();
-
-        var arr = dob.split("-");
-        var by = arr[0];
-        var bm = arr[1];
-        var bd = arr[2];
-
-        var ty = Number.parseFloat(year.value),
-            tm = Number.parseFloat(month.value),
-            td = Number.parseFloat(date.value);
-        console.log(ty);
-
-        if (td < bd) {
-            days = (td - bd + 30);
-            tm = tm - 1;
-        } else {
-            days = (td - bd);
-        }
-
-        if (tm < bm) {
-            months = (tm - bm + 12);
-            ty = ty - 1;
-        } else {
-            months = (tm - bm);
-        }
-        agee.value = (ty - by) + ' years ' + months + ' months ' + days + ' days';
-    }
-    $('.datepicker').datepicker();
-</script>
-
-<script>
-    $('input[type=text], textarea').keyup(function() {
-        $(this).val(function() {
-            return this.value.toUpperCase();
-        })
-    });
-
-    /** jQUERY for email validation **/
-    const validateEmail = (email) => {
-        return email.match(
-            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        );
-    };
-</script>

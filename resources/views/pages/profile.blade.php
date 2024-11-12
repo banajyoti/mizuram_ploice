@@ -1,5 +1,15 @@
 @include('layouts.header')
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+<style>
+    .readonly-field {
+        background-color: #f3f4f6;
+        /* Light gray background */
+        border-color: #d1d5db;
+        /* Border color for readonly fields */
+        cursor: not-allowed;
+        /* Change cursor to not-allowed to indicate no editing */
+    }
+</style>
 @include('layouts.nav-2')
 <div class="px-4 grow flex flex-col">
     <div class="flex gap-3">
@@ -305,7 +315,7 @@
                                 <option value="" selected disabled>Select</option>
                                 @foreach ($states as $state)
                                     <option value="{{ $state->id }}"
-                                        {{ old('permanent_address.state_id', $userProfiles->p_state_id ?? '') == $state->id ? 'selected' : '' }}>
+                                        {{ old('permanent_address.state_id', $userProfiles->p_state_id) == $state->id ? 'selected' : '' }}>
                                         {{ $state->name }}
                                     </option>
                                 @endforeach
@@ -327,7 +337,8 @@
                                 @foreach ($districts as $district)
                                     <option value="{{ $district->id }}"
                                         {{ old('permanent_address.district', $userProfiles->p_district_id ?? '') == $district->id ? 'selected' : '' }}>
-                                        {{ $district->name }}</option>
+                                        {{ $district->name }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -341,11 +352,11 @@
                                 District (Please specify)<span class="ps-1 text-red-500">*</span>
                             </label>
                             <input type="text" id="district-text" name="permanent_address[district_text]"
+                                value="{{ old('permanent_address.district_text', $userProfiles->p_other_district ?? '') }}"
                                 onkeydown="return /[a-z]/i.test(event.key)"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" />
                         </div>
                     </div>
-
 
                     <!-- Police Station -->
                     <div class="col-span-12 md:col-span-6 lg:col-span-3 xl:col-span-2">
@@ -388,7 +399,7 @@
                     </div>
                 </div>
                 <div class="inline-block flex items-center">
-                    <input type="checkBox" onclick="FillAddressInput()" id="addr" value="add"
+                    <input type="checkBox" onclick="FillAddressInput()" id="checkBox"
                         class="mt-0.5 w-5 h-5 rounded-md text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
                     <label for="address_same" class="ms-2 text-sm font text-gray-900">
                         Please check if Permanent Address is the same as Correspondence Address.
@@ -450,12 +461,12 @@
                         </div>
                     </div>
 
-                    <!-- Correspondence District -->
+                    <!-- District -->
                     <div class="col-span-12 md:col-span-6 lg:col-span-3 xl:col-span-2" id="c_district-container">
                         <div class="h-full flex flex-col">
-                            <label for="C-district"
-                                class="block mb-auto px-1 text-sm font-medium text-gray-600">District<span
-                                    class="ps-1 text-red-500">*</span></label>
+                            <label for="district" class="block mb-auto px-1 text-sm font-medium text-gray-600">
+                                District<span class="ps-1 text-red-500">*</span>
+                            </label>
                             <select id="c_district_id" name="correspondence_address[district]"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 required>
@@ -463,7 +474,8 @@
                                 @foreach ($districts as $district)
                                     <option value="{{ $district->id }}"
                                         {{ old('correspondence_address.district', $userProfiles->c_district_id ?? '') == $district->id ? 'selected' : '' }}>
-                                        {{ $district->name }}</option>
+                                        {{ $district->name }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -476,12 +488,12 @@
                             <label for="district-text" class="block mb-auto px-1 text-sm font-medium text-gray-600">
                                 District (Please specify)<span class="ps-1 text-red-500">*</span>
                             </label>
-                            <input type="text" id="c_district-text" name="permanent_address[district_text]"
+                            <input type="text" id="c_district-text" name="correspondence_address[district_text]"
+                                value="{{ old('correspondence_address.district_text', $userProfiles->c_other_district ?? '') }}"
                                 onkeydown="return /[a-z]/i.test(event.key)"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" />
                         </div>
                     </div>
-
 
                     <!-- Correspondence Police Station -->
                     <div class="col-span-12 md:col-span-6 lg:col-span-3 xl:col-span-2">
@@ -636,7 +648,7 @@
                             text: 'Form submitted successfully!',
                             icon: 'success',
                             confirmButtonText: 'OK',
-                            confirmButtonColor:'#2DB325'
+                            confirmButtonColor: '#2DB325'
                         }).then(() => {
                             // Redirect after the user clicks "OK" on the success message
                             window.location.href = '/document'; // Redirect URL
@@ -667,93 +679,152 @@
 </script>
 
 <script>
-    // JavaScript to handle dynamic change
-    document.getElementById('p_state_id').addEventListener('change', function() {
-        var stateId = this.value;
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check Permanent Address State
+        var pStateId = document.getElementById('p_state_id').value;
         var districtSelect = document.getElementById('district-container');
         var districtTextbox = document.getElementById('district-textbox-container');
 
-        if (stateId != '2') { // If state ID is 2, show text box and hide select
-            districtSelect.classList.add('hidden');
-            districtTextbox.classList.remove('hidden');
-        } else {
+        // Apply the correct logic based on the saved state ID
+        if (pStateId === '17') { // If state ID is 17 (or whatever your condition is)
             districtSelect.classList.remove('hidden');
             districtTextbox.classList.add('hidden');
+        } else {
+            districtSelect.classList.add('hidden');
+            districtTextbox.classList.remove('hidden');
         }
+
+        // Check Correspondence Address State
+        var cStateId = document.getElementById('c_state_id').value;
+        var cDistrictSelect = document.getElementById('c_district-container');
+        var cDistrictTextbox = document.getElementById('c_district-textbox-container');
+
+        // Apply the correct logic based on the saved state ID for Correspondence Address
+        if (cStateId === '17') { // If state ID is 17 (or whatever your condition is)
+            cDistrictSelect.classList.remove('hidden');
+            cDistrictTextbox.classList.add('hidden');
+        } else {
+            cDistrictSelect.classList.add('hidden');
+            cDistrictTextbox.classList.remove('hidden');
+        }
+
+        // Handle the 'change' event for Permanent Address state
+        document.getElementById('p_state_id').addEventListener('change', function() {
+            var stateId = this.value;
+            if (stateId === '17') { // If state ID is 17
+                districtSelect.classList.remove('hidden');
+                districtTextbox.classList.add('hidden');
+            } else {
+                districtSelect.classList.add('hidden');
+                districtTextbox.classList.remove('hidden');
+            }
+        });
+
+        // Handle the 'change' event for Correspondence Address state
+        document.getElementById('c_state_id').addEventListener('change', function() {
+            var stateId = this.value;
+            if (stateId === '17') { // If state ID is 17
+                cDistrictSelect.classList.remove('hidden');
+                cDistrictTextbox.classList.add('hidden');
+            } else {
+                cDistrictSelect.classList.add('hidden');
+                cDistrictTextbox.classList.remove('hidden');
+            }
+        });
     });
 </script>
 
 <script>
-    // JavaScript to handle dynamic change
-    document.getElementById('c_state_id').addEventListener('change', function() {
-        var stateId = this.value;
-        var districtSelect = document.getElementById('c_district-container');
-        var districtTextbox = document.getElementById('c_district-textbox-container');
-
-        if (stateId != '2') { // If state ID is 2, show text box and hide select
-            districtSelect.classList.add('hidden');
-            districtTextbox.classList.remove('hidden');
-        } else {
-            districtSelect.classList.remove('hidden');
-            districtTextbox.classList.add('hidden');
-        }
-    });
-</script>
-<script>
-    /** jQuery for append address */
     function FillAddressInput() {
         let checkBox = document.getElementById('checkBox');
 
+        // Permanent address fields
         let pAddress1 = document.getElementById("p_address1");
         let pAddress2 = document.getElementById("p_address2");
         let postOffice1 = document.getElementById("p_post_office");
         let policeStation1 = document.getElementById("p_police_id");
-        let disrtric1 = document.getElementById("p_district_id");
+        let district1 = document.getElementById("p_district_id");
         let state1 = document.getElementById("p_state_id");
         let pin1 = document.getElementById("p_pin");
-        let dsitrict1text = document.getElementById("district-text");
+        let district1text = document.getElementById("district-text");
 
+        // Correspondence address fields
         let cAddress1 = document.getElementById("c_address1");
         let cAddress2 = document.getElementById("c_address2");
         let postOffice2 = document.getElementById("c_post_office");
         let policeStation2 = document.getElementById("c_police_id");
-        let disrtric2 = document.getElementById("c_district_id");
+        let district2 = document.getElementById("c_district_id");
         let state2 = document.getElementById("c_state_id");
         let pin2 = document.getElementById("c_pin");
-        let dsitrict2text = document.getElementById("c_district-text");
-        let addr = document.getElementById("addr");
+        let district2text = document.getElementById("c_district-text");
 
-        if (addr.checked == true) {
-
+        if (checkBox.checked == true) {
+            // Get values from permanent address fields
             let pAddress1Value = pAddress1.value;
             let pAddress2Value = pAddress2.value;
             let postOffice1Value = postOffice1.value;
             let policeStation1Value = policeStation1.value;
-            let disrtric1Value = disrtric1.value;
+            let district1Value = district1.value;
             let state1Value = state1.value;
             let pin1Value = pin1.value;
-            let dsitrict1textValue = dsitrict1text.value;
+            let district1textValue = district1text.value;
 
+            // Copy permanent address to correspondence fields
             cAddress1.value = pAddress1Value;
             cAddress2.value = pAddress2Value;
             postOffice2.value = postOffice1Value;
             policeStation2.value = policeStation1Value;
-            disrtric2.value = disrtric1Value;
+            district2.value = district1Value;
             state2.value = state1Value;
             pin2.value = pin1Value;
-            dsitrict2text.value = dsitrict1textValue;
+            district2text.value = district1textValue;
+            console.log(district2text.value)
+
+            // Make correspondence fields readonly
+            cAddress1.setAttribute('readonly', true);
+            cAddress2.setAttribute('readonly', true);
+            postOffice2.setAttribute('readonly', true);
+            policeStation2.setAttribute('readonly', true);
+            pin2.setAttribute('readonly', true);
+            district2text.setAttribute('readonly', true);
+
+            // Optionally, you can add classes to give a visual cue that these fields are readonly
+            cAddress1.classList.add('readonly-field');
+            cAddress2.classList.add('readonly-field');
+            postOffice2.classList.add('readonly-field');
+            policeStation2.classList.add('readonly-field');
+            pin2.classList.add('readonly-field');
+            district2text.classList.add('readonly-field');
         } else {
+            // Clear the correspondence fields if checkbox is unchecked
             cAddress1.value = "";
             cAddress2.value = "";
             postOffice2.value = "";
             policeStation2.value = "";
-            disrtric2.value = "";
+            district2.value = "";
             state2.value = "";
             pin2.value = "";
-            dsitrict2text.value = "";
+            district2text.value = "";
+
+            // Remove the readonly attribute when checkbox is unchecked
+            cAddress1.removeAttribute('readonly');
+            cAddress2.removeAttribute('readonly');
+            postOffice2.removeAttribute('readonly');
+            policeStation2.removeAttribute('readonly');
+            pin2.removeAttribute('readonly');
+            district2text.removeAttribute('readonly');
+
+            // Optionally, remove the visual cue for readonly fields
+            cAddress1.classList.remove('readonly-field');
+            cAddress2.classList.remove('readonly-field');
+            postOffice2.classList.remove('readonly-field');
+            policeStation2.classList.remove('readonly-field');
+            pin2.classList.remove('readonly-field');
+            district2text.classList.remove('readonly-field');
         }
     }
 </script>
+
 <script>
     $('input[type=text], textarea').keyup(function() {
         $(this).val(function() {

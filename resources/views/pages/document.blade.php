@@ -116,13 +116,24 @@
                     </div>
 
                     <!-- View Document Link (Initially hidden) -->
-                    <a id="view-document-link"
-                        class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center mt-4 cursor-pointer"
-                        href="#">View Document</a>
+                    @if (isset($documents->photo) && !empty($documents->photo))
+                        <a id="view-document-link"
+                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center mt-4 cursor-pointer"
+                            href="{{ asset('storage/public/uploads/upload_photo/' . $documents->photo) }}">View
+                            Document</a>
 
-                    <!-- Image Preview (Initially hidden) -->
-                    <img id="photo-preview" src="" alt="Image Preview"
-                        class="hidden w-32 h-32 object-cover rounded-md mt-4" />
+                        <!-- Image Preview (Initially hidden) -->
+                        <img id="photo-preview" src="" alt="Image Preview"
+                            class="hidden w-32 h-32 object-cover rounded-md mt-4" />
+                    @else
+                        <a id="view-document-link"
+                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center mt-4 cursor-pointer"
+                            href="">View Document</a>
+
+                        <!-- Image Preview (Initially hidden) -->
+                        <img id="photo-preview" src="" alt="Image Preview"
+                            class="hidden w-32 h-32 object-cover rounded-md mt-4" />
+                    @endif
                 </div>
 
 
@@ -145,9 +156,16 @@
                             <input id="signature" type="file" class="hidden" name="signature" />
                         </label>
                     </div>
-                    <a id="signature_view"
-                        class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
-                        href="#" target="_blank">View Document</a>
+                    @if (isset($documents->signature) && !empty($documents->signature))
+                        <a id="signature_view"
+                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                            href="{{ asset('storage/public/uploads/upload_signature/' . $documents->signature) }}"
+                            target="_blank">View Document</a>
+                    @else
+                        <a id="signature_view"
+                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                            href="" target="_blank">View Document</a>
+                    @endif
                 </div>
 
                 <div class="p-2 space-y-2">
@@ -168,9 +186,16 @@
                             <input id="age_proof" type="file" class="hidden" name="age_prof_cert" />
                         </label>
                     </div>
-                    <a id="age_proof_view"
-                        class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
-                        href="#" target="_blank">View Document</a>
+                    @if (isset($documents->age_prof_cert) && !empty($documents->age_prof_cert))
+                        <a id="age_proof_view"
+                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                            href="{{ asset('storage/public/uploads/age_prof_cert/' . $documents->age_prof_cert) }}"
+                            target="_blank">View Document</a>
+                    @else
+                        <a id="age_proof_view"
+                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                            href="" target="_blank">View Document</a>
+                    @endif
                 </div>
 
                 <div class="p-2 space-y-2">
@@ -191,9 +216,16 @@
                             <input id="x_marksheet" type="file" class="hidden" name="class_x_cert" />
                         </label>
                     </div>
-                    <a id="x_marksheet_view"
-                        class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
-                        href="#" target="_blank">View Document</a>
+                    @if (isset($documents->class_x_cert) && !empty($documents->class_x_cert))
+                        <a id="x_marksheet_view"
+                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                            href="{{ asset('storage/public/uploads/class_x_cert/' . $documents->class_x_cert) }}"
+                            target="_blank">View Document</a>
+                    @else
+                        <a id="x_marksheet_view"
+                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                            href="" target="_blank">View Document</a>
+                    @endif
                 </div>
 
 
@@ -215,82 +247,118 @@
                             <input id="mizo_lang_prof" type="file" class="hidden" name="mizu_lang_cert" />
                         </label>
                     </div>
-                    <a id="mizo_lang_prof_view"
-                        class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
-                        href="#" target="_blank">View Document</a>
+                    @if (isset($documents->mizu_lang_cert) && !empty($documents->mizu_lang_cert))
+                        <a id="mizo_lang_prof_view"
+                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                            href="{{ asset('storage/public/uploads/mechanic_ex_cert/' . $documents->mizu_lang_cert) }}"
+                            target="_blank">View Document</a>
+                    @else
+                        <a id="mizo_lang_prof_view"
+                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                            href="" target="_blank">View Document</a>
+                    @endif
                 </div>
 
+                @if ($questionaries->home_guard == 1)
+                    <div class="p-2 space-y-2">
+                        <div class="flex items-center">
+                            <span class="text-sm pr-1">06.</span>
+                            <p class="text-xs">Homeguard Certificate</p>
+                        </div>
+                        <div class="flex items-center justify-center w-full">
+                            <label for="homeguard"
+                                class="flex flex-col items-center justify-center h-28 md:h-54 w-32 md:w-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 p-2">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <i class="bi bi-cloud-arrow-up text-xl md:text-3xl text-gray-500"></i>
+                                    <p class="mb-2 text-[0.65rem] md:text-sm text-gray-500 text-center"><span
+                                            class="font-semibold">Click to upload</span> or drag and drop</p>
+                                    <p class="text-[0.65rem] md:text-xs text-gray-500 text-center">PDF <br
+                                            class="block md:hidden">(MAX. SIZE 200kb)</p>
+                                </div>
+                                <input id="homeguard" type="file" class="hidden" name="homeguard_cert" />
+                            </label>
+                        </div>
+                        @if (isset($documents->homeguard_cert) && !empty($documents->homeguard_cert))
+                            <a id="homeguard_view"
+                                class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                                href="{{ asset('storage/public/uploads/homeguard_cert/' . $documents->homeguard_cert) }}"
+                                target="_blank">View Document</a>
+                        @else
+                            <a id="homeguard_view"
+                                class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                                href="" target="_blank">View Document</a>
+                        @endif
+                    </div>
+                @endif
 
-                <div class="p-2 space-y-2">
-                    <div class="flex items-center">
-                        <span class="text-sm pr-1">06.</span>
-                        <p class="text-xs">Homeguard Certificate</p>
+                @if (
+                    $userDetails->category_id == 2 ||
+                        $userDetails->category_id == 3 ||
+                        $userDetails->category_id == 4 ||
+                        $userDetails->category_id == 5 ||
+                        $userDetails->category_id == 6)
+                    <div class="p-2 space-y-2">
+                        <div class="flex items-center">
+                            <span class="text-sm pr-1">07.</span>
+                            <p class="text-xs">Cast Certificate</p>
+                        </div>
+                        <div class="flex items-center justify-center w-full">
+                            <label for="cast_cert"
+                                class="flex flex-col items-center justify-center h-28 md:h-54 w-32 md:w-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 p-2">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <i class="bi bi-cloud-arrow-up text-xl md:text-3xl text-gray-500"></i>
+                                    <p class="mb-2 text-[0.65rem] md:text-sm text-gray-500 text-center"><span
+                                            class="font-semibold">Click to upload</span> or drag and drop</p>
+                                    <p class="text-[0.65rem] md:text-xs text-gray-500 text-center">PDF <br
+                                            class="block md:hidden">(MAX. SIZE 200kb)</p>
+                                </div>
+                                <input id="cast_cert" type="file" class="hidden" name="caste_cert" />
+                            </label>
+                        </div>
+                        @if (isset($documents->caste_cert) && !empty($documents->caste_cert))
+                            <a id="cast_cert_view"
+                                class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                                href="{{ asset('storage/public/uploads/caste_cert/' . $documents->caste_cert) }}"
+                                target="_blank">View Document</a>
+                        @else
+                            <a id="cast_cert_view"
+                                class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                                href="" target="_blank">View Document</a>
+                        @endif
                     </div>
-                    <div class="flex items-center justify-center w-full">
-                        <label for="homeguard"
-                            class="flex flex-col items-center justify-center h-28 md:h-54 w-32 md:w-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 p-2">
-                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                <i class="bi bi-cloud-arrow-up text-xl md:text-3xl text-gray-500"></i>
-                                <p class="mb-2 text-[0.65rem] md:text-sm text-gray-500 text-center"><span
-                                        class="font-semibold">Click to upload</span> or drag and drop</p>
-                                <p class="text-[0.65rem] md:text-xs text-gray-500 text-center">PDF <br
-                                        class="block md:hidden">(MAX. SIZE 200kb)</p>
-                            </div>
-                            <input id="homeguard" type="file" class="hidden" name="homeguard_cert" />
-                        </label>
-                    </div>
-                    <a id="homeguard_view"
-                        class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
-                        href="#" target="_blank">View Document</a>
-                </div>
+                @endif
 
-
-                <div class="p-2 space-y-2">
-                    <div class="flex items-center">
-                        <span class="text-sm pr-1">07.</span>
-                        <p class="text-xs">Cast Certificate</p>
+                @if ($questionaries->ncc_cert == 1)
+                    <div class="p-2 space-y-2">
+                        <div class="flex items-center">
+                            <span class="text-sm pr-1">08.</span>
+                            <p class="text-xs">NCC Certificate</p>
+                        </div>
+                        <div class="flex items-center justify-center w-full">
+                            <label for="ncc"
+                                class="flex flex-col items-center justify-center h-28 md:h-54 w-32 md:w-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 p-2">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    <i class="bi bi-cloud-arrow-up text-xl md:text-3xl text-gray-500"></i>
+                                    <p class="mb-2 text-[0.65rem] md:text-sm text-gray-500 text-center"><span
+                                            class="font-semibold">Click to upload</span> or drag and drop</p>
+                                    <p class="text-[0.65rem] md:text-xs text-gray-500 text-center">PDF <br
+                                            class="block md:hidden">(MAX. SIZE 200kb)</p>
+                                </div>
+                                <input id="ncc" type="file" class="hidden" name="ncc_cert" />
+                            </label>
+                        </div>
+                        @if (isset($documents->ncc_cert) && !empty($documents->ncc_cert))
+                            <a id="ncc_view"
+                                class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                                href="{{ asset('storage/public/uploads/ncc_cert/' . $documents->ncc_cert) }}"
+                                target="_blank">View Document</a>
+                        @else
+                            <a id="ncc_view"
+                                class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                                href="" target="_blank">View Document</a>
+                        @endif
                     </div>
-                    <div class="flex items-center justify-center w-full">
-                        <label for="cast_cert"
-                            class="flex flex-col items-center justify-center h-28 md:h-54 w-32 md:w-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 p-2">
-                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                <i class="bi bi-cloud-arrow-up text-xl md:text-3xl text-gray-500"></i>
-                                <p class="mb-2 text-[0.65rem] md:text-sm text-gray-500 text-center"><span
-                                        class="font-semibold">Click to upload</span> or drag and drop</p>
-                                <p class="text-[0.65rem] md:text-xs text-gray-500 text-center">PDF <br
-                                        class="block md:hidden">(MAX. SIZE 200kb)</p>
-                            </div>
-                            <input id="cast_cert" type="file" class="hidden" name="caste_cert" />
-                        </label>
-                    </div>
-                    <a id="cast_cert_view"
-                        class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
-                        href="#" target="_blank">View Document</a>
-                </div>
-
-
-                <div class="p-2 space-y-2">
-                    <div class="flex items-center">
-                        <span class="text-sm pr-1">08.</span>
-                        <p class="text-xs">NCC Certificate</p>
-                    </div>
-                    <div class="flex items-center justify-center w-full">
-                        <label for="ncc"
-                            class="flex flex-col items-center justify-center h-28 md:h-54 w-32 md:w-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 p-2">
-                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                <i class="bi bi-cloud-arrow-up text-xl md:text-3xl text-gray-500"></i>
-                                <p class="mb-2 text-[0.65rem] md:text-sm text-gray-500 text-center"><span
-                                        class="font-semibold">Click to upload</span> or drag and drop</p>
-                                <p class="text-[0.65rem] md:text-xs text-gray-500 text-center">PDF <br
-                                        class="block md:hidden">(MAX. SIZE 200kb)</p>
-                            </div>
-                            <input id="ncc" type="file" class="hidden" name="ncc_cert" />
-                        </label>
-                    </div>
-                    <a id="ncc_view"
-                        class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
-                        href="#" target="_blank">View Document</a>
-                </div>
+                @endif
 
 
                 <div class="p-2 space-y-2">
@@ -311,9 +379,16 @@
                             <input id="computer_cert" type="file" class="hidden" name="comp_cert" />
                         </label>
                     </div>
-                    <a id="computer_cert_view"
-                        class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
-                        href="#" target="_blank">View Document</a>
+                    @if (isset($documents->comp_cert) && !empty($documents->comp_cert))
+                        <a id="computer_cert_view"
+                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                            href="{{ asset('storage/public/uploads/comp_cert/' . $documents->comp_cert) }}"
+                            target="_blank">View Document</a>
+                    @else
+                        <a id="computer_cert_view"
+                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                            href="" target="_blank">View Document</a>
+                    @endif
                 </div>
 
 
@@ -335,9 +410,16 @@
                             <input id="mechanic_cert" type="file" class="hidden" name="mechanic_ex_cert" />
                         </label>
                     </div>
-                    <a id="mechanic_cert_view"
-                        class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
-                        href="#" target="_blank">View Document</a>
+                    @if (isset($documents->mechanic_ex_cert) && !empty($documents->mechanic_ex_cert))
+                        <a id="mechanic_cert_view"
+                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                            href="{{ asset('storage/public/uploads/mechanic_ex_cert/' . $documents->mechanic_ex_cert) }}"
+                            target="_blank">View Document</a>
+                    @else
+                        <a id="mechanic_cert_view"
+                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                            href="" target="_blank">View Document</a>
+                    @endif
                 </div>
             </div>
         </form>

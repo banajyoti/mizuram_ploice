@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\District;
 use App\Models\Document;
 use App\Models\Profile;
+use App\Models\Questionary;
 use App\Models\State;
 use App\Models\User;
 use Auth;
@@ -22,6 +23,7 @@ class ProfileController extends Controller
                 ->select('castes.name as c', 'users.*')
                 ->where('users.id', Auth::user()->id)
                 ->first();
+
             $userProfiles = Profile::leftJoin('states as st1', 'st1.id', '=', 'profiles.p_state_id')
                 ->leftJoin('states as st2', 'st2.id', '=', 'profiles.c_state_id')
                 ->leftJoin('districts as dist1', 'dist1.id', '=', 'profiles.p_district_id')
@@ -37,14 +39,14 @@ class ProfileController extends Controller
                 'permanent_address.street2' => 'nullable|string|max:255',
                 'permanent_address.pincode' => 'required|numeric|digits:6',
                 'permanent_address.state_id' => 'required',
-                'permanent_address.district' => 'required',
+                // 'permanent_address.district' => 'required',
                 'permanent_address.police_station' => 'required|string|max:255',
                 'permanent_address.post_office' => 'required|string|max:255',
                 'correspondence_address.street1' => 'required|string|max:255',
                 'correspondence_address.street2' => 'nullable|string|max:255',
                 'correspondence_address.pincode' => 'required|numeric|digits:6',
                 'correspondence_address.state_id' => 'required',
-                'correspondence_address.district' => 'required',
+                // 'correspondence_address.district' => 'required',
                 'correspondence_address.police_station' => 'required|string|max:255',
                 'correspondence_address.post_office' => 'required|string|max:255',
                 'education.board_school' => 'required|string|max:255',
@@ -53,33 +55,56 @@ class ProfileController extends Controller
                 'education.yop' => 'required|integer|digits:4',
                 'education.percentage' => 'required|numeric|between:0,100',
             ]);
+            $p_state_id = $request->input('permanent_address.state_id');
+            $c_state_id = $request->input('correspondence_address.state_id');
+            $p_district_id = $request->input('permanent_address.district');
+            $p_other_district = $request->input('permanent_address.district_text');
+            $c_district_id = $request->input('correspondence_address.district');
+            $c_other_district = $request->input('correspondence_address.district_text');
 
+            $data = [
+                'religion' => $request->input('religion'),
+                'nationality' => $request->input('nationality'),
+                'adhar_no' => $request->input('adhar_no'),
+                'p_address1' => $request->input('permanent_address.street1'),
+                'p_address2' => $request->input('permanent_address.street2'),
+                'p_pin' => $request->input('permanent_address.pincode'),
+                'p_state_id' => $p_state_id,
+                'p_district_id' => $p_district_id,
+                'p_other_district' => $p_other_district,
+                'p_police_id' => $request->input('permanent_address.police_station'),
+                'p_post_office' => $request->input('permanent_address.post_office'),
+                'c_address1' => $request->input('correspondence_address.street1'),
+                'c_address2' => $request->input('correspondence_address.street2'),
+                'c_pin' => $request->input('correspondence_address.pincode'),
+                'c_state_id' => $c_state_id,
+                'c_district_id' => $c_district_id,
+                'c_other_district' => $c_other_district,
+                'c_police_id' => $request->input('correspondence_address.police_station'),
+                'c_post_office' => $request->input('correspondence_address.post_office'),
+                'board_id' => $request->input('education.board_school'),
+                'school_name' => $request->input('education.school_name'),
+                'roll_no' => $request->input('education.roll_no'),
+                'year_of_passing' => $request->input('education.yop'),
+                'percentage' => $request->input('education.percentage'),
+            ];
+
+            if ($p_state_id != 17) {
+                $data['p_district_id'] = null;
+            } else {
+                $data['p_other_district'] = null;
+            }
+
+            if ($c_state_id != 17) {
+                $data['c_district_id'] = null;
+            } else {
+                $data['c_other_district'] = null;
+            }
+
+            // Update or create the profile
             $userProfile = Profile::updateOrCreate(
                 ['user_id' => Auth::user()->id],
-                [
-                    'religion' => $request->input('religion'),
-                    'nationality' => $request->input('nationality'),
-                    'adhar_no' => $request->input('adhar_no'),
-                    'p_address1' => $request->input('permanent_address.street1'),
-                    'p_address2' => $request->input('permanent_address.street2'),
-                    'p_pin' => $request->input('permanent_address.pincode'),
-                    'p_state_id' => $request->input('permanent_address.state_id'),
-                    'p_district_id' => $request->input('permanent_address.district'),
-                    'p_police_id' => $request->input('permanent_address.police_station'),
-                    'p_post_office' => $request->input('permanent_address.post_office'),
-                    'c_address1' => $request->input('correspondence_address.street1'),
-                    'c_address2' => $request->input('correspondence_address.street2'),
-                    'c_pin' => $request->input('correspondence_address.pincode'),
-                    'c_state_id' => $request->input('correspondence_address.state_id'),
-                    'c_district_id' => $request->input('correspondence_address.district'),
-                    'c_police_id' => $request->input('correspondence_address.police_station'),
-                    'c_post_office' => $request->input('correspondence_address.post_office'),
-                    'board_id' => $request->input('education.board_school'),
-                    'school_name' => $request->input('education.school_name'),
-                    'roll_no' => $request->input('education.roll_no'),
-                    'year_of_passing' => $request->input('education.yop'),
-                    'percentage' => $request->input('education.percentage'),
-                ]
+                $data
             );
 
             // Return a response (JSON in case of AJAX submission)
@@ -229,42 +254,52 @@ class ProfileController extends Controller
     public function document(Request $request)
     {
         if ($request->isMethod('GET')) {
-            return view('pages.document');
+            $userDetails = User::where('id', Auth::user()->id)->first();
+            $questionaries = Questionary::where('user_id', $userDetails->id)->first();
+            $documents = Document::where('user_id', $userDetails->id)->first();
+            return view('pages.document', compact('userDetails', 'questionaries', 'documents'));
         } else {
+
             $reg_id = Auth::user();
             $uploadedFiles = [];
 
             $fields = [
-                'photo' => '/public/uploads/upload_photo',
-                'signature' => '/public/uploads/upload_signature',
-                'age_prof_cert' => '/public/uploads/age_prof_cert',
-                'class_x_cert' => '/public/uploads/class_x_cert',
-                'mizu_lang_cert' => '/public/uploads/mizu_lang_cert',
-                'homeguard_cert' => '/public/uploads/homeguard_cert',
-                'caste_cert' => '/public/uploads/caste_cert',
-                'ncc_cert' => '/public/uploads/ncc_cert',
-                'comp_cert' => '/public/uploads/comp_cert',
-                'mechanic_ex_cert' => '/public/uploads/mechanic_ex_cert',
+                'photo' => 'uploads/upload_photo',
+                'signature' => 'uploads/upload_signature',
+                'age_prof_cert' => 'uploads/age_prof_cert',
+                'class_x_cert' => 'uploads/class_x_cert',
+                'mizu_lang_cert' => 'uploads/mizu_lang_cert',
+                'homeguard_cert' => 'uploads/homeguard_cert',
+                'caste_cert' => 'uploads/caste_cert',
+                'ncc_cert' => 'uploads/ncc_cert',
+                'comp_cert' => 'uploads/comp_cert',
+                'mechanic_ex_cert' => 'uploads/mechanic_ex_cert',
             ];
 
+
+            $existingDocument = Document::where('user_id', $reg_id->id)->first();
+
             foreach ($fields as $field => $path) {
-                if ($request->hasFile($field)) {
-                    $fileName = $reg_id->id . "_" . time() . "." . $request->$field->getClientOriginalExtension();
-                    $request->$field->storeAs($path, $fileName);
-                    $uploadedFiles[$field] = $fileName;
+                if ($reg_id->category_id == 1 && $field == 'caste_cert') {
+                    $uploadedFiles[$field] = $existingDocument && !is_null($existingDocument->$field) ? $existingDocument->$field : null;
                 } else {
-                    $existingDocument = Document::where('user_id', $reg_id->id)->first();
-                    dd($existingDocument);
-                    if (is_null($existingDocument) || is_null($existingDocument->$field)) {
-                        return response()->json([
-                            'errors' => [$field => 'Please Upload Your ' . ucfirst(str_replace('_', ' ', $field)) . '.']
-                        ], 422);
+                    if ($request->hasFile($field)) {
+                        $fileName = $reg_id->id . "_" . time() . "." . $request->$field->getClientOriginalExtension();
+                        $request->$field->storeAs('public/' . $path, $fileName);
+                        $uploadedFiles[$field] = $fileName;
                     } else {
-                        $uploadedFiles[$field] = $existingDocument->$field;
+                        if ($existingDocument && !is_null($existingDocument->$field)) {
+                            $uploadedFiles[$field] = $existingDocument->$field;
+                        } else {
+                            return response()->json([
+                                'errors' => [$field => 'Please Upload Your ' . ucfirst(str_replace('_', ' ', $field)) . '.']
+                            ], 422);
+                        }
                     }
                 }
             }
 
+            // Prepare the data for insert/update
             $data = [
                 'user_id' => $reg_id->id,
                 'photo' => $uploadedFiles['photo'],
@@ -273,7 +308,7 @@ class ProfileController extends Controller
                 'class_x_cert' => $uploadedFiles['class_x_cert'],
                 'mizu_lang_cert' => $uploadedFiles['mizu_lang_cert'],
                 'homeguard_cert' => $uploadedFiles['homeguard_cert'],
-                'caste_cert' => $uploadedFiles['caste_cert'],
+                'caste_cert' => $uploadedFiles['caste_cert'], // This will be skipped if category_id == 1
                 'ncc_cert' => $uploadedFiles['ncc_cert'],
                 'comp_cert' => $uploadedFiles['comp_cert'],
                 'mechanic_ex_cert' => $uploadedFiles['mechanic_ex_cert'],
@@ -284,12 +319,10 @@ class ProfileController extends Controller
                 $data
             );
 
-            // Respond with a success message
             return response()->json([
                 'message' => 'Documents uploaded successfully.'
             ]);
         }
     }
-
 
 }
