@@ -85,7 +85,11 @@
 			<p class="text-xs font-medium text-gray-500">(Post's are displayed in respect to preference order)</p>
 			<div class="text-xl">Total Amount: ₹ 200</div>
 			<div class="pt-6 proceed_payment_div">
-				<button type="button" class="proceed_payment inline-block bg-blue-600 hover:bg-blue-700 text-white p-2 px-3 rounded-lg">Proceede to Pay<i class="bi bi-chevron-double-right ps-1 text-sm"></i></button>
+				{{-- <button type="button" class="proceed_payment inline-block bg-blue-600 hover:bg-blue-700 text-white p-2 px-3 rounded-lg">Proceede to Pay<i class="bi bi-chevron-double-right ps-1 text-sm"></i></button> --}}
+                <button type="button" class="proceed_payment inline-block bg-blue-600 hover:bg-blue-700 text-white p-2 px-3 rounded-lg" onclick="window.location='{{ route('download_ack') }}'">
+                    Proceed to Pay <i class="bi bi-chevron-double-right ps-1 text-sm"></i>
+                </button>
+
 			</div>
 			<div class="pt-6 payment_completed_div hidden">
 				<p class="md:text-xl text-green-600 font-medium">Payment Completed!</p>

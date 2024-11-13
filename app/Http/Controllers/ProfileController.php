@@ -34,27 +34,41 @@ class ProfileController extends Controller
 
             return view('pages.profile', compact('registerDetails', 'districts', 'states', 'userProfiles'));
         } else {
-            $validatedData = $request->validate([
+            // Add dynamic validation rules based on the state IDs
+            $rules = [
+                'religion' => 'required',
+                'nationality' => 'required',
                 'permanent_address.street1' => 'required|string|max:255',
                 'permanent_address.street2' => 'nullable|string|max:255',
                 'permanent_address.pincode' => 'required|numeric|digits:6',
                 'permanent_address.state_id' => 'required',
-                // 'permanent_address.district' => 'required',
-                'permanent_address.police_station' => 'required|string|max:255',
-                'permanent_address.post_office' => 'required|string|max:255',
                 'correspondence_address.street1' => 'required|string|max:255',
                 'correspondence_address.street2' => 'nullable|string|max:255',
                 'correspondence_address.pincode' => 'required|numeric|digits:6',
                 'correspondence_address.state_id' => 'required',
-                // 'correspondence_address.district' => 'required',
-                'correspondence_address.police_station' => 'required|string|max:255',
-                'correspondence_address.post_office' => 'required|string|max:255',
                 'education.board_school' => 'required|string|max:255',
                 'education.school_name' => 'nullable|string|max:255',
                 'education.roll_no' => 'required|string|max:50',
                 'education.yop' => 'required|integer|digits:4',
                 'education.percentage' => 'required|numeric|between:0,100',
-            ]);
+            ];
+
+            // Add district requirements if state_id is 17
+            if ($request->input('permanent_address.state_id') == 17) {
+                $rules['permanent_address.district'] = 'required';
+            } else {
+                $rules['permanent_address.district_text'] = 'required';
+            }
+            if ($request->input('correspondence_address.state_id') == 17) {
+                $rules['correspondence_address.district'] = 'required';
+            } else {
+                $rules['correspondence_address.district_text'] = 'required';
+            }
+
+            // Validate request data
+            $validatedData = $request->validate($rules);
+
+            // Get data from the request
             $p_state_id = $request->input('permanent_address.state_id');
             $c_state_id = $request->input('correspondence_address.state_id');
             $p_district_id = $request->input('permanent_address.district');
@@ -62,6 +76,7 @@ class ProfileController extends Controller
             $c_district_id = $request->input('correspondence_address.district');
             $c_other_district = $request->input('correspondence_address.district_text');
 
+            // Prepare data for update
             $data = [
                 'religion' => $request->input('religion'),
                 'nationality' => $request->input('nationality'),
@@ -89,6 +104,7 @@ class ProfileController extends Controller
                 'percentage' => $request->input('education.percentage'),
             ];
 
+            // Handle state and district logic
             if ($p_state_id != 17) {
                 $data['p_district_id'] = null;
             } else {
@@ -250,7 +266,6 @@ class ProfileController extends Controller
             // }
         }
     }
-
     public function document(Request $request)
     {
         if ($request->isMethod('GET')) {
@@ -259,7 +274,6 @@ class ProfileController extends Controller
             $documents = Document::where('user_id', $userDetails->id)->first();
             return view('pages.document', compact('userDetails', 'questionaries', 'documents'));
         } else {
-
             $reg_id = Auth::user();
             $uploadedFiles = [];
 
@@ -276,11 +290,15 @@ class ProfileController extends Controller
                 'mechanic_ex_cert' => 'uploads/mechanic_ex_cert',
             ];
 
-
             $existingDocument = Document::where('user_id', $reg_id->id)->first();
+            $questionaries = Questionary::where('user_id', $reg_id->id)->first();
 
             foreach ($fields as $field => $path) {
-                if ($reg_id->category_id == 1 && $field == 'caste_cert') {
+                if (
+                    ($reg_id->category_id == 1 && $field == 'caste_cert') ||
+                    ($field == 'ncc_cert' && $questionaries->ncc_cert == 0) ||
+                    ($field == 'homeguard_cert' && $questionaries->home_guard == 0)
+                ) {
                     $uploadedFiles[$field] = $existingDocument && !is_null($existingDocument->$field) ? $existingDocument->$field : null;
                 } else {
                     if ($request->hasFile($field)) {
@@ -298,7 +316,6 @@ class ProfileController extends Controller
                     }
                 }
             }
-
             // Prepare the data for insert/update
             $data = [
                 'user_id' => $reg_id->id,
@@ -307,13 +324,14 @@ class ProfileController extends Controller
                 'age_prof_cert' => $uploadedFiles['age_prof_cert'],
                 'class_x_cert' => $uploadedFiles['class_x_cert'],
                 'mizu_lang_cert' => $uploadedFiles['mizu_lang_cert'],
-                'homeguard_cert' => $uploadedFiles['homeguard_cert'],
+                'homeguard_cert' => $uploadedFiles['homeguard_cert'], // This will be skipped if home_guard == 0
                 'caste_cert' => $uploadedFiles['caste_cert'], // This will be skipped if category_id == 1
-                'ncc_cert' => $uploadedFiles['ncc_cert'],
+                'ncc_cert' => $uploadedFiles['ncc_cert'], // This will be skipped if ncc_cert == 0
                 'comp_cert' => $uploadedFiles['comp_cert'],
                 'mechanic_ex_cert' => $uploadedFiles['mechanic_ex_cert'],
             ];
 
+            // Update or Create the Document record
             Document::updateOrCreate(
                 ['user_id' => $reg_id->id],
                 $data
@@ -324,5 +342,4 @@ class ProfileController extends Controller
             ]);
         }
     }
-
 }

@@ -159,18 +159,18 @@
                         <div class="h-full flex flex-col">
                             <label for="father_name"
                                 class="block mb-auto px-1 text-sm font-medium text-gray-600">Father Name</label>
-                            <input type="text" id="father_name" {{ $registerDetails->first_name }}
+                            <input type="text" id="father_name"
                                 class="bg-gray-200  border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
-                                name="" value="Papa Triwedi Shriwastav" required disabled />
+                                name="" value="{{ $registerDetails->father_name }}" required disabled />
                         </div>
                     </div>
                     <div class="col-span-12 md:col-span-4 lg:col-span-3 xl:col-span-2">
                         <div class="h-full flex flex-col">
                             <label for="mother_name"
                                 class="block mb-auto px-1 text-sm font-medium text-gray-600">Mother Name</label>
-                            <input type="text" id="mother_name" {{ $registerDetails->mother_name }}
+                            <input type="text" id="mother_name"
                                 class="bg-gray-200  border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
-                                name="" value="Maa Triwedi Shriwastav" required disabled />
+                                name="" value="{{ $registerDetails->mother_name }}" required disabled />
                         </div>
                     </div>
                     <div class="col-span-12 md:col-span-4 lg:col-span-3 xl:col-span-2">
@@ -237,10 +237,34 @@
                             <label for="religion"
                                 class="block mb-auto px-1 text-sm font-medium text-gray-600">Religion<span
                                     class="ps-1 text-red-500">*</span></label>
-                            <input type="text" id="religion"
-                                class="bg-gray-50  border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
-                                name="religion" value="{{ old('religion', $userProfiles->religion ?? '') }}"
-                                placeholder="Religion" required />
+                            <select id="religion" name="religion"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 @error('religion') is-invalid @enderror">
+                                <option selected disabled>select</option>
+                                <option value="1"
+                                    {{ old('religion', $userProfiles->religion ?? '') == '1' ? 'selected' : '' }}>Hindu
+                                </option>
+                                <option value="2"
+                                    {{ old('religion', $userProfiles->religion ?? '') == '2' ? 'selected' : '' }}>
+                                    Muslim</option>
+                                <option value="3"
+                                    {{ old('religion', $userProfiles->religion ?? '') == '3' ? 'selected' : '' }}>
+                                    Christian</option>
+                                <option value="4"
+                                    {{ old('religion', $userProfiles->religion ?? '') == '4' ? 'selected' : '' }}>Sikh
+                                </option>
+                                <option value="5"
+                                    {{ old('religion', $userProfiles->religion ?? '') == '5' ? 'selected' : '' }}>
+                                    Buddhist</option>
+                                <option value="6"
+                                    {{ old('religion', $userProfiles->religion ?? '') == '6' ? 'selected' : '' }}>Jain
+                                </option>
+                                <option value="7"
+                                    {{ old('religion', $userProfiles->religion ?? '') == '7' ? 'selected' : '' }}>Other
+                                    Religions</option>
+                            </select>
+                            @error('religion')
+                                <div class="text-sm text-red-500">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-span-12 md:col-span-4 lg:col-span-3 xl:col-span-2">
@@ -252,6 +276,9 @@
                                 class="bg-gray-50  border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 name="nationality" value="{{ old('nationality', $userProfiles->nationality ?? '') }}"
                                 placeholder="Nationality" required />
+                            @error('nationality')
+                                <div class="text-sm text-red-500">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-span-12 md:col-span-4 lg:col-span-3 xl:col-span-2">
@@ -262,6 +289,9 @@
                                 class="bg-gray-50  border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 name="adhar_no"value="{{ old('adhar_no', $userProfiles->adhar_no ?? '') }}"
                                 placeholder="Aadhaar Number" required />
+                            @error('adhar_no')
+                                <div class="text-sm text-red-500">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -287,6 +317,9 @@
                                 value="{{ old('permanent_address.street1', $userProfiles->p_address1 ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Street 1" required />
+                            @error('permanent_address.street1')
+                                <div class="text-sm text-red-500">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 
@@ -301,6 +334,9 @@
                                 value="{{ old('permanent_address.street2', $userProfiles->p_address2 ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Street 2" />
+                            @error('permanent_address.street2')
+                                <div class="text-sm text-red-500">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                     <!-- State -->
@@ -315,17 +351,19 @@
                                 <option value="" selected disabled>Select</option>
                                 @foreach ($states as $state)
                                     <option value="{{ $state->id }}"
-                                        {{ old('permanent_address.state_id', $userProfiles->p_state_id) == $state->id ? 'selected' : '' }}>
+                                        {{ old('permanent_address.state_id', $userProfiles && $userProfiles->p_state_id ? $userProfiles->p_state_id : '') == $state->id ? 'selected' : '' }}>
                                         {{ $state->name }}
                                     </option>
                                 @endforeach
-
                             </select>
+                            @error('permanent_address.state_id')
+                                <div class="text-sm text-red-500 mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 
                     <!-- District -->
-                    <div class="col-span-12 md:col-span-6 lg:col-span-3 xl:col-span-2" id="district-container">
+                    <div class="col-span-12 md:col-span-6 lg:col-span-3 xl:col-span-2 hidden" id="district-container">
                         <div class="h-full flex flex-col">
                             <label for="district" class="block mb-auto px-1 text-sm font-medium text-gray-600">
                                 District<span class="ps-1 text-red-500">*</span>
@@ -341,6 +379,9 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @error('permanent_address.district')
+                                <div class="text-sm text-red-500 mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 
@@ -355,6 +396,7 @@
                                 value="{{ old('permanent_address.district_text', $userProfiles->p_other_district ?? '') }}"
                                 onkeydown="return /[a-z]/i.test(event.key)"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" />
+
                         </div>
                     </div>
 
@@ -369,6 +411,9 @@
                                 value="{{ old('permanent_address.police_station', $userProfiles->p_police_id ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Police Station" required />
+                            @error('permanent_address.police_station')
+                                <div class="text-sm text-red-500">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 
@@ -382,6 +427,9 @@
                                 value="{{ old('permanent_address.post_office', $userProfiles->p_post_office ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Post Office" required />
+                            @error('permanent_address.post_office')
+                                <div class="text-sm text-red-500">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 
@@ -391,15 +439,19 @@
                             <label for="pincode"
                                 class="block mb-auto px-1 text-sm font-medium text-gray-600">Pincode<span
                                     class="ps-1 text-red-500">*</span></label>
-                            <input type="text" id="p_pin" name="permanent_address[pincode]"
+                            <input type="text" id="p_pin" name="permanent_address[pincode]" maxlength="6"
+                                minlength="6"
                                 value="{{ old('permanent_address.pincode', $userProfiles->p_pin ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Pincode" required />
+                            @error('permanent_address.pincode')
+                                <div class="text-sm text-red-500">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                 </div>
                 <div class="inline-block flex items-center">
-                    <input type="checkBox" onclick="FillAddressInput()" id="checkBox"
+                    <input type="checkBox" id="checkBox"
                         class="mt-0.5 w-5 h-5 rounded-md text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
                     <label for="address_same" class="ms-2 text-sm font text-gray-900">
                         Please check if Permanent Address is the same as Correspondence Address.
@@ -425,6 +477,9 @@
                                 value="{{ old('permanent_address.street1', $userProfiles->c_address1 ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Street 1" required />
+                            @error('correspondence_address.street1')
+                                <div class="text-sm text-red-500 mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 
@@ -439,6 +494,9 @@
                                 value="{{ old('permanent_address.street2', $userProfiles->c_address2 ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Street 2" />
+                            @error('correspondence_address.street2')
+                                <div class="text-sm text-red-500 mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 
@@ -451,6 +509,7 @@
                             <select id="c_state_id" name="correspondence_address[state_id]"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 required>
+                                <option value="" selected disabled>Select</option>
                                 @foreach ($states as $state)
                                     <option value="{{ $state->id }}"
                                         {{ old('correspondence_address.state_id', $userProfiles->c_state_id ?? '') == $state->id ? 'selected' : '' }}>
@@ -458,6 +517,9 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @error('correspondence_address.state_id')
+                                <div class="text-sm text-red-500 mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 
@@ -470,7 +532,7 @@
                             <select id="c_district_id" name="correspondence_address[district]"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 required>
-                                <option value="">Select</option>
+                                <option value="" selected disabled>Select</option>
                                 @foreach ($districts as $district)
                                     <option value="{{ $district->id }}"
                                         {{ old('correspondence_address.district', $userProfiles->c_district_id ?? '') == $district->id ? 'selected' : '' }}>
@@ -478,6 +540,9 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @error('correspondence_address.district')
+                                <div class="text-sm text-red-500 mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 
@@ -506,6 +571,9 @@
                                 value="{{ old('permanent_address.police_station', $userProfiles->c_police_id ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Police Station" required />
+                            @error('correspondence_address.police_station')
+                                <div class="text-sm text-red-500 mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 
@@ -520,6 +588,9 @@
                                 value="{{ old('permanent_address.post_office', $userProfiles->c_post_office ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Post Office" required />
+                            @error('correspondence_address.post_office')
+                                <div class="text-sm text-red-500 mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 
@@ -534,6 +605,9 @@
                                 value="{{ old('permanent_address.pincode', $userProfiles->c_pin ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Pincode" required />
+                            @error('correspondence_address.pincode')
+                                <div class="text-sm text-red-500 mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -553,6 +627,9 @@
                                     value="{{ old('permanent_address.board_school', $userProfiles->board_id ?? '') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                     placeholder="Board/ School" required />
+                                @error('education.board_school')
+                                    <div class="text-sm text-red-500 mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
@@ -565,6 +642,9 @@
                                     value="{{ old('permanent_address.school_name', $userProfiles->school_name ?? '') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                     placeholder="School Name" />
+                                @error('education.school_name')
+                                    <div class="text-sm text-red-500 mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
@@ -577,6 +657,9 @@
                                     value="{{ old('permanent_address.roll_no', $userProfiles->roll_no ?? '') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                     placeholder="Roll Number" required />
+                                @error('education.roll_no')
+                                    <div class="text-sm text-red-500 mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
@@ -589,6 +672,9 @@
                                     value="{{ old('permanent_address.yop', $userProfiles->year_of_passing ?? '') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                     placeholder="Year of Passing" required />
+                                @error('education.yop')
+                                    <div class="text-sm text-red-500 mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
 
@@ -601,6 +687,9 @@
                                     value="{{ old('permanent_address.percentage', $userProfiles->percentage ?? '') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                     placeholder="Percentage %" required />
+                                @error('education.percentage')
+                                    <div class="text-sm text-red-500 mt-1">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -614,221 +703,8 @@
     <a class="inline-block bg-gray-600 hover:bg-gray-700 text-white p-2 rounded-md Nunito"
         href="{{ route('preference') }}"><i class="bi bi-arrow-left-short pr-1"></i>Go Back</a>
     <a id="save-proceed-btn"
-        class="ml-auto inline-block bg-green-600 hover:bg-green-700 text-white p-2 rounded-md Nunito {{ !empty($userProfiles) ? '' : 'hidden' }}"><i
+        class="ml-auto inline-block bg-green-600 hover:bg-green-700 text-white p-2 rounded-md Nunito"><i
             class="bi bi-check-all pr-1"></i>Save & proceede</a>
 </div>
 @include('layouts.footer')
-<!-- Include jQuery (only if it's not already included in your layout) -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<!-- SweetAlert2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<script>
-    // AJAX Form Submission
-    $(document).ready(function() {
-        $('#save-proceed-btn').on('click', function(e) {
-            e.preventDefault();
-
-            var formData = new FormData($('#profile-form')[0]);
-
-            // Send AJAX POST request
-            $.ajax({
-                url: '{{ route('profile') }}',
-                type: 'POST',
-                data: formData,
-                processData: false, // Important for file uploads
-                contentType: false, // Important for file uploads
-                success: function(response) {
-                    if (response.success) {
-                        // Success alert with SweetAlert2
-                        Swal.fire({
-                            title: 'Success!',
-                            text: 'Form submitted successfully!',
-                            icon: 'success',
-                            confirmButtonText: 'OK',
-                            confirmButtonColor: '#2DB325'
-                        }).then(() => {
-                            // Redirect after the user clicks "OK" on the success message
-                            window.location.href = '/document'; // Redirect URL
-                        });
-                    } else {
-                        // Error alert with SweetAlert2
-                        Swal.fire({
-                            title: 'Error!',
-                            text: 'There was an error submitting the form.',
-                            icon: 'error',
-                            confirmButtonText: 'Try Again'
-                        });
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error: " + error);
-                    // Error alert with SweetAlert2 for AJAX failure
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'An error occurred while submitting the form.',
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    });
-                }
-            });
-        });
-    });
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Check Permanent Address State
-        var pStateId = document.getElementById('p_state_id').value;
-        var districtSelect = document.getElementById('district-container');
-        var districtTextbox = document.getElementById('district-textbox-container');
-
-        // Apply the correct logic based on the saved state ID
-        if (pStateId === '17') { // If state ID is 17 (or whatever your condition is)
-            districtSelect.classList.remove('hidden');
-            districtTextbox.classList.add('hidden');
-        } else {
-            districtSelect.classList.add('hidden');
-            districtTextbox.classList.remove('hidden');
-        }
-
-        // Check Correspondence Address State
-        var cStateId = document.getElementById('c_state_id').value;
-        var cDistrictSelect = document.getElementById('c_district-container');
-        var cDistrictTextbox = document.getElementById('c_district-textbox-container');
-
-        // Apply the correct logic based on the saved state ID for Correspondence Address
-        if (cStateId === '17') { // If state ID is 17 (or whatever your condition is)
-            cDistrictSelect.classList.remove('hidden');
-            cDistrictTextbox.classList.add('hidden');
-        } else {
-            cDistrictSelect.classList.add('hidden');
-            cDistrictTextbox.classList.remove('hidden');
-        }
-
-        // Handle the 'change' event for Permanent Address state
-        document.getElementById('p_state_id').addEventListener('change', function() {
-            var stateId = this.value;
-            if (stateId === '17') { // If state ID is 17
-                districtSelect.classList.remove('hidden');
-                districtTextbox.classList.add('hidden');
-            } else {
-                districtSelect.classList.add('hidden');
-                districtTextbox.classList.remove('hidden');
-            }
-        });
-
-        // Handle the 'change' event for Correspondence Address state
-        document.getElementById('c_state_id').addEventListener('change', function() {
-            var stateId = this.value;
-            if (stateId === '17') { // If state ID is 17
-                cDistrictSelect.classList.remove('hidden');
-                cDistrictTextbox.classList.add('hidden');
-            } else {
-                cDistrictSelect.classList.add('hidden');
-                cDistrictTextbox.classList.remove('hidden');
-            }
-        });
-    });
-</script>
-
-<script>
-    function FillAddressInput() {
-        let checkBox = document.getElementById('checkBox');
-
-        // Permanent address fields
-        let pAddress1 = document.getElementById("p_address1");
-        let pAddress2 = document.getElementById("p_address2");
-        let postOffice1 = document.getElementById("p_post_office");
-        let policeStation1 = document.getElementById("p_police_id");
-        let district1 = document.getElementById("p_district_id");
-        let state1 = document.getElementById("p_state_id");
-        let pin1 = document.getElementById("p_pin");
-        let district1text = document.getElementById("district-text");
-
-        // Correspondence address fields
-        let cAddress1 = document.getElementById("c_address1");
-        let cAddress2 = document.getElementById("c_address2");
-        let postOffice2 = document.getElementById("c_post_office");
-        let policeStation2 = document.getElementById("c_police_id");
-        let district2 = document.getElementById("c_district_id");
-        let state2 = document.getElementById("c_state_id");
-        let pin2 = document.getElementById("c_pin");
-        let district2text = document.getElementById("c_district-text");
-
-        if (checkBox.checked == true) {
-            // Get values from permanent address fields
-            let pAddress1Value = pAddress1.value;
-            let pAddress2Value = pAddress2.value;
-            let postOffice1Value = postOffice1.value;
-            let policeStation1Value = policeStation1.value;
-            let district1Value = district1.value;
-            let state1Value = state1.value;
-            let pin1Value = pin1.value;
-            let district1textValue = district1text.value;
-
-            // Copy permanent address to correspondence fields
-            cAddress1.value = pAddress1Value;
-            cAddress2.value = pAddress2Value;
-            postOffice2.value = postOffice1Value;
-            policeStation2.value = policeStation1Value;
-            district2.value = district1Value;
-            state2.value = state1Value;
-            pin2.value = pin1Value;
-            district2text.value = district1textValue;
-            console.log(district2text.value)
-
-            // Make correspondence fields readonly
-            cAddress1.setAttribute('readonly', true);
-            cAddress2.setAttribute('readonly', true);
-            postOffice2.setAttribute('readonly', true);
-            policeStation2.setAttribute('readonly', true);
-            pin2.setAttribute('readonly', true);
-            district2text.setAttribute('readonly', true);
-
-            // Optionally, you can add classes to give a visual cue that these fields are readonly
-            cAddress1.classList.add('readonly-field');
-            cAddress2.classList.add('readonly-field');
-            postOffice2.classList.add('readonly-field');
-            policeStation2.classList.add('readonly-field');
-            pin2.classList.add('readonly-field');
-            district2text.classList.add('readonly-field');
-        } else {
-            // Clear the correspondence fields if checkbox is unchecked
-            cAddress1.value = "";
-            cAddress2.value = "";
-            postOffice2.value = "";
-            policeStation2.value = "";
-            district2.value = "";
-            state2.value = "";
-            pin2.value = "";
-            district2text.value = "";
-
-            // Remove the readonly attribute when checkbox is unchecked
-            cAddress1.removeAttribute('readonly');
-            cAddress2.removeAttribute('readonly');
-            postOffice2.removeAttribute('readonly');
-            policeStation2.removeAttribute('readonly');
-            pin2.removeAttribute('readonly');
-            district2text.removeAttribute('readonly');
-
-            // Optionally, remove the visual cue for readonly fields
-            cAddress1.classList.remove('readonly-field');
-            cAddress2.classList.remove('readonly-field');
-            postOffice2.classList.remove('readonly-field');
-            policeStation2.classList.remove('readonly-field');
-            pin2.classList.remove('readonly-field');
-            district2text.classList.remove('readonly-field');
-        }
-    }
-</script>
-
-<script>
-    $('input[type=text], textarea').keyup(function() {
-        $(this).val(function() {
-            return this.value.toUpperCase();
-        })
-    });
-</script>
+@include('layouts.custom-scripts.profileScript')

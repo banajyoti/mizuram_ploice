@@ -143,6 +143,9 @@
                                 <option value="Ms">Ms.</option>
                                 <option value="Md">Md.</option>
                             </select>
+                            @error('salutation')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-span-4">
@@ -153,6 +156,9 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 name="first_name" value="{{ old('first_name') }}" placeholder="First Name" required />
                         </div>
+                        @error('first_name')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="col-span-3">
                         <div class="h-full flex flex-col">
@@ -160,7 +166,11 @@
                                 Name<span class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="middle_name" onkeydown="return /[a-z]/i.test(event.key)"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
-                                name="middle_name" value="{{ old('middle_name') }}" placeholder="Middle Name" required />
+                                name="middle_name" value="{{ old('middle_name') }}" placeholder="Middle Name"
+                                required />
+                            @error('middle_name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-span-3">
@@ -170,6 +180,9 @@
                             <input type="text" id="last_name" onkeydown="return /[a-z]/i.test(event.key)"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 name="last_name" value="{{ old('last_name') }}" placeholder="Last Name" required />
+                            @error('last_name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-span-6">
@@ -179,7 +192,11 @@
                                 Name<span class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="father_name" onkeydown="return /[a-z]/i.test(event.key)"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
-                                name="father_name" value="{{ old('father_name') }}" placeholder="Father Name" required />
+                                name="father_name" value="{{ old('father_name') }}" placeholder="Father Name"
+                                required />
+                            @error('father_name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-span-6">
@@ -189,7 +206,11 @@
                                     class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="mother_name" onkeydown="return /[a-z]/i.test(event.key)"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
-                                name="mother_name" value="{{ old('mother_name') }}" placeholder="Mother Name" required />
+                                name="mother_name" value="{{ old('mother_name') }}" placeholder="Mother Name"
+                                required />
+                            @error('mother_name')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-span-3">
@@ -207,6 +228,9 @@
                                 <option value="5">Post Graduation</option>
                                 <option value="6">Phd.</option>
                             </select>
+                            @error('high_qual')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-span-3">
@@ -221,6 +245,9 @@
                                 <option value="2">Female</option>
                                 <option value="3">Others</option>
                             </select>
+                            @error('gender_id')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-span-3">
@@ -237,6 +264,9 @@
                                 <option value="5">ST (P)</option>
                                 <option value="6">ST (H)</option>
                             </select>
+                            @error('category_id')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-span-3">
@@ -246,6 +276,9 @@
                             <input type="date" id="dob" onchange="myFunction()"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 datepicker"
                                 name="dob" value="" placeholder="Date of Birth" required />
+                            @error('dob')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-span-4">
@@ -271,6 +304,9 @@
                             <input type="" id="email"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 name="email" value="" placeholder="Email Address" required />
+                            @error('email')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="col-span-4">
@@ -328,4 +364,3 @@
 @include('layouts.footer')
 @include('layouts.modals')
 @include('layouts.custom-scripts.registerScript')
-
