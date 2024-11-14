@@ -53,7 +53,7 @@
                 </div>
                 <div class="">
                     <p class="mb-2 text-xs font-medium text-gray-500">( Login to continue form fillup as per the advertised post's. )</p>
-                    <a data-modal-hide="reg-form-saved" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-white focus:outline-none bg-blue-600 rounded-lg border border-blue-200 hover:bg-blue-700 focus:z-10 focus:ring-4 focus:ring-blue-100" href="{{ route('notification-login') }}">Back to Login</a>
+                    <a data-modal-hide="reg-form-saved" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-white focus:outline-none bg-blue-600 rounded-lg border border-blue-200 hover:bg-blue-700 focus:z-10 focus:ring-4 focus:ring-blue-100" href="{{ route('login') }}">Back to Login</a>
                 </div>
             </div>
         </div>

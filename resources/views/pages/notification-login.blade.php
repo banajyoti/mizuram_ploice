@@ -109,7 +109,7 @@
     </div>
     <div class="md:col-span-12 xl:col-span-2 md:order-1 xl:order-2">
         <div class="h-full p- rounded-xl borde border-gray-400 space-y-6 pt-4 flex flex-col">
-            <a href="register.php" class="">
+            <a href="{{ route('register') }}" class="">
                 <div
                     class="my-3 bg-white shadow-md p-4 lg:py-6 rounded hover:text-red-600 transition-all border rounded-xl space-y-1 lg:space-y-3">
                     <div class="">
@@ -153,6 +153,9 @@
                     <input type="text" id="rec_id" name="rec_id"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         placeholder="Recruitment ID" required />
+                    @error('rec_id')
+                        <div class="text-red-500">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="mb-4 flex items-center px-10">
                     <div class="h-[0.08rem] bg-gray-300 w-full"></div>
@@ -164,12 +167,18 @@
                     <input type="text" id="mob_no" name="mobile_no" maxlength="10" minlength="10"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         placeholder="Mobile Number" required />
+                    @error('mob_no')
+                        <div class="text-red-500">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="mb-6">
                     <label for="mob_no" class="block mb-2 text-sm font-medium text-gray-600">Date of Birth</label>
                     <input type="date" id="dob" name="dob"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-3xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                         placeholder="Password" required />
+                    @error('dob')
+                        <div class="text-red-500">{{ $message }}</div>
+                    @enderror
                 </div>
                 <a type="button" id="loginButton"
                     class="mb-6 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-3xl text-sm w-full sm:w- px-5 py-2.5 text-center">Login</a>

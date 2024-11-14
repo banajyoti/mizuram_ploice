@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\District;
 use App\Models\Document;
+use App\Models\Preference;
 use App\Models\Profile;
 use App\Models\Questionary;
 use App\Models\State;
@@ -78,6 +79,7 @@ class ProfileController extends Controller
 
             // Prepare data for update
             $data = [
+                'alt_mobile' => $request->input('alt_mobile'),
                 'religion' => $request->input('religion'),
                 'nationality' => $request->input('nationality'),
                 'adhar_no' => $request->input('adhar_no'),
@@ -288,6 +290,7 @@ class ProfileController extends Controller
                 'ncc_cert' => 'uploads/ncc_cert',
                 'comp_cert' => 'uploads/comp_cert',
                 'mechanic_ex_cert' => 'uploads/mechanic_ex_cert',
+                'iti_ex_cert' => 'uploads/iti_ex_cert',
             ];
 
             $existingDocument = Document::where('user_id', $reg_id->id)->first();
@@ -297,7 +300,9 @@ class ProfileController extends Controller
                 if (
                     ($reg_id->category_id == 1 && $field == 'caste_cert') ||
                     ($field == 'ncc_cert' && $questionaries->ncc_cert == 0) ||
-                    ($field == 'homeguard_cert' && $questionaries->home_guard == 0)
+                    ($field == 'homeguard_cert' && $questionaries->home_guard == 0) ||
+                    ($field == 'mechanic_ex_cert' && $questionaries->auto_mobile == 0) ||
+                    ($field == 'iti_ex_cert' && $questionaries->iti_eqi == 0)
                 ) {
                     $uploadedFiles[$field] = $existingDocument && !is_null($existingDocument->$field) ? $existingDocument->$field : null;
                 } else {
@@ -329,6 +334,7 @@ class ProfileController extends Controller
                 'ncc_cert' => $uploadedFiles['ncc_cert'], // This will be skipped if ncc_cert == 0
                 'comp_cert' => $uploadedFiles['comp_cert'],
                 'mechanic_ex_cert' => $uploadedFiles['mechanic_ex_cert'],
+                'iti_ex_cert' => $uploadedFiles['iti_ex_cert'],
             ];
 
             // Update or Create the Document record
@@ -339,6 +345,53 @@ class ProfileController extends Controller
 
             return response()->json([
                 'message' => 'Documents uploaded successfully.'
+            ]);
+        }
+    }
+
+    public function preview(Request $request)
+    {
+        if ($request->isMethod('GET')) {
+            $userDetails = User::leftJoin('questionaries', 'questionaries.user_id', '=', 'users.id')
+                ->leftJoin('preferences', 'preferences.user_id', '=', 'users.id')
+                ->leftJoin('profiles', 'profiles.user_id', '=', 'users.id')
+                ->leftJoin('documents', 'documents.user_id', '=', 'users.id')
+                ->leftJoin('castes', 'castes.id', '=', 'users.category_id')
+                ->leftJoin('states as s1', 's1.id', '=', 'profiles.p_state_id')
+                ->leftJoin('states as s2', 's2.id', '=', 'profiles.c_state_id')
+                ->leftJoin('districts as d1', 'd1.id', '=', 'profiles.p_district_id')
+                ->leftJoin('districts as d2', 'd2.id', '=', 'profiles.c_district_id')
+                ->select(
+                    'users.*',
+                    'questionaries.*',
+                    'questionaries.comp_cert as comp',
+                    'questionaries.ncc_cert as ncc',
+                    'preferences.*',
+                    'profiles.*',
+                    'documents.*',
+                    'castes.name as c',
+                    's1.name as pState',
+                    's2.name as cState',
+                    'd1.name as pDist',
+                    'd2.name as cDist'
+                )
+                ->where('users.id', Auth::user()->id)
+                ->first();
+
+            $preferences = Preference::leftJoin('posts', 'posts.id', '=', 'preferences.post_id')
+                ->select('preferences', 'posts.*')
+                ->where('preferences.user_id', Auth::user()->id)
+                ->get();
+
+            return view('pages.preview', compact('userDetails', 'preferences'));
+        } else {
+
+            $user = Auth::user();
+            $user->final_submit = 1;
+            $user->save();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Form successfully submitted and marked as final.',
             ]);
         }
     }

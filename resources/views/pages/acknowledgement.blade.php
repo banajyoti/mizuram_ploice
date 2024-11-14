@@ -679,7 +679,7 @@
                 <p class="m-0 fs-12 fw-600 text-gray-700">Do you have Computer Certificate?</p>
             </td>
             <td class="p-1" style="width: !important" colspan="">
-                @if ($userDetails->comp_cert == 1)
+                @if ($userDetails->comp == 1)
                     <p class="m-0 fs-12 fw-500 text-c">YES</p>
                 @else
                     <p class="m-0 fs-12 fw-500 text-c">NO</p>
@@ -691,7 +691,7 @@
                 <p class="m-0 fs-12 fw-600 text-gray-700">Do you have NCC Certificate?</p>
             </td>
             <td class="p-1" style="width: !important" colspan="">
-                @if ($userDetails->ncc_cert == 1)
+                @if ($userDetails->ncc == 1)
                     <p class="m-0 fs-12 fw-500 text-c">YES</p>
                 @else
                     <p class="m-0 fs-12 fw-500 text-c">NO</p>
@@ -784,7 +784,7 @@
         <tr>
             <td class="p-1" style="width: 20%!important" colspan="">
                 <p class="m-0 fs-10 fw-600 text-gray-700 text-">Age proof Certificate</p>
-                @if ($userDetails->photo == null)
+                @if (is_null($userDetails->age_prof_cert))
                     <p class="m-0 fs-12 fw-500 text-e">Not Uploaded</p>
                 @else
                     <p class="m-0 fs-12 fw-500 text-e">Uploaded</p>
@@ -792,7 +792,7 @@
             </td>
             <td class="p-1" style="width: 20%!important" colspan="">
                 <p class="m-0 fs-10 fw-600 text-gray-700 text-">Class X Marksheet</p>
-                @if ($userDetails->class_x_cert == null)
+                @if (is_null($userDetails->class_x_cert))
                     <p class="m-0 fs-12 fw-500 text-e">Not Uploaded</p>
                 @else
                     <p class="m-0 fs-12 fw-500 text-e">Uploaded</p>
@@ -800,7 +800,7 @@
             </td>
             <td class="p-1" style="width: 20%!important" colspan="">
                 <p class="m-0 fs-10 fw-600 text-gray-700 text-">Mizo Language Profeciency Cert.</p>
-                @if ($userDetails->mizu_lang_cert == null)
+                @if (is_null($userDetails->mizu_lang_cert))
                     <p class="m-0 fs-12 fw-500 text-e">Not Uploaded</p>
                 @else
                     <p class="m-0 fs-12 fw-500 text-e">Uploaded</p>
@@ -808,7 +808,7 @@
             </td>
             <td class="p-1" style="width: 20%!important" colspan="">
                 <p class="m-0 fs-10 fw-600 text-gray-700 text-">Homeguard Certificate</p>
-                @if ($userDetails->homeguard_cert == null)
+                @if (is_null($userDetails->homeguard_cert))
                     <p class="m-0 fs-12 fw-500 text-e">Not Uploaded</p>
                 @else
                     <p class="m-0 fs-12 fw-500 text-e">Uploaded</p>
@@ -818,7 +818,7 @@
         <tr>
             <td class="p-1" style="width: 20%!important" colspan="">
                 <p class="m-0 fs-10 fw-600 text-gray-700 text-">Cast Certificate</p>
-                @if ($userDetails->caste_cert == null)
+                @if (is_null($userDetails->caste_cert))
                     <p class="m-0 fs-12 fw-500 text-e">Not Uploaded</p>
                 @else
                     <p class="m-0 fs-12 fw-500 text-e">Uploaded</p>
@@ -826,7 +826,7 @@
             </td>
             <td class="p-1" style="width: 20%!important" colspan="">
                 <p class="m-0 fs-10 fw-600 text-gray-700 text-">NCC Certificate</p>
-                @if ($userDetails->ncc_cert == null)
+                @if (is_null($userDetails->ncc))
                     <p class="m-0 fs-12 fw-500 text-e">Not Uploaded</p>
                 @else
                     <p class="m-0 fs-12 fw-500 text-e">Uploaded</p>
@@ -834,7 +834,7 @@
             </td>
             <td class="p-1" style="width: 20%!important" colspan="">
                 <p class="m-0 fs-10 fw-600 text-gray-700 text-">Computer Certificate</p>
-                @if ($userDetails->comp_cert == null)
+                @if (is_null($userDetails->comp))
                     <p class="m-0 fs-12 fw-500 text-e">Not Uploaded</p>
                 @else
                     <p class="m-0 fs-12 fw-500 text-e">Uploaded</p>
@@ -842,7 +842,7 @@
             </td>
             <td class="p-1" style="width: 20%!important" colspan="">
                 <p class="m-0 fs-10 fw-600 text-gray-700 text-">Mechanic Experiance Certificate</p>
-                @if ($userDetails->mechanic_ex_cert == null)
+                @if (is_null($userDetails->mechanic_ex_cert))
                     <p class="m-0 fs-12 fw-500 text-e">Not Uploaded</p>
                 @else
                     <p class="m-0 fs-12 fw-500 text-e">Uploaded</p>

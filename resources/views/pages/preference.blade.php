@@ -10,7 +10,7 @@
         <div class="grow flex flex-col group">
             <div class="h-full flex flex-col items-center md:items-start">
                 <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="questionaries.php">
+                    href="{{ route('questionaries') }}">
                     <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
                             class="m-auto text-sm TimesNR">Q</span></div>
                     <span class="hidden lg:inline-block">Questionaries</span>
@@ -36,7 +36,7 @@
         <div class="grow flex flex-col group">
             <div class="h-full flex flex-col items-center md:items-start">
                 <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="profile.php">
+                    href="#">
                     <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
                             class="m-auto text-sm TimesNR"><i class="bi bi-person"></i></span></div>
                     <span class="hidden lg:inline-block">Profile</span>
@@ -49,10 +49,23 @@
         <div class="grow flex flex-col group">
             <div class="h-full flex flex-col items-center md:items-start">
                 <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="document.php">
+                    href="#">
                     <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
                             class="m-auto text-sm TimesNR"><i class="bi bi-file-earmark-pdf"></i></span></div>
                     <span class="hidden lg:inline-block">Document's</span>
+                </a>
+                <div class="flex h-6 ml-6">
+                    <div class="h-full w-[2px] bg-gray-300 group-hover:bg-blue-600"></div>
+                </div>
+            </div>
+        </div>
+        <div class="grow flex flex-col group">
+            <div class="h-full flex flex-col items-center md:items-start">
+                <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
+                    href="preview.php">
+                    <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
+                            class="m-auto text-sm TimesNR"><i class="bi bi-eye"></i></span></div>
+                    <span class="hidden lg:inline-block">Preview</span>
                 </a>
                 <div class="flex h-6 ml-6">
                     <div class="h-full w-[2px] bg-gray-300 group-hover:bg-blue-600"></div>
@@ -72,22 +85,7 @@
                 </div>
             </div>
         </div>
-        <div class="grow flex flex-col group">
-            <div class="h-full flex flex-col items-center md:items-start">
-                <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="download.php">
-                    <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
-                            class="m-auto text-sm TimesNR"><i class="bi bi-download"></i></span></div>
-                    <span class="hidden lg:inline-block">Download</span>
-                </a>
-                <div class="flex h-6 ml-6">
-                    <div class="h-full w-[2px] bg-gray-300 group-hover:bg-blue-600"></div>
-                </div>
-            </div>
-        </div>
     </div>
-
-
 
     <div class="p-4 grow border border-gray-300 rounded-lg space-y-8">
         <p class="m-auto text-yellow-500 text-center rounded-md text-[0.65rem] md:text-sm font-medium">Candidate are
@@ -140,29 +138,30 @@
                 </div>
 
                 <!-- CONSTABLE Section -->
-                <div class="mb-2 md:mb-0 lg:w-[40vw] grid grid-cols-12" id="constable-section">
-                    <div class="col-span-12 md:col-span-9 border">
-                        <div class="h-full p-2 flex justify-center md:justify-start items-center">
-                            CONSTABLE
+                @if ($questionaries->iti_eqi == 1 && $questionaries->auto_mobile == 1)
+                    <div class="mb-2 md:mb-0 lg:w-[40vw] grid grid-cols-12" id="constable-section">
+                        <div class="col-span-12 md:col-span-9 border">
+                            <div class="h-full p-2 flex justify-center md:justify-start items-center">
+                                CONSTABLE
+                            </div>
+                        </div>
+                        <div class="col-span-12 md:col-span-3 border">
+                            <div class="h-full p-2 text-center">
+                                <button type="button"
+                                    class="p-1 px-2 bg-gray-200 hover:bg-blue-600 hover:text-white text-xs w-full add-post-btn"
+                                    data-section="constable"
+                                    @if ($postStatuses['constable']) style="display: none;" @endif>
+                                    <i class="bi bi-plus-lg pr-1"></i>ADD POST
+                                </button>
+                                <button type="button"
+                                    class="p-1 px-2 text-green-600 text-xs w-full pe-none post-added-btn"
+                                    @if (!$postStatuses['constable']) style="display: none;" @endif>
+                                    <i class="bi bi-check-all pr-1"></i>POST ADDED
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-span-12 md:col-span-3 border">
-                        <div class="h-full p-2 text-center">
-                            <button type="button"
-                                class="p-1 px-2 bg-gray-200 hover:bg-blue-600 hover:text-white text-xs w-full add-post-btn"
-                                data-section="constable"
-                                @if ($postStatuses['constable']) style="display: none;" @endif>
-                                <i class="bi bi-plus-lg pr-1"></i>ADD POST
-                            </button>
-                            <button type="button"
-                                class="p-1 px-2 text-green-600 text-xs w-full pe-none post-added-btn"
-                                @if (!$postStatuses['constable']) style="display: none;" @endif>
-                                <i class="bi bi-check-all pr-1"></i>POST ADDED
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
+                @endif
             </div>
             <p class="mb-4 text-gray-600 border-b">List of post's with preference order</p>
             <div class="lg:w-[60vw] hidden md:grid grid-cols-12">

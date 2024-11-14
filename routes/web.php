@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::match(['get', 'post'], '/preference', [\App\Http\Controllers\QuestionariesController::class, 'preference'])->name('preference');
     Route::match(['get', 'post'], '/profile', [ProfileController::class, 'profile'])->name('profile');
     Route::match(['get', 'post'], '/document', [ProfileController::class, 'document'])->name('document');
+    Route::match(['get', 'post'], '/preview', [ProfileController::class, 'preview'])->name('preview');
     Route::get('/get-payment', [PaymentController::class, 'getPayment'])->name('getPayment');
     Route::get('/get-district', [ProfileController::class, 'getDistrict'])->name('getDistrict');
     Route::get('/update-preference/{prefId}/{type}', [\App\Http\Controllers\QuestionariesController::class, 'preferenceUpdate'])->name('candidate.preference.update');

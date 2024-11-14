@@ -53,8 +53,7 @@
                             timer: 1500 // Auto-hide after 1.5 seconds
                         }).then(() => {
                             // Redirect after successful login
-                            window.location.href =
-                                '{{ route('questionaries') }}'; // Manually handle redirect
+                            window.location.href = response.redirect_url;
                         });
                     } else {
                         // Handle failed login
@@ -67,16 +66,16 @@
                 },
                 error: function(xhr) {
                     // Handle errors (invalid form submission, etc.)
-                    const errors = xhr.responseJSON.errors;
-                    if (errors) {
-                        let errorMessages = Object.values(errors).join('\n');
+                    const response = xhr.responseJSON; // Get the response from the server
+                    if (response && response.message) {
                         Swal.fire({
                             icon: 'error',
                             title: 'Error',
-                            text: 'Please fix the following errors:\n' +
-                                errorMessages
+                            text: response
+                                .message // Show detailed error message from the server
                         });
                     } else {
+                        // Fallback in case of an unexpected error or no message in the response
                         Swal.fire({
                             icon: 'error',
                             title: 'Unexpected Error',

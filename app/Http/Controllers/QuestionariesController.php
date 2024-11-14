@@ -144,6 +144,7 @@ class QuestionariesController extends Controller
     public function preference(Request $request)
     {
         if ($request->isMethod('GET')) {
+            $questionaries = Questionary::where('user_id', Auth::user()->id)->first();
             $preferences = Preference::where('user_id', Auth::user()->id)->get();
             $check = Preference::where('user_id', Auth::user()->id)->first();
             $postStatuses = [
@@ -156,7 +157,7 @@ class QuestionariesController extends Controller
 
             // Get posts that are not in the selected post_ids
             // $posts = Post::whereNotIn('id', $post_ids)->get(['id', 'post']);
-            return view('pages.preference', compact('preferences', 'postStatuses', 'check'));
+            return view('pages.preference', compact('preferences', 'postStatuses', 'check', 'questionaries'));
         } else {
             $postData = $request->all();
             $userId = Auth::user()->id;

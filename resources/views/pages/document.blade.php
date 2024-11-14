@@ -11,7 +11,7 @@
         <div class="grow flex flex-col group">
             <div class="h-full flex flex-col items-center md:items-start">
                 <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="questionaries.php">
+                    href="{{ route('questionaries') }}">
                     <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
                             class="m-auto text-sm TimesNR">Q</span></div>
                     <span class="hidden lg:inline-block">Questionaries</span>
@@ -24,7 +24,7 @@
         <div class="grow flex flex-col group">
             <div class="h-full flex flex-col items-center md:items-start">
                 <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="preference.php">
+                    href="{{ route('preference') }}">
                     <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
                             class="m-auto text-sm TimesNR"><i class="bi bi-arrow-down-up"></i></span></div>
                     <span class="hidden lg:inline-block">Post Preferences</span>
@@ -37,7 +37,7 @@
         <div class="grow flex flex-col group">
             <div class="h-full flex flex-col items-center md:items-start">
                 <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="profile.php">
+                    href="{{ route('profile') }}">
                     <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
                             class="m-auto text-sm TimesNR"><i class="bi bi-person"></i></span></div>
                     <span class="hidden lg:inline-block">Profile</span>
@@ -63,10 +63,10 @@
         <div class="grow flex flex-col group">
             <div class="h-full flex flex-col items-center md:items-start">
                 <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="payment.php">
+                    href="preview.php">
                     <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
-                            class="m-auto text-sm TimesNR">₹</span></div>
-                    <span class="hidden lg:inline-block">Payment</span>
+                            class="m-auto text-sm TimesNR"><i class="bi bi-eye"></i></span></div>
+                    <span class="hidden lg:inline-block">Preview</span>
                 </a>
                 <div class="flex h-6 ml-6">
                     <div class="h-full w-[2px] bg-gray-300 group-hover:bg-blue-600"></div>
@@ -76,10 +76,10 @@
         <div class="grow flex flex-col group">
             <div class="h-full flex flex-col items-center md:items-start">
                 <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="download.php">
+                    href="payment.php">
                     <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
-                            class="m-auto text-sm TimesNR"><i class="bi bi-download"></i></span></div>
-                    <span class="hidden lg:inline-block">Download</span>
+                            class="m-auto text-sm TimesNR">₹</span></div>
+                    <span class="hidden lg:inline-block">Payment</span>
                 </a>
                 <div class="flex h-6 ml-6">
                     <div class="h-full w-[2px] bg-gray-300 group-hover:bg-blue-600"></div>
@@ -106,40 +106,31 @@
                             class="flex flex-col items-center justify-center h-28 md:h-54 w-32 md:w-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 p-2">
                             <div class="flex flex-col items-center justify-center pt-5 pb-6">
                                 @if (isset($documents->photo) && !empty($documents->photo))
-                                <p class="mb-2 text-[0.65rem] md:text-sm text-gray-500 text-center"><span
-                                    class="font-semibold">Document Uploaded</span></p>
-                            <p class="text-[0.65rem] md:text-xs text-gray-500 text-center">JPG, PNG <br
-                                    class="block md:hidden">(MAX. SIZE 200kb)</p>
+                                    <p class="mb-2 text-[0.65rem] md:text-sm text-gray-500 text-center"><span
+                                            class="font-semibold">Document Uploaded</span></p>
+                                    <p class="text-[0.65rem] md:text-xs text-gray-500 text-center">JPG, PNG <br
+                                            class="block md:hidden">(MAX. SIZE 200kb)</p>
                                 @else
-                                <i class="bi bi-cloud-arrow-up text-xl md:text-3xl text-gray-500"></i>
-                                <p class="mb-2 text-[0.65rem] md:text-sm text-gray-500 text-center"><span
-                                        class="font-semibold">Click to upload</span> or drag and drop</p>
-                                <p class="text-[0.65rem] md:text-xs text-gray-500 text-center">PNG, JPG, JPEG <br
-                                        class="block md:hidden">(MAX. SIZE 200kb)</p>
+                                    <i class="bi bi-cloud-arrow-up text-xl md:text-3xl text-gray-500"></i>
+                                    <p class="mb-2 text-[0.65rem] md:text-sm text-gray-500 text-center"><span
+                                            class="font-semibold">Click to upload</span> or drag and drop</p>
+                                    <p class="text-[0.65rem] md:text-xs text-gray-500 text-center">PNG, JPG, JPEG <br
+                                            class="block md:hidden">(MAX. SIZE 200kb)</p>
                                 @endif
                             </div>
                             <input id="pasport_photo" type="file" class="hidden" name="photo" accept="image/*" />
                         </label>
                     </div>
 
-                    <!-- View Document Link (Initially hidden) -->
                     @if (isset($documents->photo) && !empty($documents->photo))
-                        <a id="view-document-link"
-                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center mt-4 cursor-pointer"
-                            href="{{ asset('storage/public/uploads/upload_photo/' . $documents->photo) }}">View
-                            Document</a>
-
-                        <!-- Image Preview (Initially hidden) -->
-                        <img id="photo-preview" src="" alt="Image Preview"
-                            class="hidden w-32 h-32 object-cover rounded-md mt-4" />
+                        <a id="photo_view"
+                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                            href="{{ asset('storage/public/uploads/upload_photo/' . $documents->photo) }}"
+                            target="_blank">View Document</a>
                     @else
-                        <a id="view-document-link"
-                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center mt-4 cursor-pointer"
-                            href="">View Document</a>
-
-                        <!-- Image Preview (Initially hidden) -->
-                        <img id="photo-preview" src="" alt="Image Preview"
-                            class="hidden w-32 h-32 object-cover rounded-md mt-4" />
+                        <a id="photo_view"
+                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                            href="" target="_blank">View Document</a>
                     @endif
                 </div>
 
@@ -256,43 +247,48 @@
                     @endif
                 </div>
 
-
-                <div class="p-2 space-y-2">
-                    <div class="flex items-center">
-                        <span class="text-sm pr-1">05.</span>
-                        <p class="text-xs">Mizo Language Proficiency Cert.</p>
+                @if ($questionaries->min_score_mizo == 1 || $questionaries->mizo_as_mil == 1)
+                    <div class="p-2 space-y-2">
+                        <div class="flex items-center">
+                            <span class="text-sm pr-1">05.</span>
+                            @if ($questionaries->min_score_mizo == 1)
+                                <p class="text-xs">Mizo Language Proficiency Cert. (Min Score)</p>
+                            @elseif ($questionaries->mizo_as_mil == 1)
+                                <p class="text-xs">Mizo Language Proficiency Cert. (MIL)</p>
+                            @endif
+                        </div>
+                        <div class="flex items-center justify-center w-full">
+                            <label for="mizo_lang_prof"
+                                class="flex flex-col items-center justify-center h-28 md:h-54 w-32 md:w-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 p-2">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    @if (isset($documents->mizu_lang_cert) && !empty($documents->mizu_lang_cert))
+                                        <p class="mb-2 text-[0.65rem] md:text-sm text-gray-500 text-center"><span
+                                                class="font-semibold">Document Uploaded</span></p>
+                                        <p class="text-[0.65rem] md:text-xs text-gray-500 text-center">JPG, PNG <br
+                                                class="block md:hidden">(MAX. SIZE 200kb)</p>
+                                    @else
+                                        <i class="bi bi-cloud-arrow-up text-xl md:text-3xl text-gray-500"></i>
+                                        <p class="mb-2 text-[0.65rem] md:text-sm text-gray-500 text-center"><span
+                                                class="font-semibold">Click to upload</span> or drag and drop</p>
+                                        <p class="text-[0.65rem] md:text-xs text-gray-500 text-center">PDF <br
+                                                class="block md:hidden">(MAX. SIZE 200kb)</p>
+                                    @endif
+                                </div>
+                                <input id="mizo_lang_prof" type="file" class="hidden" name="mizu_lang_cert" />
+                            </label>
+                        </div>
+                        @if (isset($documents->mizu_lang_cert) && !empty($documents->mizu_lang_cert))
+                            <a id="mizo_lang_prof_view"
+                                class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                                href="{{ asset('storage/public/uploads/mechanic_ex_cert/' . $documents->mizu_lang_cert) }}"
+                                target="_blank">View Document</a>
+                        @else
+                            <a id="mizo_lang_prof_view"
+                                class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                                href="" target="_blank">View Document</a>
+                        @endif
                     </div>
-                    <div class="flex items-center justify-center w-full">
-                        <label for="mizo_lang_prof"
-                            class="flex flex-col items-center justify-center h-28 md:h-54 w-32 md:w-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 p-2">
-                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                @if (isset($documents->mizu_lang_cert) && !empty($documents->mizu_lang_cert))
-                                    <p class="mb-2 text-[0.65rem] md:text-sm text-gray-500 text-center"><span
-                                            class="font-semibold">Document Uploaded</span></p>
-                                    <p class="text-[0.65rem] md:text-xs text-gray-500 text-center">JPG, PNG <br
-                                            class="block md:hidden">(MAX. SIZE 200kb)</p>
-                                @else
-                                    <i class="bi bi-cloud-arrow-up text-xl md:text-3xl text-gray-500"></i>
-                                    <p class="mb-2 text-[0.65rem] md:text-sm text-gray-500 text-center"><span
-                                            class="font-semibold">Click to upload</span> or drag and drop</p>
-                                    <p class="text-[0.65rem] md:text-xs text-gray-500 text-center">PDF <br
-                                            class="block md:hidden">(MAX. SIZE 200kb)</p>
-                                @endif
-                            </div>
-                            <input id="mizo_lang_prof" type="file" class="hidden" name="mizu_lang_cert" />
-                        </label>
-                    </div>
-                    @if (isset($documents->mizu_lang_cert) && !empty($documents->mizu_lang_cert))
-                        <a id="mizo_lang_prof_view"
-                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
-                            href="{{ asset('storage/public/uploads/mechanic_ex_cert/' . $documents->mizu_lang_cert) }}"
-                            target="_blank">View Document</a>
-                    @else
-                        <a id="mizo_lang_prof_view"
-                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
-                            href="" target="_blank">View Document</a>
-                    @endif
-                </div>
+                @endif
 
                 @if ($questionaries->home_guard == 1)
                     <div class="p-2 space-y-2">
@@ -454,43 +450,83 @@
                     @endif
                 </div>
 
+                @if ($questionaries->auto_mobile == 1)
+                    <div class="p-2 space-y-2">
+                        <div class="flex items-center">
+                            <span class="text-sm pr-1">10.</span>
+                            <p class="text-xs">Mechanic Experience Certificate</p>
+                        </div>
+                        <div class="flex items-center justify-center w-full">
+                            <label for="mechanic_cert"
+                                class="flex flex-col items-center justify-center h-28 md:h-54 w-32 md:w-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 p-2">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    @if (isset($documents->mechanic_ex_cert) && !empty($documents->mechanic_ex_cert))
+                                        <p class="mb-2 text-[0.65rem] md:text-sm text-gray-500 text-center"><span
+                                                class="font-semibold">Document Uploaded</span></p>
+                                        <p class="text-[0.65rem] md:text-xs text-gray-500 text-center">JPG, PNG <br
+                                                class="block md:hidden">(MAX. SIZE 200kb)</p>
+                                    @else
+                                        <i class="bi bi-cloud-arrow-up text-xl md:text-3xl text-gray-500"></i>
+                                        <p class="mb-2 text-[0.65rem] md:text-sm text-gray-500 text-center"><span
+                                                class="font-semibold">Click to upload</span> or drag and drop</p>
+                                        <p class="text-[0.65rem] md:text-xs text-gray-500 text-center">PDF <br
+                                                class="block md:hidden">(MAX. SIZE 200kb)</p>
+                                    @endif
+                                </div>
+                                <input id="mechanic_cert" type="file" class="hidden" name="mechanic_ex_cert" />
+                            </label>
+                        </div>
+                        @if (isset($documents->mechanic_ex_cert) && !empty($documents->mechanic_ex_cert))
+                            <a id="mechanic_cert_view"
+                                class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                                href="{{ asset('storage/public/uploads/mechanic_ex_cert/' . $documents->mechanic_ex_cert) }}"
+                                target="_blank">View Document</a>
+                        @else
+                            <a id="mechanic_cert_view"
+                                class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                                href="" target="_blank">View Document</a>
+                        @endif
+                    </div>
+                @endif
 
-                <div class="p-2 space-y-2">
-                    <div class="flex items-center">
-                        <span class="text-sm pr-1">10.</span>
-                        <p class="text-xs">Mechanic Experience Certificate</p>
+                @if ($questionaries->iti_eqi == 1)
+                    <div class="p-2 space-y-2">
+                        <div class="flex items-center">
+                            <span class="text-sm pr-1">11.</span>
+                            <p class="text-xs">Industrial Training Institute Certificate</p>
+                        </div>
+                        <div class="flex items-center justify-center w-full">
+                            <label for="iti_cert"
+                                class="flex flex-col items-center justify-center h-28 md:h-54 w-32 md:w-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 p-2">
+                                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                    @if (isset($documents->iti_ex_cert) && !empty($documents->iti_ex_cert))
+                                        <p class="mb-2 text-[0.65rem] md:text-sm text-gray-500 text-center"><span
+                                                class="font-semibold">Document Uploaded</span></p>
+                                        <p class="text-[0.65rem] md:text-xs text-gray-500 text-center">JPG, PNG <br
+                                                class="block md:hidden">(MAX. SIZE 200kb)</p>
+                                    @else
+                                        <i class="bi bi-cloud-arrow-up text-xl md:text-3xl text-gray-500"></i>
+                                        <p class="mb-2 text-[0.65rem] md:text-sm text-gray-500 text-center"><span
+                                                class="font-semibold">Click to upload</span> or drag and drop</p>
+                                        <p class="text-[0.65rem] md:text-xs text-gray-500 text-center">PDF <br
+                                                class="block md:hidden">(MAX. SIZE 200kb)</p>
+                                    @endif
+                                </div>
+                                <input id="iti_cert" type="file" class="hidden" name="iti_ex_cert" />
+                            </label>
+                        </div>
+                        @if (isset($documents->iti_ex_cert) && !empty($documents->iti_ex_cert))
+                            <a id="iti_cert_view"
+                                class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                                href="{{ asset('storage/public/uploads/iti_ex_cert/' . $documents->iti_ex_cert) }}"
+                                target="_blank">View Document</a>
+                        @else
+                            <a id="iti_cert_view"
+                                class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
+                                href="" target="_blank">View Document</a>
+                        @endif
                     </div>
-                    <div class="flex items-center justify-center w-full">
-                        <label for="mechanic_cert"
-                            class="flex flex-col items-center justify-center h-28 md:h-54 w-32 md:w-48 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 p-2">
-                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                @if (isset($documents->mechanic_ex_cert) && !empty($documents->mechanic_ex_cert))
-                                    <p class="mb-2 text-[0.65rem] md:text-sm text-gray-500 text-center"><span
-                                            class="font-semibold">Document Uploaded</span></p>
-                                    <p class="text-[0.65rem] md:text-xs text-gray-500 text-center">JPG, PNG <br
-                                            class="block md:hidden">(MAX. SIZE 200kb)</p>
-                                @else
-                                    <i class="bi bi-cloud-arrow-up text-xl md:text-3xl text-gray-500"></i>
-                                    <p class="mb-2 text-[0.65rem] md:text-sm text-gray-500 text-center"><span
-                                            class="font-semibold">Click to upload</span> or drag and drop</p>
-                                    <p class="text-[0.65rem] md:text-xs text-gray-500 text-center">PDF <br
-                                            class="block md:hidden">(MAX. SIZE 200kb)</p>
-                                @endif
-                            </div>
-                            <input id="mechanic_cert" type="file" class="hidden" name="mechanic_ex_cert" />
-                        </label>
-                    </div>
-                    @if (isset($documents->mechanic_ex_cert) && !empty($documents->mechanic_ex_cert))
-                        <a id="mechanic_cert_view"
-                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
-                            href="{{ asset('storage/public/uploads/mechanic_ex_cert/' . $documents->mechanic_ex_cert) }}"
-                            target="_blank">View Document</a>
-                    @else
-                        <a id="mechanic_cert_view"
-                            class="block p-2 bg-gray-200 hover:bg-blue-600 hover:text-white rounded-md text-xs text-center"
-                            href="" target="_blank">View Document</a>
-                    @endif
-                </div>
+                @endif
             </div>
         </form>
     </div>

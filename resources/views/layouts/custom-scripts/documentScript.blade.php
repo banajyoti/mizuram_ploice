@@ -1,58 +1,39 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    document.getElementById('pasport_photo').addEventListener('change', function(event) {
-        var file = event.target.files[0]; // Get the selected file
-        var previewImage = document.getElementById('photo-preview'); // Get the preview image element
-        var viewDocumentLink = document.getElementById('view-document-link'); // Get the View Document link
-        var maxSize = 200 * 1024; // Maximum file size: 200 KB (in bytes)
+    document.body.addEventListener('change', function(e) {
+        if (e.target && e.target.id === 'photo') {
+            let file = e.target.files[0];
+            let fileLink = document.getElementById('photo_view');
+            let maxSize = 200 * 1024; // Maximum file size: 200 KB (in bytes)
 
-        // Check if a file was selected
-        if (file) {
-            // Check if the file is an image
-            if (file.type.startsWith('image/')) {
-                // Check if the file size is less than or equal to 200 KB
-                if (file.size <= maxSize) {
-                    var reader = new FileReader();
-
-                    reader.onload = function(e) {
-                        // Update the image preview source
-                        previewImage.src = e.target.result;
-
-                        // Show the "View Document" link
-                        viewDocumentLink.classList.remove('hidden');
-                    };
-
-                    // Read the file as a data URL (base64-encoded string)
-                    reader.readAsDataURL(file);
+            if (file) {
+                // Check if the file is a PDF
+                if (file.type === 'image/') {
+                    // Check if the file size is less than or equal to 200 KB
+                    if (file.size <= maxSize) {
+                        let reader = new FileReader();
+                        reader.onload = function() {
+                            let fileUrl = reader.result;
+                            // Update the "View Document" link to point to the file URL
+                            fileLink.href = fileUrl;
+                            // Show the "View Document" link
+                            fileLink.classList.remove('hidden');
+                        };
+                        reader.readAsDataURL(file); // Read the PDF as a Data URL
+                    } else {
+                        // If the file size is larger than 200 KB, show an alert
+                        alert("File size is too large. Please select a file smaller than 200 KB.");
+                        fileLink.classList.add('hidden'); // Hide the View Document link
+                    }
                 } else {
-                    // If the file size is larger than 200 KB, show an alert
-                    alert('File size is too large. Please select a file smaller than 200 KB.');
-                    previewImage.classList.add('hidden'); // Hide the preview image
-                    viewDocumentLink.classList.add('hidden'); // Hide the View Document link
+                    // If the file is not a PDF, show an alert
+                    alert("Please upload a valid image file (JPG, PNG, GIF).");
+                    fileLink.classList.add('hidden'); // Hide the View Document link
                 }
             } else {
-                // If the file is not an image, hide the preview and alert the user
-                previewImage.classList.add('hidden');
-                viewDocumentLink.classList.add('hidden');
-                alert('Please select a valid image file.');
+                // If no file is selected, hide the View Document link
+                fileLink.classList.add('hidden');
             }
-        }
-    });
-
-    // Handle click on the "View Document" link
-    document.getElementById('view-document-link').addEventListener('click', function(e) {
-        // Prevent default link behavior
-        e.preventDefault();
-
-        // Get the image preview element
-        var previewImage = document.getElementById('photo-preview');
-
-        // Check if the image has been selected and has a source
-        if (previewImage.src) {
-            // Open the image in a new tab
-            window.open(previewImage.src, '_blank');
-        } else {
-            alert('No image selected!');
         }
     });
 
@@ -353,49 +334,91 @@
 
 
     // Add event listener for the Mechanic Experience Certificate input
-    document.getElementById('mechanic_cert').addEventListener('change', function(e) {
-        let file = e.target.files[0];
-        let fileLink = document.getElementById('mechanic_cert_view');
-        let maxSize = 200 * 1024; // Maximum file size: 20 KB (in bytes)
+    document.body.addEventListener('change', function(e) {
+        if (e.target && e.target.id === 'mechanic_cert') {
+            let file = e.target.files[0];
+            let fileLink = document.getElementById('mechanic_cert_view');
+            let maxSize = 200 * 1024; // Maximum file size: 200 KB (in bytes)
 
-        if (file) {
-            // Check if the file is a PDF
-            if (file.type === 'application/pdf') {
-                // Check if the file size is less than or equal to 20 KB
-                if (file.size <= maxSize) {
-                    let reader = new FileReader();
-                    reader.onload = function() {
-                        let fileUrl = reader.result;
-                        // Update the "View Document" link to point to the file URL
-                        fileLink.href = fileUrl;
-                        // Show the "View Document" link
-                        fileLink.classList.remove('hidden');
-                    };
-                    reader.readAsDataURL(file); // Read the PDF as a Data URL
+            if (file) {
+                // Check if the file is a PDF
+                if (file.type === 'application/pdf') {
+                    // Check if the file size is less than or equal to 200 KB
+                    if (file.size <= maxSize) {
+                        let reader = new FileReader();
+                        reader.onload = function() {
+                            let fileUrl = reader.result;
+                            // Update the "View Document" link to point to the file URL
+                            fileLink.href = fileUrl;
+                            // Show the "View Document" link
+                            fileLink.classList.remove('hidden');
+                        };
+                        reader.readAsDataURL(file); // Read the PDF as a Data URL
+                    } else {
+                        // If the file size is larger than 200 KB, show an alert
+                        alert("File size is too large. Please select a file smaller than 200 KB.");
+                        fileLink.classList.add('hidden'); // Hide the View Document link
+                    }
                 } else {
-                    // If the file size is larger than 20 KB, show an alert
-                    alert("File size is too large. Please select a file smaller than 200 KB.");
+                    // If the file is not a PDF, show an alert
+                    alert("Please upload a valid PDF document.");
                     fileLink.classList.add('hidden'); // Hide the View Document link
                 }
             } else {
-                // If the file is not a PDF, show an alert
-                alert("Please upload a valid PDF document.");
-                fileLink.classList.add('hidden'); // Hide the View Document link
+                // If no file is selected, hide the View Document link
+                fileLink.classList.add('hidden');
             }
-        } else {
-            // If no file is selected, hide the View Document link
-            fileLink.classList.add('hidden');
+        }
+    });
+
+    // Add event listener for the ITI Experience Certificate input
+    document.body.addEventListener('change', function(e) {
+        if (e.target && e.target.id === 'iti_cert') {
+            let file = e.target.files[0];
+            let fileLink = document.getElementById('iti_cert_view');
+            let maxSize = 200 * 1024; // Maximum file size: 200 KB (in bytes)
+
+            if (file) {
+                // Check if the file is a PDF
+                if (file.type === 'application/pdf') {
+                    // Check if the file size is less than or equal to 200 KB
+                    if (file.size <= maxSize) {
+                        let reader = new FileReader();
+                        reader.onload = function() {
+                            let fileUrl = reader.result;
+                            // Update the "View Document" link to point to the file URL
+                            fileLink.href = fileUrl;
+                            // Show the "View Document" link
+                            fileLink.classList.remove('hidden');
+                        };
+                        reader.readAsDataURL(file); // Read the PDF as a Data URL
+                    } else {
+                        // If the file size is larger than 200 KB, show an alert
+                        alert("File size is too large. Please select a file smaller than 200 KB.");
+                        fileLink.classList.add('hidden'); // Hide the View Document link
+                    }
+                } else {
+                    // If the file is not a PDF, show an alert
+                    alert("Please upload a valid PDF document.");
+                    fileLink.classList.add('hidden'); // Hide the View Document link
+                }
+            } else {
+                // If no file is selected, hide the View Document link
+                fileLink.classList.add('hidden');
+            }
         }
     });
 
     $(document).ready(function() {
         $('#save-proceed-btn').click(function(e) {
             e.preventDefault();
+
             $('#document-form').submit();
         });
 
         $('#document-form').submit(function(e) {
             e.preventDefault();
+
             var formData = new FormData(this);
 
             $.ajax({
@@ -407,27 +430,22 @@
                 success: function(response) {
                     Swal.fire({
                         title: "Success!",
-                        text: response
-                            .message,
+                        text: response.message,
                         icon: "success",
-                        button: "OK",
                         confirmButtonColor: '#2DB325',
+                        confirmButtonText: 'OK',
                     }).then(() => {
-                        window.location.href =
-                            '{{ route('getPayment') }}';
+                        window.location.href = '{{ route('preview') }}';
                     });
                 },
                 error: function(xhr, status, error) {
                     var errors = xhr.responseJSON.errors;
                     var errorMessage = '';
-
                     for (var field in errors) {
                         if (Array.isArray(errors[field])) {
-                            errorMessage += errors[field].join(', ') +
-                                '\n';
+                            errorMessage += errors[field].join(', ') + '\n';
                         } else {
-                            errorMessage += errors[field] +
-                                '\n';
+                            errorMessage += errors[field] + '\n';
                         }
                     }
 
@@ -435,7 +453,7 @@
                         title: "Error!",
                         text: errorMessage,
                         icon: "error",
-                        button: "OK",
+                        confirmButtonText: 'OK',
                     });
                 }
             });

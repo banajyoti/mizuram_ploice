@@ -25,6 +25,8 @@ class DownloadController extends Controller
             ->select(
                 'users.*',
                 'questionaries.*',
+                'questionaries.comp_cert as comp',
+                'questionaries.ncc_cert as ncc',
                 'preferences.*',
                 'profiles.*',
                 'documents.*',

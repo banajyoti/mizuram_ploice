@@ -16,7 +16,7 @@
         <div class="grow flex flex-col group">
             <div class="h-full flex flex-col items-center md:items-start">
                 <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="questionaries.php">
+                    href="{{ route('questionaries') }}">
                     <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
                             class="m-auto text-sm TimesNR">Q</span></div>
                     <span class="hidden lg:inline-block">Questionaries</span>
@@ -29,7 +29,7 @@
         <div class="grow flex flex-col group">
             <div class="h-full flex flex-col items-center md:items-start">
                 <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="preference.php">
+                    href="{{ route('preference') }}">
                     <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
                             class="m-auto text-sm TimesNR"><i class="bi bi-arrow-down-up"></i></span></div>
                     <span class="hidden lg:inline-block">Post Preferences</span>
@@ -66,31 +66,27 @@
             </div>
         </div>
         <div class="grow flex flex-col group">
-            <div class="h-full flex flex-col items-center md:items-start">
-                <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="#">
-                    <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
-                            class="m-auto text-sm TimesNR">₹</span></div>
-                    <span class="hidden lg:inline-block">Payment</span>
-                </a>
-                <div class="flex h-6 ml-6">
-                    <div class="h-full w-[2px] bg-gray-300 group-hover:bg-blue-600"></div>
-                </div>
-            </div>
-        </div>
-        <div class="grow flex flex-col group">
-            <div class="h-full flex flex-col items-center md:items-start">
-                <a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs"
-                    href="#">
-                    <div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span
-                            class="m-auto text-sm TimesNR"><i class="bi bi-download"></i></span></div>
-                    <span class="hidden lg:inline-block">Download</span>
-                </a>
-                <div class="flex h-6 ml-6">
-                    <div class="h-full w-[2px] bg-gray-300 group-hover:bg-blue-600"></div>
-                </div>
-            </div>
-        </div>
+			<div class="h-full flex flex-col items-center md:items-start">
+				<a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs" href="preview.php">
+					<div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span class="m-auto text-sm TimesNR"><i class="bi bi-eye"></i></span></div>
+					<span class="hidden lg:inline-block">Preview</span>
+				</a>
+				<div class="flex h-6 ml-6">
+					<div class="h-full w-[2px] bg-gray-300 group-hover:bg-blue-600"></div>
+				</div>
+			</div>
+		</div>
+		<div class="grow flex flex-col group">
+			<div class="h-full flex flex-col items-center md:items-start">
+				<a class="grow inline-block lg:w-full border border-gray-300 hover:border-blue-600 hover:shadow-md rounded-lg p-2 flex items-center hover:text-blue-600 font-medium transition-all text-xs" href="payment.php">
+					<div class="h-8 w-8 bg-gray-200 rounded-full lg:mr-2 text-black text-xs flex"><span class="m-auto text-sm TimesNR">₹</span></div>
+					<span class="hidden lg:inline-block">Payment</span>
+				</a>
+				<div class="flex h-6 ml-6">
+					<div class="h-full w-[2px] bg-gray-300 group-hover:bg-blue-600"></div>
+				</div>
+			</div>
+		</div>
     </div>
     <form id="profile-form" action="" method="POST">
         @csrf
@@ -197,7 +193,8 @@
                         <div class="h-full flex flex-col">
                             <label for="alt_Pnumber" class="block mb-auto px-1 text-sm font-medium text-gray-600">Alt.
                                 Phone Number</label>
-                            <input type="text" id="alt_Pnumber"
+                            <input type="" id="alt_Pnumber" onkeypress="return isNumber(event)"
+                                minlength="10" maxlength="10"
                                 class="bg-gray-50  border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 name="alt_mobile" value="{{ old('alt_mobile', $userProfiles->alt_mobile ?? '') }}"
                                 placeholder="Alternate number" required />
@@ -285,9 +282,10 @@
                         <div class="h-full flex flex-col">
                             <label for="adhar" class="block mb-auto px-1 text-sm font-medium text-gray-600">Aadhaar
                                 Number</label>
-                            <input type="text" id="adhar"
-                                class="bg-gray-50  border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
-                                name="adhar_no"value="{{ old('adhar_no', $userProfiles->adhar_no ?? '') }}"
+                            <input type="text" id="adhar" minlength="12" maxlength="12"
+                                onkeypress="return isNumber(event)"
+                                class="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
+                                name="adhar_no" value="{{ old('adhar_no', $userProfiles->adhar_no ?? '') }}"
                                 placeholder="Aadhaar Number" required />
                             @error('adhar_no')
                                 <div class="text-sm text-red-500">{{ $message }}</div>
@@ -313,7 +311,6 @@
                                 Line
                                 1<span class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="p_address1" name="permanent_address[street1]"
-                                onkeydown="return /[a-z]/i.test(event.key)"
                                 value="{{ old('permanent_address.street1', $userProfiles->p_address1 ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Street 1" required />
@@ -330,7 +327,6 @@
                                 Line
                                 2</label>
                             <input type="text" id="p_address2" name="permanent_address[street2]"
-                                onkeydown="return /[a-z]/i.test(event.key)"
                                 value="{{ old('permanent_address.street2', $userProfiles->p_address2 ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Street 2" />
@@ -394,7 +390,7 @@
                             </label>
                             <input type="text" id="district-text" name="permanent_address[district_text]"
                                 value="{{ old('permanent_address.district_text', $userProfiles->p_other_district ?? '') }}"
-                                onkeydown="return /[a-z]/i.test(event.key)"
+                                onkeydown="return /[a-z ]/i.test(event.key)"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" />
 
                         </div>
@@ -407,7 +403,7 @@
                                 class="block mb-auto px-1 text-sm font-medium text-gray-600">Police Station<span
                                     class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="p_police_id" name="permanent_address[police_station]"
-                                onkeydown="return /[a-z]/i.test(event.key)"
+                                onkeydown="return /[a-z ]/i.test(event.key)"
                                 value="{{ old('permanent_address.police_station', $userProfiles->p_police_id ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Police Station" required />
@@ -423,7 +419,7 @@
                             <label for="post_office" class="block mb-auto px-1 text-sm font-medium text-gray-600">Post
                                 Office<span class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="p_post_office" name="permanent_address[post_office]"
-                                onkeydown="return /[a-z]/i.test(event.key)"
+                                onkeydown="return /[a-z ]/i.test(event.key)"
                                 value="{{ old('permanent_address.post_office', $userProfiles->p_post_office ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Post Office" required />
@@ -440,7 +436,7 @@
                                 class="block mb-auto px-1 text-sm font-medium text-gray-600">Pincode<span
                                     class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="p_pin" name="permanent_address[pincode]" maxlength="6"
-                                minlength="6"
+                                minlength="6" onkeypress="return isNumber(event)"
                                 value="{{ old('permanent_address.pincode', $userProfiles->p_pin ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Pincode" required />
@@ -473,7 +469,6 @@
                                 class="block mb-auto px-1 text-sm font-medium text-gray-600">Address Line
                                 1<span class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="c_address1" name="correspondence_address[street1]"
-                                onkeydown="return /[a-z]/i.test(event.key)"
                                 value="{{ old('permanent_address.street1', $userProfiles->c_address1 ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Street 1" required />
@@ -490,7 +485,6 @@
                                 class="block mb-auto px-1 text-sm font-medium text-gray-600">Address Line
                                 2</label>
                             <input type="text" id="c_address2" name="correspondence_address[street2]"
-                                onkeydown="return /[a-z]/i.test(event.key)"
                                 value="{{ old('permanent_address.street2', $userProfiles->c_address2 ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Street 2" />
@@ -555,7 +549,7 @@
                             </label>
                             <input type="text" id="c_district-text" name="correspondence_address[district_text]"
                                 value="{{ old('correspondence_address.district_text', $userProfiles->c_other_district ?? '') }}"
-                                onkeydown="return /[a-z]/i.test(event.key)"
+                                onkeydown="return /[a-z ]/i.test(event.key)"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2" />
                         </div>
                     </div>
@@ -567,7 +561,7 @@
                                 class="block mb-auto px-1 text-sm font-medium text-gray-600">Police Station<span
                                     class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="c_police_id" name="correspondence_address[police_station]"
-                                onkeydown="return /[a-z]/i.test(event.key)"
+                                onkeydown="return /[a-z ]/i.test(event.key)"
                                 value="{{ old('permanent_address.police_station', $userProfiles->c_police_id ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Police Station" required />
@@ -584,7 +578,7 @@
                                 class="block mb-auto px-1 text-sm font-medium text-gray-600">Post Office<span
                                     class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="c_post_office" name="correspondence_address[post_office]"
-                                onkeydown="return /[a-z]/i.test(event.key)"
+                                onkeydown="return /[a-z ]/i.test(event.key)"
                                 value="{{ old('permanent_address.post_office', $userProfiles->c_post_office ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Post Office" required />
@@ -601,7 +595,7 @@
                                 class="block mb-auto px-1 text-sm font-medium text-gray-600">Pincode<span
                                     class="ps-1 text-red-500">*</span></label>
                             <input type="text" id="c_pin" name="correspondence_address[pincode]"
-                                maxlength="6" minlength="6"
+                                maxlength="6" minlength="6" onkeypress="return isNumber(event)"
                                 value="{{ old('permanent_address.pincode', $userProfiles->c_pin ?? '') }}"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 placeholder="Pincode" required />
@@ -623,7 +617,7 @@
                                     class="block mb-auto px-1 text-sm font-medium text-gray-600">Board/ School<span
                                         class="ps-1 text-red-500">*</span></label>
                                 <input type="text" id="board_school" name="education[board_school]"
-                                    onkeydown="return /[a-z]/i.test(event.key)"
+                                    onkeydown="return /[a-z ]/i.test(event.key)"
                                     value="{{ old('permanent_address.board_school', $userProfiles->board_id ?? '') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                     placeholder="Board/ School" required />
@@ -638,7 +632,7 @@
                                 <label for="school_name"
                                     class="block mb-auto px-1 text-sm font-medium text-gray-600">School Name</label>
                                 <input type="text" id="school_name" name="education[school_name]"
-                                    onkeydown="return /[a-z]/i.test(event.key)"
+                                    onkeydown="return /[a-z ]/i.test(event.key)"
                                     value="{{ old('permanent_address.school_name', $userProfiles->school_name ?? '') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                     placeholder="School Name" />
@@ -669,6 +663,7 @@
                                     class="block mb-auto px-1 text-sm font-medium text-gray-600">Year of
                                     Passing<span class="ps-1 text-red-500">*</span></label>
                                 <input type="text" id="yop" name="education[yop]"
+                                    onkeypress="return isNumber(event)" minlength="4" maxlength="4"
                                     value="{{ old('permanent_address.yop', $userProfiles->year_of_passing ?? '') }}"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                     placeholder="Year of Passing" required />

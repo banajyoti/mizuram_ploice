@@ -24,7 +24,7 @@ class RegisterController extends Controller
             $validator = Validator::make($request->all(), [
                 'salutation' => 'required|string|max:10',
                 'first_name' => 'required|string|max:255',
-                'middle_name' => 'nullable|string|max:255',
+                // 'middle_name' => 'nullable|string|max:255',
                 'last_name' => 'required|string|max:255',
                 'father_name' => 'required|string|max:255',
                 'mother_name' => 'required|string|max:255',
@@ -63,7 +63,7 @@ class RegisterController extends Controller
                 'dob' => $request->dob,
                 'age' => $request->age,
                 'email' => $request->email,
-                // 'phone' => $request->phone,
+                'phone' => $request->phone,
                 'ex_ser' => $request->ex_ser,
                 'X_inMizo' => $request->X_inMizo,
                 // Add more fields as necessary

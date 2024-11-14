@@ -190,7 +190,7 @@
                             <label for="father_name"
                                 class="block mb-auto px-1 text-sm font-medium text-gray-600">Father
                                 Name<span class="ps-1 text-red-500">*</span></label>
-                            <input type="text" id="father_name" onkeydown="return /[a-z]/i.test(event.key)"
+                            <input type="text" id="father_name" onkeydown="return /[a-z ]/i.test(event.key)"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 name="father_name" value="{{ old('father_name') }}" placeholder="Father Name"
                                 required />
@@ -204,7 +204,7 @@
                             <label for="mother_name"
                                 class="block mb-auto px-1 text-sm font-medium text-gray-600">Mother Name<span
                                     class="ps-1 text-red-500">*</span></label>
-                            <input type="text" id="mother_name" onkeydown="return /[a-z]/i.test(event.key)"
+                            <input type="text" id="mother_name" onkeydown="return /[a-z ]/i.test(event.key)"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                                 name="mother_name" value="{{ old('mother_name') }}" placeholder="Mother Name"
                                 required />
@@ -310,6 +310,50 @@
                         </div>
                     </div>
                     <div class="col-span-4">
+                        <!-- Div-1 -->
+                        <div class="h-ful flex flex-col phone">
+                            <div class="flex items-center justify-between">
+                                <label for="p_number" class="block mb-auto px-1 text-sm font-medium text-gray-600">
+                                    <i class="bi bi-check-circle-fill text-[0.70rem] pr-1"></i>
+                                    Phone Number
+                                    <span class="ps-1 text-red-500">*</span>
+                                </label>
+                                <button class="pr-2 text-xs flex items-center hover:text-red-500 hidden"
+                                    id="change_p_number"><i
+                                        class="bi bi-arrow-repeat text-sm pr-1"></i>change</button>
+                            </div>
+                            <div class="flex gap-2">
+                                <input type="text" id="p_number" onkeypress="return isNumber(event)"
+                                    minlength="10" maxlength="10"
+                                    class="grow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
+                                    name="phone" value="" placeholder="Phone Number" required />
+                                <button type="button"
+                                    class="text-xs text-white hover:text-green-100 bg-green-600 hover:bg-green-700 rounded-lg p-2 whitespace-nowrap"
+                                    id="send_OTP">Send OTP</button>
+                            </div>
+                        </div>
+                        <!-- Div-2 -->
+                        <div class="h-ful flex flex-col verify_phone hidden">
+                            <label for="email"
+                                class="block px-1 text-sm font-medium text-gray-600 flex items-center">
+                                <button type="button"
+                                    class="rounded-md px-1 mr-1 bg-gray-200 hover:bg-gray-300 text-blue-600"
+                                    id="back_to_phone"><i
+                                        class="bi bi-chevron-double-left text-[0.65rem]"></i></button>
+                                Enter OTP
+                                <span class="ps-1 text-red-500">*</span>
+                            </label>
+                            <div class="flex gap-1 mt-auto">
+                                <input type="text" id="otp"
+                                    class="grow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 text-center"
+                                    name="otp" value="" placeholder="X X X X" required />
+                                <button type="button"
+                                    class="text-xs text-white hover:text-green-100 bg-green-600 hover:bg-green-700 rounded-lg px-2 py-0.5"
+                                    id="verified">Verify</button>
+                                <button type="button"
+                                    class="text-xs text-white hover:text-yellow-100 bg-yellow-500 hover:bg-yellow-600 rounded-lg px-2 py-0.5">Resend</button>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-span-4">
                         <div class="h-full flex flex-col">
